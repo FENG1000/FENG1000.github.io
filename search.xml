@@ -162,15 +162,15 @@
       
       <categories>
           
-          <category> ELK </category>
-          
           <category> DB </category>
+          
+          <category> ELK </category>
           
           <category> NoSQL </category>
           
-          <category> Docker </category>
-          
           <category> Elasticsearch </category>
+          
+          <category> Docker </category>
           
           <category> Elasticsearch </category>
           
@@ -193,9 +193,9 @@
           
           <category> Web </category>
           
-          <category> BUG </category>
-          
           <category> Ajax </category>
+          
+          <category> BUG </category>
           
           <category> 接口 </category>
           
@@ -251,9 +251,9 @@
       
       <categories>
           
-          <category> ELK </category>
-          
           <category> DB </category>
+          
+          <category> ELK </category>
           
           <category> NoSQL </category>
           
@@ -615,9 +615,9 @@
           
           <category> Web </category>
           
-          <category> BUG </category>
-          
           <category> Ajax </category>
+          
+          <category> BUG </category>
           
           <category> 跨域 </category>
           
