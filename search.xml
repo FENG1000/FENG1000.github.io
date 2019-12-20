@@ -168,9 +168,9 @@
           
           <category> NoSQL </category>
           
-          <category> Docker </category>
-          
           <category> Elasticsearch </category>
+          
+          <category> Docker </category>
           
           <category> Elasticsearch </category>
           
@@ -193,9 +193,9 @@
           
           <category> Web </category>
           
-          <category> BUG </category>
-          
           <category> Ajax </category>
+          
+          <category> BUG </category>
           
           <category> 接口 </category>
           
@@ -259,9 +259,9 @@
           
           <category> Elasticsearch </category>
           
-          <category> Elasticsearch </category>
-          
           <category> x-pack </category>
+          
+          <category> Elasticsearch </category>
           
       </categories>
       
@@ -526,9 +526,9 @@
           
           <category> SpringBoot </category>
           
-          <category> BUG </category>
-          
           <category> Redis </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -615,9 +615,9 @@
           
           <category> Web </category>
           
-          <category> BUG </category>
-          
           <category> Ajax </category>
+          
+          <category> BUG </category>
           
           <category> 跨域 </category>
           
