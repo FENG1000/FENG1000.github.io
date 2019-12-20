@@ -104,9 +104,9 @@
           
           <category> Spring </category>
           
-          <category> BUG </category>
-          
           <category> SpringBoot </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -168,9 +168,9 @@
           
           <category> NoSQL </category>
           
-          <category> Elasticsearch </category>
-          
           <category> Docker </category>
+          
+          <category> Elasticsearch </category>
           
           <category> Elasticsearch </category>
           
@@ -193,9 +193,9 @@
           
           <category> Web </category>
           
-          <category> Ajax </category>
-          
           <category> BUG </category>
+          
+          <category> Ajax </category>
           
           <category> 接口 </category>
           
@@ -458,9 +458,9 @@
           
           <category> Spring </category>
           
-          <category> BUG </category>
-          
           <category> SpringBoot </category>
+          
+          <category> BUG </category>
           
           <category> 警告 </category>
           
@@ -524,9 +524,9 @@
           
           <category> Spring </category>
           
-          <category> BUG </category>
-          
           <category> SpringBoot </category>
+          
+          <category> BUG </category>
           
           <category> Redis </category>
           
@@ -615,9 +615,9 @@
           
           <category> Web </category>
           
-          <category> Ajax </category>
-          
           <category> BUG </category>
+          
+          <category> Ajax </category>
           
           <category> 跨域 </category>
           
