@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="jieba“结巴”中文分词：做最好的 Python 中文分词组件 “Jieba” (Chinese for “to stutter”) Chinese text segmentation: built to be the best Python Chinese word segmentation module.  Scroll down for English documentation.  特点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jieba 中文分词使用教程">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;2019&#x2F;08&#x2F;02&#x2F;jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&#x2F;index.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="jieba“结巴”中文分词：做最好的 Python 中文分词组件 “Jieba” (Chinese for “to stutter”) Chinese text segmentation: built to be the best Python Chinese word segmentation module.  Scroll down for English documentation.  特点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-02T08:20:58.000Z">
+<meta property="article:modified_time" content="2019-12-20T07:19:03.273Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="jieba分词">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>jieba 中文分词使用教程</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/08/15/JMeter-%E6%B5%8B%E8%AF%95%E5%B8%B8%E7%94%A8%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8A%9F%E8%83%BD/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/07/20/spring-validation%E6%A0%A1%E9%AA%8C%E5%AF%B9%E8%B1%A1%E5%A4%9A%E4%B8%AA%E5%AD%97%E6%AE%B5%E8%BF%94%E5%9B%9E%E7%9A%84%E6%B6%88%E6%81%AF%E5%86%85%E5%AE%B9%E9%A1%BA%E5%BA%8F%E9%9A%8F%E6%9C%BA%E9%97%AE%E9%A2%98/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&text=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&is_video=false&description=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=jieba 中文分词使用教程&body=Check out this article: https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&name=jieba 中文分词使用教程&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&t=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jieba"><span class="toc-number">1.</span> <span class="toc-text">jieba</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特点"><span class="toc-number">2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#友情链接"><span class="toc-number">3.</span> <span class="toc-text">友情链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装说明"><span class="toc-number">4.</span> <span class="toc-text">安装说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#算法"><span class="toc-number">5.</span> <span class="toc-text">算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#主要功能"><span class="toc-number">6.</span> <span class="toc-text">主要功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#载入词典"><span class="toc-number">6.0.1.</span> <span class="toc-text">载入词典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调整词典"><span class="toc-number">6.0.2.</span> <span class="toc-text">调整词典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于-TF-IDF-算法的关键词抽取"><span class="toc-number">6.0.3.</span> <span class="toc-text">基于 TF-IDF 算法的关键词抽取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于-TextRank-算法的关键词抽取"><span class="toc-number">6.0.4.</span> <span class="toc-text">基于 TextRank 算法的关键词抽取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本思想"><span class="toc-number">6.0.4.1.</span> <span class="toc-text">基本思想:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用示例"><span class="toc-number">6.0.4.2.</span> <span class="toc-text">使用示例:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延迟加载机制"><span class="toc-number">6.1.</span> <span class="toc-text">延迟加载机制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他词典"><span class="toc-number">7.</span> <span class="toc-text">其他词典</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他语言实现"><span class="toc-number">8.</span> <span class="toc-text">其他语言实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Java-版本"><span class="toc-number">8.1.</span> <span class="toc-text">结巴分词 Java 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-C-版本"><span class="toc-number">8.2.</span> <span class="toc-text">结巴分词 C++ 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Rust-版本"><span class="toc-number">8.3.</span> <span class="toc-text">结巴分词 Rust 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Node-js-版本"><span class="toc-number">8.4.</span> <span class="toc-text">结巴分词 Node.js 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Erlang-版本"><span class="toc-number">8.5.</span> <span class="toc-text">结巴分词 Erlang 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-R-版本"><span class="toc-number">8.6.</span> <span class="toc-text">结巴分词 R 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-iOS-版本"><span class="toc-number">8.7.</span> <span class="toc-text">结巴分词 iOS 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-PHP-版本"><span class="toc-number">8.8.</span> <span class="toc-text">结巴分词 PHP 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-NET-C-版本"><span class="toc-number">8.9.</span> <span class="toc-text">结巴分词 .NET(C#) 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Go-版本"><span class="toc-number">8.10.</span> <span class="toc-text">结巴分词 Go 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词Android版本"><span class="toc-number">8.11.</span> <span class="toc-text">结巴分词Android版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#系统集成"><span class="toc-number">9.</span> <span class="toc-text">系统集成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分词速度"><span class="toc-number">10.</span> <span class="toc-text">分词速度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见问题"><span class="toc-number">11.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-模型的数据是如何生成的？"><span class="toc-number">11.1.</span> <span class="toc-text">1. 模型的数据是如何生成的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-“台中”总是被切成“台-中”？（以及类似情况）"><span class="toc-number">11.2.</span> <span class="toc-text">2. “台中”总是被切成“台 中”？（以及类似情况）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-“今天天气-不错”应该被切成“今天-天气-不错”？（以及类似情况）"><span class="toc-number">11.3.</span> <span class="toc-text">3. “今天天气 不错”应该被切成“今天 天气 不错”？（以及类似情况）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-切出了词典中没有的词语，效果不理想？"><span class="toc-number">11.4.</span> <span class="toc-text">4. 切出了词典中没有的词语，效果不理想？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修订历史"><span class="toc-number">12.</span> <span class="toc-text">修订历史</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        jieba 中文分词使用教程
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-08-02T08:20:58.000Z" itemprop="datePublished">2019-08-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Python/">Python</a> › <a class="category-link" href="/categories/Python/Jieba/">Jieba</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/jieba%E5%88%86%E8%AF%8D/" rel="tag">jieba分词</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="jieba"><a href="#jieba" class="headerlink" title="jieba"></a>jieba</h1><p>“结巴”中文分词：做最好的 Python 中文分词组件</p>
+<p>“Jieba” (Chinese for “to stutter”) Chinese text segmentation: built to be the best Python Chinese word segmentation module.</p>
+<ul>
+<li><em>Scroll down for English documentation.</em></li>
+</ul>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
+<li><p>支持三种分词模式：</p>
+<ul>
+<li>精确模式，试图将句子最精确地切开，适合文本分析；</li>
+<li>全模式，把句子中所有的可以成词的词语都扫描出来, 速度非常快，但是不能解决歧义；</li>
+<li>搜索引擎模式，在精确模式的基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词。</li>
+</ul>
+</li>
+<li><p>支持繁体分词</p>
+</li>
+<li><p>支持自定义词典</p>
+</li>
+<li><p>MIT 授权协议</p>
+</li>
+</ul>
+<h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><ul>
+<li><a href="https://github.com/baidu/lac" target="_blank" rel="noopener">https://github.com/baidu/lac</a>   百度中文词法分析（分词+词性+专名）系统</li>
+<li><a href="https://github.com/baidu/AnyQ" target="_blank" rel="noopener">https://github.com/baidu/AnyQ</a>  百度FAQ自动问答系统</li>
+<li><a href="https://github.com/baidu/Senta" target="_blank" rel="noopener">https://github.com/baidu/Senta</a> 百度情感识别系统</li>
+</ul>
+<h1 id="安装说明"><a href="#安装说明" class="headerlink" title="安装说明"></a>安装说明</h1><p>代码对 Python 2/3 均兼容</p>
+<ul>
+<li>全自动安装：<code>easy_install jieba</code> 或者 <code>pip install jieba</code> / <code>pip3 install jieba</code></li>
+<li>半自动安装：先下载 <a href="http://pypi.python.org/pypi/jieba/" target="_blank" rel="noopener">http://pypi.python.org/pypi/jieba/</a> ，解压后运行 <code>python setup.py install</code></li>
+<li>手动安装：将 jieba 目录放置于当前目录或者 site-packages 目录</li>
+<li>通过 <code>import jieba</code> 来引用</li>
+</ul>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><ul>
+<li>基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)</li>
+<li>采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合</li>
+<li>对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法</li>
+</ul>
+<h1 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h1><ol>
+<li>分词</li>
+</ol>
+<hr>
+<ul>
+<li><code>jieba.cut</code> 方法接受三个输入参数: 需要分词的字符串；cut_all 参数用来控制是否采用全模式；HMM 参数用来控制是否使用 HMM 模型</li>
+<li><code>jieba.cut_for_search</code> 方法接受两个参数：需要分词的字符串；是否使用 HMM 模型。该方法适合用于搜索引擎构建倒排索引的分词，粒度比较细</li>
+<li>待分词的字符串可以是 unicode 或 UTF-8 字符串、GBK 字符串。注意：不建议直接输入 GBK 字符串，可能无法预料地错误解码成 UTF-8</li>
+<li><code>jieba.cut</code> 以及 <code>jieba.cut_for_search</code> 返回的结构都是一个可迭代的 generator，可以使用 for 循环来获得分词后得到的每一个词语(unicode)，或者用</li>
+<li><code>jieba.lcut</code> 以及 <code>jieba.lcut_for_search</code> 直接返回 list</li>
+<li><code>jieba.Tokenizer(dictionary=DEFAULT_DICT)</code> 新建自定义分词器，可用于同时使用不同词典。<code>jieba.dt</code> 为默认分词器，所有全局分词相关函数都是该分词器的映射。</li>
+</ul>
+<p>代码示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"></span><br><span class="line">seg_list = jieba.cut(<span class="string">"我来到北京清华大学"</span>, cut_all=<span class="literal">True</span>)</span><br><span class="line">print(<span class="string">"Full Mode: "</span> + <span class="string">"/ "</span>.join(seg_list))  <span class="comment"># 全模式</span></span><br><span class="line"></span><br><span class="line">seg_list = jieba.cut(<span class="string">"我来到北京清华大学"</span>, cut_all=<span class="literal">False</span>)</span><br><span class="line">print(<span class="string">"Default Mode: "</span> + <span class="string">"/ "</span>.join(seg_list))  <span class="comment"># 精确模式</span></span><br><span class="line"></span><br><span class="line">seg_list = jieba.cut(<span class="string">"他来到了网易杭研大厦"</span>)  <span class="comment"># 默认是精确模式</span></span><br><span class="line">print(<span class="string">", "</span>.join(seg_list))</span><br><span class="line"></span><br><span class="line">seg_list = jieba.cut_for_search(<span class="string">"小明硕士毕业于中国科学院计算所，后在日本京都大学深造"</span>)  <span class="comment"># 搜索引擎模式</span></span><br><span class="line">print(<span class="string">", "</span>.join(seg_list))</span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<pre><code>【全模式】: 我/ 来到/ 北京/ 清华/ 清华大学/ 华大/ 大学
+
+【精确模式】: 我/ 来到/ 北京/ 清华大学
+
+【新词识别】：他, 来到, 了, 网易, 杭研, 大厦    (此处，“杭研”并没有在词典中，但是也被Viterbi算法识别出来了)
+
+【搜索引擎模式】： 小明, 硕士, 毕业, 于, 中国, 科学, 学院, 科学院, 中国科学院, 计算, 计算所, 后, 在, 日本, 京都, 大学, 日本京都大学, 深造</code></pre><ol start="2">
+<li>添加自定义词典</li>
+</ol>
+<hr>
+<h3 id="载入词典"><a href="#载入词典" class="headerlink" title="载入词典"></a>载入词典</h3><ul>
+<li>开发者可以指定自己自定义的词典，以便包含 jieba 词库里没有的词。虽然 jieba 有新词识别能力，但是自行添加新词可以保证更高的正确率</li>
+<li>用法： jieba.load_userdict(file_name) # file_name 为文件类对象或自定义词典的路径</li>
+<li>词典格式和 <code>dict.txt</code> 一样，一个词占一行；每一行分三部分：词语、词频（可省略）、词性（可省略），用空格隔开，顺序不可颠倒。<code>file_name</code> 若为路径或二进制方式打开的文件，则文件必须为 UTF-8 编码。</li>
+<li>词频省略时使用自动计算的能保证分出该词的词频。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">创新办 3 i</span><br><span class="line">云计算 5</span><br><span class="line">凱特琳 nz</span><br><span class="line">台中</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>更改分词器（默认为 <code>jieba.dt</code>）的 <code>tmp_dir</code> 和 <code>cache_file</code> 属性，可分别指定缓存文件所在的文件夹及其文件名，用于受限的文件系统。</p>
+</li>
+<li><p>范例：</p>
+<ul>
+<li><p>自定义词典：<a href="https://github.com/fxsjy/jieba/blob/master/test/userdict.txt" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/userdict.txt</a></p>
+</li>
+<li><p>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>* 之前： 李小福 / 是 / 创新 / 办 / 主任 / 也 / 是 / 云 / 计算 / 方面 / 的 / 专家 /
+
+* 加载自定义词库后：　李小福 / 是 / 创新办 / 主任 / 也 / 是 / 云计算 / 方面 / 的 / 专家 /</code></pre><h3 id="调整词典"><a href="#调整词典" class="headerlink" title="调整词典"></a>调整词典</h3><ul>
+<li><p>使用 <code>add_word(word, freq=None, tag=None)</code> 和 <code>del_word(word)</code> 可在程序中动态修改词典。</p>
+</li>
+<li><p>使用 <code>suggest_freq(segment, tune=True)</code> 可调节单个词语的词频，使其能（或不能）被分出来。</p>
+</li>
+<li><p>注意：自动计算的词频在使用 HMM 新词发现功能时可能无效。</p>
+</li>
+</ul>
+<p>代码示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print(&#39;&#x2F;&#39;.join(jieba.cut(&#39;如果放到post中将出错。&#39;, HMM&#x3D;False)))</span><br><span class="line">如果&#x2F;放到&#x2F;post&#x2F;中将&#x2F;出错&#x2F;。</span><br><span class="line">&gt;&gt;&gt; jieba.suggest_freq((&#39;中&#39;, &#39;将&#39;), True)</span><br><span class="line">494</span><br><span class="line">&gt;&gt;&gt; print(&#39;&#x2F;&#39;.join(jieba.cut(&#39;如果放到post中将出错。&#39;, HMM&#x3D;False)))</span><br><span class="line">如果&#x2F;放到&#x2F;post&#x2F;中&#x2F;将&#x2F;出错&#x2F;。</span><br><span class="line">&gt;&gt;&gt; print(&#39;&#x2F;&#39;.join(jieba.cut(&#39;「台中」正确应该不会被切开&#39;, HMM&#x3D;False)))</span><br><span class="line">「&#x2F;台&#x2F;中&#x2F;」&#x2F;正确&#x2F;应该&#x2F;不会&#x2F;被&#x2F;切开</span><br><span class="line">&gt;&gt;&gt; jieba.suggest_freq(&#39;台中&#39;, True)</span><br><span class="line">69</span><br><span class="line">&gt;&gt;&gt; print(&#39;&#x2F;&#39;.join(jieba.cut(&#39;「台中」正确应该不会被切开&#39;, HMM&#x3D;False)))</span><br><span class="line">「&#x2F;台中&#x2F;」&#x2F;正确&#x2F;应该&#x2F;不会&#x2F;被&#x2F;切开</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>“通过用户自定义词典来增强歧义纠错能力” — <a href="https://github.com/fxsjy/jieba/issues/14" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/issues/14</a></li>
+</ul>
+<ol start="3">
+<li>关键词提取</li>
+</ol>
+<hr>
+<h3 id="基于-TF-IDF-算法的关键词抽取"><a href="#基于-TF-IDF-算法的关键词抽取" class="headerlink" title="基于 TF-IDF 算法的关键词抽取"></a>基于 TF-IDF 算法的关键词抽取</h3><p><code>import jieba.analyse</code></p>
+<ul>
+<li>jieba.analyse.extract_tags(sentence, topK=20, withWeight=False, allowPOS=())<ul>
+<li>sentence 为待提取的文本</li>
+<li>topK 为返回几个 TF/IDF 权重最大的关键词，默认值为 20</li>
+<li>withWeight 为是否一并返回关键词权重值，默认值为 False</li>
+<li>allowPOS 仅包括指定词性的词，默认值为空，即不筛选</li>
+</ul>
+</li>
+<li>jieba.analyse.TFIDF(idf_path=None) 新建 TFIDF 实例，idf_path 为 IDF 频率文件</li>
+</ul>
+<p>代码示例 （关键词提取）</p>
+<p><a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/extract_tags.py</a></p>
+<p>关键词提取所使用逆向文件频率（IDF）文本语料库可以切换成自定义语料库的路径</p>
+<ul>
+<li>用法： jieba.analyse.set_idf_path(file_name) # file_name为自定义语料库的路径</li>
+<li>自定义语料库示例：<a href="https://github.com/fxsjy/jieba/blob/master/extra_dict/idf.txt.big" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/extra_dict/idf.txt.big</a></li>
+<li>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_idfpath.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_idfpath.py</a></li>
+</ul>
+<p>关键词提取所使用停止词（Stop Words）文本语料库可以切换成自定义语料库的路径</p>
+<ul>
+<li>用法： jieba.analyse.set_stop_words(file_name) # file_name为自定义语料库的路径</li>
+<li>自定义语料库示例：<a href="https://github.com/fxsjy/jieba/blob/master/extra_dict/stop_words.txt" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/extra_dict/stop_words.txt</a></li>
+<li>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_stop_words.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_stop_words.py</a></li>
+</ul>
+<p>关键词一并返回关键词权重值示例</p>
+<ul>
+<li>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_with_weight.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_with_weight.py</a></li>
+</ul>
+<h3 id="基于-TextRank-算法的关键词抽取"><a href="#基于-TextRank-算法的关键词抽取" class="headerlink" title="基于 TextRank 算法的关键词抽取"></a>基于 TextRank 算法的关键词抽取</h3><ul>
+<li>jieba.analyse.textrank(sentence, topK=20, withWeight=False, allowPOS=(‘ns’, ‘n’, ‘vn’, ‘v’)) 直接使用，接口相同，注意默认过滤词性。</li>
+<li>jieba.analyse.TextRank() 新建自定义 TextRank 实例</li>
+</ul>
+<p>算法论文： <a href="http://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf" target="_blank" rel="noopener">TextRank: Bringing Order into Texts</a></p>
+<h4 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想:"></a>基本思想:</h4><ol>
+<li>将待抽取关键词的文本进行分词</li>
+<li>以固定窗口大小(默认为5，通过span属性调整)，词之间的共现关系，构建图</li>
+<li>计算图中节点的PageRank，注意是无向带权图</li>
+</ol>
+<h4 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例:"></a>使用示例:</h4><p>见 <a href="https://github.com/fxsjy/jieba/blob/master/test/demo.py" target="_blank" rel="noopener">test/demo.py</a></p>
+<ol start="4">
+<li>词性标注</li>
+</ol>
+<hr>
+<ul>
+<li><code>jieba.posseg.POSTokenizer(tokenizer=None)</code> 新建自定义分词器，<code>tokenizer</code> 参数可指定内部使用的 <code>jieba.Tokenizer</code> 分词器。<code>jieba.posseg.dt</code> 为默认词性标注分词器。</li>
+<li>标注句子分词后每个词的词性，采用和 ictclas 兼容的标记法。</li>
+<li>用法示例</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import jieba.posseg as pseg</span><br><span class="line">&gt;&gt;&gt; words &#x3D; pseg.cut(&quot;我爱北京天安门&quot;)</span><br><span class="line">&gt;&gt;&gt; for word, flag in words:</span><br><span class="line">...    print(&#39;%s %s&#39; % (word, flag))</span><br><span class="line">...</span><br><span class="line">我 r</span><br><span class="line">爱 v</span><br><span class="line">北京 ns</span><br><span class="line">天安门 ns</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>并行分词</li>
+</ol>
+<hr>
+<ul>
+<li><p>原理：将目标文本按行分隔后，把各行文本分配到多个 Python 进程并行分词，然后归并结果，从而获得分词速度的可观提升</p>
+</li>
+<li><p>基于 python 自带的 multiprocessing 模块，目前暂不支持 Windows</p>
+</li>
+<li><p>用法：</p>
+<ul>
+<li><code>jieba.enable_parallel(4)</code> # 开启并行分词模式，参数为并行进程数</li>
+<li><code>jieba.disable_parallel()</code> # 关闭并行分词模式</li>
+</ul>
+</li>
+<li><p>例子：<a href="https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py</a></p>
+</li>
+<li><p>实验结果：在 4 核 3.4GHz Linux 机器上，对金庸全集进行精确分词，获得了 1MB/s 的速度，是单进程版的 3.3 倍。</p>
+</li>
+<li><p><strong>注意</strong>：并行分词仅支持默认分词器 <code>jieba.dt</code> 和 <code>jieba.posseg.dt</code>。</p>
+</li>
+</ul>
+<ol start="6">
+<li>Tokenize：返回词语在原文的起止位置</li>
+</ol>
+<hr>
+<ul>
+<li>注意，输入参数只接受 unicode</li>
+<li>默认模式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = jieba.tokenize(<span class="string">u'永和服装饰品有限公司'</span>)</span><br><span class="line"><span class="keyword">for</span> tk <span class="keyword">in</span> result:</span><br><span class="line">    print(<span class="string">"word %s\t\t start: %d \t\t end:%d"</span> % (tk[<span class="number">0</span>],tk[<span class="number">1</span>],tk[<span class="number">2</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">word 永和                start: 0                end:2</span><br><span class="line">word 服装                start: 2                end:4</span><br><span class="line">word 饰品                start: 4                end:6</span><br><span class="line">word 有限公司            start: 6                end:10</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>搜索模式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = jieba.tokenize(<span class="string">u'永和服装饰品有限公司'</span>, mode=<span class="string">'search'</span>)</span><br><span class="line"><span class="keyword">for</span> tk <span class="keyword">in</span> result:</span><br><span class="line">    print(<span class="string">"word %s\t\t start: %d \t\t end:%d"</span> % (tk[<span class="number">0</span>],tk[<span class="number">1</span>],tk[<span class="number">2</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">word 永和                start: 0                end:2</span><br><span class="line">word 服装                start: 2                end:4</span><br><span class="line">word 饰品                start: 4                end:6</span><br><span class="line">word 有限                start: 6                end:8</span><br><span class="line">word 公司                start: 8                end:10</span><br><span class="line">word 有限公司            start: 6                end:10</span><br></pre></td></tr></table></figure>
+
+
+<ol start="7">
+<li>ChineseAnalyzer for Whoosh 搜索引擎</li>
+</ol>
+<hr>
+<ul>
+<li>引用： <code>from jieba.analyse import ChineseAnalyzer</code></li>
+<li>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py</a></li>
+</ul>
+<ol start="8">
+<li>命令行分词</li>
+</ol>
+<hr>
+<p>使用示例：<code>python -m jieba news.txt &gt; cut_result.txt</code></p>
+<p>命令行选项（翻译）：</p>
+<pre><code>使用: python -m jieba [options] filename
+
+结巴命令行界面。
+
+固定参数:
+  filename              输入文件
+
+可选参数:
+  -h, --help            显示此帮助信息并退出
+  -d [DELIM], --delimiter [DELIM]
+                        使用 DELIM 分隔词语，而不是用默认的&apos; / &apos;。
+                        若不指定 DELIM，则使用一个空格分隔。
+  -p [DELIM], --pos [DELIM]
+                        启用词性标注；如果指定 DELIM，词语和词性之间
+                        用它分隔，否则用 _ 分隔
+  -D DICT, --dict DICT  使用 DICT 代替默认词典
+  -u USER_DICT, --user-dict USER_DICT
+                        使用 USER_DICT 作为附加词典，与默认词典或自定义词典配合使用
+  -a, --cut-all         全模式分词（不支持词性标注）
+  -n, --no-hmm          不使用隐含马尔可夫模型
+  -q, --quiet           不输出载入信息到 STDERR
+  -V, --version         显示版本信息并退出
+
+如果没有指定文件名，则使用标准输入。</code></pre><p><code>--help</code> 选项输出：</p>
+<pre><code>$&gt; python -m jieba --help
+Jieba command line interface.
+
+positional arguments:
+  filename              input file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d [DELIM], --delimiter [DELIM]
+                        use DELIM instead of &apos; / &apos; for word delimiter; or a
+                        space if it is used without DELIM
+  -p [DELIM], --pos [DELIM]
+                        enable POS tagging; if DELIM is specified, use DELIM
+                        instead of &apos;_&apos; for POS delimiter
+  -D DICT, --dict DICT  use DICT as dictionary
+  -u USER_DICT, --user-dict USER_DICT
+                        use USER_DICT together with the default dictionary or
+                        DICT (if specified)
+  -a, --cut-all         full pattern cutting (ignored with POS tagging)
+  -n, --no-hmm          don&apos;t use the Hidden Markov Model
+  -q, --quiet           don&apos;t print loading messages to stderr
+  -V, --version         show program&apos;s version number and exit
+
+If no filename specified, use STDIN instead.</code></pre><h2 id="延迟加载机制"><a href="#延迟加载机制" class="headerlink" title="延迟加载机制"></a>延迟加载机制</h2><p>jieba 采用延迟加载，<code>import jieba</code> 和 <code>jieba.Tokenizer()</code> 不会立即触发词典的加载，一旦有必要才开始加载词典构建前缀字典。如果你想手工初始 jieba，也可以手动初始化。</p>
+<pre><code>import jieba
+jieba.initialize()  # 手动初始化（可选）</code></pre><p>在 0.28 之前的版本是不能指定主词典的路径的，有了延迟加载机制后，你可以改变主词典的路径:</p>
+<pre><code>jieba.set_dictionary(&apos;data/dict.txt.big&apos;)</code></pre><p>例子： <a href="https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py</a></p>
+<h1 id="其他词典"><a href="#其他词典" class="headerlink" title="其他词典"></a>其他词典</h1><ol>
+<li><p>占用内存较小的词典文件<br><a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small</a></p>
+</li>
+<li><p>支持繁体分词更好的词典文件<br><a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big</a></p>
+</li>
+</ol>
+<p>下载你所需要的词典，然后覆盖 jieba/dict.txt 即可；或者用 <code>jieba.set_dictionary(&#39;data/dict.txt.big&#39;)</code></p>
+<h1 id="其他语言实现"><a href="#其他语言实现" class="headerlink" title="其他语言实现"></a>其他语言实现</h1><h2 id="结巴分词-Java-版本"><a href="#结巴分词-Java-版本" class="headerlink" title="结巴分词 Java 版本"></a>结巴分词 Java 版本</h2><p>作者：piaolingxue<br>地址：<a href="https://github.com/huaban/jieba-analysis" target="_blank" rel="noopener">https://github.com/huaban/jieba-analysis</a></p>
+<h2 id="结巴分词-C-版本"><a href="#结巴分词-C-版本" class="headerlink" title="结巴分词 C++ 版本"></a>结巴分词 C++ 版本</h2><p>作者：yanyiwu<br>地址：<a href="https://github.com/yanyiwu/cppjieba" target="_blank" rel="noopener">https://github.com/yanyiwu/cppjieba</a></p>
+<h2 id="结巴分词-Rust-版本"><a href="#结巴分词-Rust-版本" class="headerlink" title="结巴分词 Rust 版本"></a>结巴分词 Rust 版本</h2><p>作者：messense, MnO2<br>地址：<a href="https://github.com/messense/jieba-rs" target="_blank" rel="noopener">https://github.com/messense/jieba-rs</a></p>
+<h2 id="结巴分词-Node-js-版本"><a href="#结巴分词-Node-js-版本" class="headerlink" title="结巴分词 Node.js 版本"></a>结巴分词 Node.js 版本</h2><p>作者：yanyiwu<br>地址：<a href="https://github.com/yanyiwu/nodejieba" target="_blank" rel="noopener">https://github.com/yanyiwu/nodejieba</a></p>
+<h2 id="结巴分词-Erlang-版本"><a href="#结巴分词-Erlang-版本" class="headerlink" title="结巴分词 Erlang 版本"></a>结巴分词 Erlang 版本</h2><p>作者：falood<br>地址：<a href="https://github.com/falood/exjieba" target="_blank" rel="noopener">https://github.com/falood/exjieba</a></p>
+<h2 id="结巴分词-R-版本"><a href="#结巴分词-R-版本" class="headerlink" title="结巴分词 R 版本"></a>结巴分词 R 版本</h2><p>作者：qinwf<br>地址：<a href="https://github.com/qinwf/jiebaR" target="_blank" rel="noopener">https://github.com/qinwf/jiebaR</a></p>
+<h2 id="结巴分词-iOS-版本"><a href="#结巴分词-iOS-版本" class="headerlink" title="结巴分词 iOS 版本"></a>结巴分词 iOS 版本</h2><p>作者：yanyiwu<br>地址：<a href="https://github.com/yanyiwu/iosjieba" target="_blank" rel="noopener">https://github.com/yanyiwu/iosjieba</a></p>
+<h2 id="结巴分词-PHP-版本"><a href="#结巴分词-PHP-版本" class="headerlink" title="结巴分词 PHP 版本"></a>结巴分词 PHP 版本</h2><p>作者：fukuball<br>地址：<a href="https://github.com/fukuball/jieba-php" target="_blank" rel="noopener">https://github.com/fukuball/jieba-php</a></p>
+<h2 id="结巴分词-NET-C-版本"><a href="#结巴分词-NET-C-版本" class="headerlink" title="结巴分词 .NET(C#) 版本"></a>结巴分词 .NET(C#) 版本</h2><p>作者：anderscui<br>地址：<a href="https://github.com/anderscui/jieba.NET/" target="_blank" rel="noopener">https://github.com/anderscui/jieba.NET/</a></p>
+<h2 id="结巴分词-Go-版本"><a href="#结巴分词-Go-版本" class="headerlink" title="结巴分词 Go 版本"></a>结巴分词 Go 版本</h2><ul>
+<li>作者: wangbin 地址: <a href="https://github.com/wangbin/jiebago" target="_blank" rel="noopener">https://github.com/wangbin/jiebago</a></li>
+<li>作者: yanyiwu 地址: <a href="https://github.com/yanyiwu/gojieba" target="_blank" rel="noopener">https://github.com/yanyiwu/gojieba</a></li>
+</ul>
+<h2 id="结巴分词Android版本"><a href="#结巴分词Android版本" class="headerlink" title="结巴分词Android版本"></a>结巴分词Android版本</h2><ul>
+<li>作者   Dongliang.W  地址：<a href="https://github.com/452896915/jieba-android" target="_blank" rel="noopener">https://github.com/452896915/jieba-android</a></li>
+</ul>
+<h1 id="系统集成"><a href="#系统集成" class="headerlink" title="系统集成"></a>系统集成</h1><ol>
+<li>Solr: <a href="https://github.com/sing1ee/jieba-solr" target="_blank" rel="noopener">https://github.com/sing1ee/jieba-solr</a></li>
+</ol>
+<h1 id="分词速度"><a href="#分词速度" class="headerlink" title="分词速度"></a>分词速度</h1><ul>
+<li>1.5 MB / Second in Full Mode</li>
+<li>400 KB / Second in Default Mode</li>
+<li>测试环境: Intel(R) Core(TM) i7-2600 CPU @ 3.4GHz；《围城》.txt</li>
+</ul>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="1-模型的数据是如何生成的？"><a href="#1-模型的数据是如何生成的？" class="headerlink" title="1. 模型的数据是如何生成的？"></a>1. 模型的数据是如何生成的？</h2><p>详见： <a href="https://github.com/fxsjy/jieba/issues/7" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/issues/7</a></p>
+<h2 id="2-“台中”总是被切成“台-中”？（以及类似情况）"><a href="#2-“台中”总是被切成“台-中”？（以及类似情况）" class="headerlink" title="2. “台中”总是被切成“台 中”？（以及类似情况）"></a>2. “台中”总是被切成“台 中”？（以及类似情况）</h2><p>P(台中) ＜ P(台)×P(中)，“台中”词频不够导致其成词概率较低</p>
+<p>解决方法：强制调高词频</p>
+<p><code>jieba.add_word(&#39;台中&#39;)</code> 或者 <code>jieba.suggest_freq(&#39;台中&#39;, True)</code></p>
+<h2 id="3-“今天天气-不错”应该被切成“今天-天气-不错”？（以及类似情况）"><a href="#3-“今天天气-不错”应该被切成“今天-天气-不错”？（以及类似情况）" class="headerlink" title="3. “今天天气 不错”应该被切成“今天 天气 不错”？（以及类似情况）"></a>3. “今天天气 不错”应该被切成“今天 天气 不错”？（以及类似情况）</h2><p>解决方法：强制调低词频</p>
+<p><code>jieba.suggest_freq((&#39;今天&#39;, &#39;天气&#39;), True)</code></p>
+<p>或者直接删除该词 <code>jieba.del_word(&#39;今天天气&#39;)</code></p>
+<h2 id="4-切出了词典中没有的词语，效果不理想？"><a href="#4-切出了词典中没有的词语，效果不理想？" class="headerlink" title="4. 切出了词典中没有的词语，效果不理想？"></a>4. 切出了词典中没有的词语，效果不理想？</h2><p>解决方法：关闭新词发现</p>
+<p><code>jieba.cut(&#39;丰田太省了&#39;, HMM=False)</code><br><code>jieba.cut(&#39;我们中出了一个叛徒&#39;, HMM=False)</code></p>
+<p><strong>更多问题请点击</strong>：<a href="https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed</a></p>
+<h1 id="修订历史"><a href="#修订历史" class="headerlink" title="修订历史"></a>修订历史</h1><p><a href="https://github.com/fxsjy/jieba/blob/master/Changelog" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/Changelog</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jieba"><span class="toc-number">1.</span> <span class="toc-text">jieba</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特点"><span class="toc-number">2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#友情链接"><span class="toc-number">3.</span> <span class="toc-text">友情链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装说明"><span class="toc-number">4.</span> <span class="toc-text">安装说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#算法"><span class="toc-number">5.</span> <span class="toc-text">算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#主要功能"><span class="toc-number">6.</span> <span class="toc-text">主要功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#载入词典"><span class="toc-number">6.0.1.</span> <span class="toc-text">载入词典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调整词典"><span class="toc-number">6.0.2.</span> <span class="toc-text">调整词典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于-TF-IDF-算法的关键词抽取"><span class="toc-number">6.0.3.</span> <span class="toc-text">基于 TF-IDF 算法的关键词抽取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于-TextRank-算法的关键词抽取"><span class="toc-number">6.0.4.</span> <span class="toc-text">基于 TextRank 算法的关键词抽取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本思想"><span class="toc-number">6.0.4.1.</span> <span class="toc-text">基本思想:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用示例"><span class="toc-number">6.0.4.2.</span> <span class="toc-text">使用示例:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延迟加载机制"><span class="toc-number">6.1.</span> <span class="toc-text">延迟加载机制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他词典"><span class="toc-number">7.</span> <span class="toc-text">其他词典</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他语言实现"><span class="toc-number">8.</span> <span class="toc-text">其他语言实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Java-版本"><span class="toc-number">8.1.</span> <span class="toc-text">结巴分词 Java 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-C-版本"><span class="toc-number">8.2.</span> <span class="toc-text">结巴分词 C++ 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Rust-版本"><span class="toc-number">8.3.</span> <span class="toc-text">结巴分词 Rust 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Node-js-版本"><span class="toc-number">8.4.</span> <span class="toc-text">结巴分词 Node.js 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Erlang-版本"><span class="toc-number">8.5.</span> <span class="toc-text">结巴分词 Erlang 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-R-版本"><span class="toc-number">8.6.</span> <span class="toc-text">结巴分词 R 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-iOS-版本"><span class="toc-number">8.7.</span> <span class="toc-text">结巴分词 iOS 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-PHP-版本"><span class="toc-number">8.8.</span> <span class="toc-text">结巴分词 PHP 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-NET-C-版本"><span class="toc-number">8.9.</span> <span class="toc-text">结巴分词 .NET(C#) 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词-Go-版本"><span class="toc-number">8.10.</span> <span class="toc-text">结巴分词 Go 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结巴分词Android版本"><span class="toc-number">8.11.</span> <span class="toc-text">结巴分词Android版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#系统集成"><span class="toc-number">9.</span> <span class="toc-text">系统集成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分词速度"><span class="toc-number">10.</span> <span class="toc-text">分词速度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见问题"><span class="toc-number">11.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-模型的数据是如何生成的？"><span class="toc-number">11.1.</span> <span class="toc-text">1. 模型的数据是如何生成的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-“台中”总是被切成“台-中”？（以及类似情况）"><span class="toc-number">11.2.</span> <span class="toc-text">2. “台中”总是被切成“台 中”？（以及类似情况）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-“今天天气-不错”应该被切成“今天-天气-不错”？（以及类似情况）"><span class="toc-number">11.3.</span> <span class="toc-text">3. “今天天气 不错”应该被切成“今天 天气 不错”？（以及类似情况）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-切出了词典中没有的词语，效果不理想？"><span class="toc-number">11.4.</span> <span class="toc-text">4. 切出了词典中没有的词语，效果不理想？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修订历史"><span class="toc-number">12.</span> <span class="toc-text">修订历史</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&text=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&is_video=false&description=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=jieba 中文分词使用教程&body=Check out this article: https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&title=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&name=jieba 中文分词使用教程&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/2019/08/02/jieba-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/&t=jieba 中文分词使用教程" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

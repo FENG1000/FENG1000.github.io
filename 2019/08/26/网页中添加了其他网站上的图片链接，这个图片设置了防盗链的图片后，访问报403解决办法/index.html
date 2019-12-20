@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="碰到的问题网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403 防盗链基本实现说明主要是通过验证referer中记录的接口请求来源来验证网站有没有权限访问该图片资源，如果没权限在则返回403无权限访问 分析经排查测试，发现一般大多数网站中图片的防盗链都是只屏蔽了不在白名单中的referer，但是没有屏蔽referer为空的请求   解决办法在网页的&lt;head&gt;标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;2019&#x2F;08&#x2F;26&#x2F;%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95&#x2F;index.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="碰到的问题网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403 防盗链基本实现说明主要是通过验证referer中记录的接口请求来源来验证网站有没有权限访问该图片资源，如果没权限在则返回403无权限访问 分析经排查测试，发现一般大多数网站中图片的防盗链都是只屏蔽了不在白名单中的referer，但是没有屏蔽referer为空的请求   解决办法在网页的&lt;head&gt;标">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;imgconvert.csdnimg.cn&#x2F;aHR0cHM6Ly9zMi5heDF4LmNvbS8yMDE5LzA4LzI2L21mOTVCZC5wbmc?x-oss-process&#x3D;image&#x2F;format,png">
+<meta property="article:published_time" content="2019-08-26T08:29:15.000Z">
+<meta property="article:modified_time" content="2019-12-20T07:23:35.840Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="防盗链">
+<meta property="article:tag" content="403">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;imgconvert.csdnimg.cn&#x2F;aHR0cHM6Ly9zMi5heDF4LmNvbS8yMDE5LzA4LzI2L21mOTVCZC5wbmc?x-oss-process&#x3D;image&#x2F;format,png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/08/31/Xpath%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/08/15/JMeter-%E6%B5%8B%E8%AF%95%E5%B8%B8%E7%94%A8%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8A%9F%E8%83%BD/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&text=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&is_video=false&description=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法&body=Check out this article: https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&name=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&t=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#碰到的问题"><span class="toc-number">1.</span> <span class="toc-text">碰到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#防盗链基本实现说明"><span class="toc-number">1.1.</span> <span class="toc-text">防盗链基本实现说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法"><span class="toc-number">1.3.</span> <span class="toc-text">解决办法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Referrer简介"><span class="toc-number">1.4.</span> <span class="toc-text">Referrer简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#作用"><span class="toc-number">1.4.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可设置的参数"><span class="toc-number">1.4.2.</span> <span class="toc-text">可设置的参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#了解Referrer详细内容可以参靠此篇博客"><span class="toc-number">1.4.3.</span> <span class="toc-text">了解Referrer详细内容可以参靠此篇博客</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-08-26T08:29:15.000Z" itemprop="datePublished">2019-08-26</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/BUG/">BUG</a> › <a class="category-link" href="/categories/Web/">Web</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/403/" rel="tag">403</a>, <a class="tag-link" href="/tags/%E9%98%B2%E7%9B%97%E9%93%BE/" rel="tag">防盗链</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h2><p>网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403</p>
+<h3 id="防盗链基本实现说明"><a href="#防盗链基本实现说明" class="headerlink" title="防盗链基本实现说明"></a>防盗链基本实现说明</h3><p>主要是通过验证<code>referer</code>中记录的接口请求来源来验证网站有没有权限访问该图片资源，如果没权限在则返回<code>403</code>无权限访问</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>经排查测试，发现一般大多数网站中图片的防盗链都是只屏蔽了不在白名单中的<code>referer</code>，但是没有屏蔽<code>referer</code>为空的请求  </p>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>在网页的<code>&lt;head&gt;</code>标签中添加<code>&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;/&gt;</code>，意思是设置从此页面发出的请求（包括请求图片等资源文件）不设置<code>referer</code>请求来源<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zMi5heDF4LmNvbS8yMDE5LzA4LzI2L21mOTVCZC5wbmc?x-oss-process=image/format,png" alt="mf95Bd.png"></p>
+<h3 id="Referrer简介"><a href="#Referrer简介" class="headerlink" title="Referrer简介"></a>Referrer简介</h3><p><code>Referrer</code>网站来路，访问者进入网站任何途径。<code>HTTP Referer</code>是<code>header</code>的一部分，当浏览器向web服务器发出请求的时候，一般会带上<code>Referer</code>,告诉服务器用户从那个页面连接过来的，服务器藉此可以获得一些信息用语处理。</p>
+<h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>判断网站来源,可以相应的做一些校验,比如只允许某网站的请求,那么就可以通过获取<code>referer</code>，加以判断即可。</p>
+<h4 id="可设置的参数"><a href="#可设置的参数" class="headerlink" title="可设置的参数"></a>可设置的参数</h4><table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">空字符串</td>
+<td align="left">按照浏览器的默认值执行。默认值为 <code>no-referrer-when-downgrade</code>。部分标签可重定义此安全策略</td>
+</tr>
+<tr>
+<td align="center"><code>no-referrer</code></td>
+<td align="left">不传递 <code>Referrer</code> 报头的值</td>
+</tr>
+<tr>
+<td align="center"><code>no-referrer-when-downgrade</code></td>
+<td align="left">当发生降级（比如从 <code>https://</code> 跳转到 <code>http://</code> ）时，不传递 <code>Referrer</code> 报头。但是反过来的话不受影响。通常也会当作浏览器的默认安全策略</td>
+</tr>
+<tr>
+<td align="center"><code>same-origin</code></td>
+<td align="left">同源，即当协议、域名和端口（如果有一方指定的话）都相同，才会传递 <code>Referrer</code></td>
+</tr>
+<tr>
+<td align="center"><code>origin</code></td>
+<td align="left">将当前页面过滤掉参数及路径部分，仅将协议、域名和端口（如果有的话）当作 <code>Referrer</code></td>
+</tr>
+<tr>
+<td align="center"><code>strict-origin</code></td>
+<td align="left">类似于 <code>origin</code>，但是不能降级。</td>
+</tr>
+<tr>
+<td align="center"><code>origin-when-cross-origin</code></td>
+<td align="left">跨域时（协议、域名和端口只有一个不同）和 <code>origin</code> 模式相同，否则 Referrer 还是传递当前页的全路径。</td>
+</tr>
+<tr>
+<td align="center"><code>strict-origin-when-cross-origin</code></td>
+<td align="left">与 <code>origin-when-cross-origin</code> 类似，但不能降级。</td>
+</tr>
+<tr>
+<td align="center"><code>unsafe-url</code></td>
+<td align="left">任意情况下，都发送当前页的全部地址到 <code>Referrer</code>，最宽松和不安全的策略。</td>
+</tr>
+</tbody></table>
+<h4 id="了解Referrer详细内容可以参靠此篇博客"><a href="#了解Referrer详细内容可以参靠此篇博客" class="headerlink" title="了解Referrer详细内容可以参靠此篇博客"></a>了解<code>Referrer</code>详细内容可以参靠<a href="https://blog.csdn.net/java_zhangshuai/article/details/81627365" target="_blank" rel="noopener">此篇博客</a></h4>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#碰到的问题"><span class="toc-number">1.</span> <span class="toc-text">碰到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#防盗链基本实现说明"><span class="toc-number">1.1.</span> <span class="toc-text">防盗链基本实现说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法"><span class="toc-number">1.3.</span> <span class="toc-text">解决办法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Referrer简介"><span class="toc-number">1.4.</span> <span class="toc-text">Referrer简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#作用"><span class="toc-number">1.4.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可设置的参数"><span class="toc-number">1.4.2.</span> <span class="toc-text">可设置的参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#了解Referrer详细内容可以参靠此篇博客"><span class="toc-number">1.4.3.</span> <span class="toc-text">了解Referrer详细内容可以参靠此篇博客</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&text=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&is_video=false&description=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法&body=Check out this article: https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&title=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&name=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/2019/08/26/%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%BA%86%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE%E4%BA%86%E9%98%B2%E7%9B%97%E9%93%BE%E7%9A%84%E5%9B%BE%E7%89%87%E5%90%8E%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%8A%A5403%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/&t=网页中添加了其他网站上的图片链接，这个图片设置了防盗链的图片后，访问报403解决办法" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
