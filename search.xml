@@ -104,9 +104,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> BUG </category>
+          
+          <category> SpringBoot </category>
           
           <category> 异常 </category>
           
@@ -458,9 +458,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> BUG </category>
+          
+          <category> SpringBoot </category>
           
           <category> 警告 </category>
           
@@ -524,9 +524,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> BUG </category>
+          
+          <category> SpringBoot </category>
           
           <category> Redis </category>
           
