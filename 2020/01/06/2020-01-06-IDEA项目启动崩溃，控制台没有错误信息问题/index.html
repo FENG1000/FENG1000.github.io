@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="idea中项目以线下环境启动，程序启动失败，项目无法访问，控制台打印部分日志如下 123456782020-01-06 19:35:55.170 | INFO  --- [RMI TCP Connection(3)-127.0.0.1] |      org.hibernate.validator.internal.util.Version :30   | HV000001: Hibernate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA项目启动崩溃，控制台没有错误信息问题">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;2020&#x2F;01&#x2F;06&#x2F;2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98&#x2F;index.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="idea中项目以线下环境启动，程序启动失败，项目无法访问，控制台打印部分日志如下 123456782020-01-06 19:35:55.170 | INFO  --- [RMI TCP Connection(3)-127.0.0.1] |      org.hibernate.validator.internal.util.Version :30   | HV000001: Hibernate">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;s2.ax1x.com&#x2F;2020&#x2F;01&#x2F;06&#x2F;lykCwV.png">
+<meta property="article:published_time" content="2020-01-06T11:32:03.000Z">
+<meta property="article:modified_time" content="2020-01-06T11:57:46.636Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="IllegalStateException">
+<meta property="article:tag" content="没有日志">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;s2.ax1x.com&#x2F;2020&#x2F;01&#x2F;06&#x2F;lykCwV.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>IDEA项目启动崩溃，控制台没有错误信息问题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/12/20/%E9%80%9A%E8%BF%87GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&text=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&is_video=false&description=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=IDEA项目启动崩溃，控制台没有错误信息问题&body=Check out this article: https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&name=IDEA项目启动崩溃，控制台没有错误信息问题&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&t=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        IDEA项目启动崩溃，控制台没有错误信息问题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-06T11:32:03.000Z" itemprop="datePublished">2020-01-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/BUG/">BUG</a> › <a class="category-link" href="/categories/BUG/%E5%BC%82%E5%B8%B8/">异常</a> › <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/Spring/">Spring</a> › <a class="category-link" href="/categories/idea/">idea</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/IllegalStateException/" rel="tag">IllegalStateException</a>, <a class="tag-link" href="/tags/%E6%B2%A1%E6%9C%89%E6%97%A5%E5%BF%97/" rel="tag">没有日志</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>idea中项目以线下环境启动，程序启动失败，项目无法访问，控制台打印部分日志如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2020-01-06 19:35:55.170 | INFO  --- [RMI TCP Connection(3)-127.0.0.1] |      org.hibernate.validator.internal.util.Version :30   | HV000001: Hibernate Validator 5.2.4.Final</span><br><span class="line">06-Jan-2020 19:35:57.481 SEVERE [RMI TCP Connection(3)-127.0.0.1] org.apache.catalina.core.StandardContext.startInternal One or more listeners failed to start. Full details will be found in the appropriate container log file</span><br><span class="line">06-Jan-2020 19:35:57.484 SEVERE [RMI TCP Connection(3)-127.0.0.1] org.apache.catalina.core.StandardContext.startInternal Context [] startup failed due to previous errors</span><br><span class="line">2020-01-06 19:35:57.478 | INFO  --- [RMI TCP Connection(3)-127.0.0.1] |      org.springframework.web.context.ContextLoader :345  | Root WebApplicationContext: initialization completed in 15109 ms</span><br><span class="line">2020-01-06 19:35:57.495 | INFO  --- [RMI TCP Connection(3)-127.0.0.1] |   o.s.web.context.support.XmlWebApplicationContext :982  | Closing Root WebApplicationContext: startup date [Mon Jan 06 19:35:42 CST 2020]; root of context hierarchy</span><br><span class="line">06-Jan-2020 19:35:57.546 WARNING [RMI TCP Connection(3)-127.0.0.1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [ROOT] registered the JDBC driver [net.sf.log4jdbc.DriverSpy] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.</span><br><span class="line">06-Jan-2020 19:35:57.546 WARNING [RMI TCP Connection(3)-127.0.0.1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [ROOT] registered the JDBC driver [com.mysql.jdbc.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.</span><br><span class="line">[2020-01-06 07:35:57,595] Artifact dudu-erp-admin:war exploded: Error during artifact deployment. See server log for details.</span><br></pre></td></tr></table></figure>
+
+
+<p>可以看到日志中并没有错误信息，只是报了一个数据库JDCB驱动相关的警告，期初以为是因为打开的软件太多，系统内存不够，然后关闭了很多软件再次尝试仍然是报这个信息，然后又尝试了一波玄学操作：<strong>重启电脑，删除项目中的<code>.idea</code>文件夹和<code>*.iml</code>文件后再重启项目</strong>，这种做法一般在idea出现bug的时候可以解决，但是在这里问题还是无法解决。</p>
+<p>在尝试了几种解决办法后仍然不能正常启动，就又从新从上往下看了遍日志，发先了两行藏在<code>info</code>日志中间的红色日志<br><img src="https://s2.ax1x.com/2020/01/06/lykCwV.png" alt="lykCwV.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">06-Jan-2020 19:35:57.481 SEVERE [RMI TCP Connection(3)-127.0.0.1] org.apache.catalina.core.StandardContext.startInternal One or more listeners failed to start. Full details will be found in the appropriate container log file</span><br><span class="line">06-Jan-2020 19:35:57.484 SEVERE [RMI TCP Connection(3)-127.0.0.1] org.apache.catalina.core.StandardContext.startInternal Context [] startup failed due to previous errors</span><br></pre></td></tr></table></figure>
+
+<p>到这里错误信息就稍微明了一些了，说是<strong>因为一个或多个侦听器无法启动导致的错误，详细日志需要查看容器日志文件。</strong>  看到这里就打开了Tomcat的<code>catalina.2020-01-06.log</code>和<code>localhost.2020-01-06.log</code> 进行查找，然后在<code>localhost*.log</code>日志中找到了错误信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">org.apache.catalina.core.StandardContext.listenerStart Exception sending context initialized event to listener instance of class org.springframework.web.context.ContextLoaderListener</span><br><span class="line"> java.lang.IllegalStateException: Cannot initialize context because there is already a root application context present - check whether you have multiple ContextLoader* definitions in your web.xml!</span><br><span class="line">	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:297)</span><br><span class="line">	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)</span><br><span class="line">	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4738)</span><br></pre></td></tr></table></figure>
+
+<p>经过检查日志发现，是因为我之前为了处理区分项目线上线下环境时继承重写了<code>org.springframework.web.context.ContextLoaderListener</code>监听，在<code>web.xml</code>中配置时加入自己重写过的<code>listener</code>后，没有删除<code>ContextLoaderListener</code>监听导致的，删除后即可正常启动项目</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&text=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&is_video=false&description=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=IDEA项目启动崩溃，控制台没有错误信息问题&body=Check out this article: https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&title=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&name=IDEA项目启动崩溃，控制台没有错误信息问题&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/2020/01/06/2020-01-06-IDEA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E9%97%AE%E9%A2%98/&t=IDEA项目启动崩溃，控制台没有错误信息问题" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
