@@ -13,13 +13,13 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> BUG </category>
           
-          <category> 爬虫 </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
+          
+          <category> 爬虫 </category>
           
           <category> mitmproxy </category>
           
@@ -48,11 +48,11 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -79,9 +79,9 @@
           
           <category> Java </category>
           
-          <category> Spring </category>
-          
           <category> idea </category>
+          
+          <category> Spring </category>
           
           <category> BUG </category>
           
@@ -346,9 +346,9 @@
           
           <category> Web </category>
           
-          <category> SpringBoot </category>
-          
           <category> BUG </category>
+          
+          <category> SpringBoot </category>
           
           <category> 异常 </category>
           
@@ -408,9 +408,9 @@
           
           <category> BUG </category>
           
-          <category> Git </category>
-          
           <category> 异常 </category>
+          
+          <category> Git </category>
           
           <category> 项目管理 </category>
           
@@ -721,9 +721,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> BUG </category>
+          
+          <category> SpringBoot </category>
           
           <category> logback </category>
           
@@ -789,11 +789,11 @@
           
           <category> Spring </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -826,11 +826,11 @@
           
           <category> Spring </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -884,11 +884,11 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -913,15 +913,15 @@
       
       <categories>
           
+          <category> BUG </category>
+          
           <category> DB </category>
           
           <category> NoSQL </category>
           
-          <category> BUG </category>
+          <category> 异常 </category>
           
           <category> MongoDB </category>
-          
-          <category> 异常 </category>
           
       </categories>
       
@@ -1041,9 +1041,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> BUG </category>
+          
+          <category> SpringBoot </category>
           
           <category> 异常 </category>
           
@@ -1130,9 +1130,9 @@
           
           <category> Web </category>
           
-          <category> BUG </category>
-          
           <category> Ajax </category>
+          
+          <category> BUG </category>
           
           <category> 接口 </category>
           
@@ -1395,9 +1395,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> BUG </category>
+          
+          <category> SpringBoot </category>
           
           <category> 警告 </category>
           
@@ -1461,11 +1461,11 @@
           
           <category> Spring </category>
           
+          <category> BUG </category>
+          
           <category> SpringBoot </category>
           
           <category> Redis </category>
-          
-          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1552,9 +1552,9 @@
           
           <category> Web </category>
           
-          <category> BUG </category>
-          
           <category> Ajax </category>
+          
+          <category> BUG </category>
           
           <category> 跨域 </category>
           
