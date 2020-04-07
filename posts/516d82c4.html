@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="bug原因代码如下 1234567891011121314151617181920$.ajax(&amp;#123;    url: &#39;$&amp;#123;root&amp;#125;&#x2F;ajax&#x2F;user&#x2F;or_shop_and_elect&#39;,    dataType: &#39;json&#39;,    async: false,    success: function (rs) &amp;#123;        if (typeof">
+<meta property="og:type" content="article">
+<meta property="og:title" content="360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;posts&#x2F;516d82c4.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="bug原因代码如下 1234567891011121314151617181920$.ajax(&amp;#123;    url: &#39;$&amp;#123;root&amp;#125;&#x2F;ajax&#x2F;user&#x2F;or_shop_and_elect&#39;,    dataType: &#39;json&#39;,    async: false,    success: function (rs) &amp;#123;        if (typeof">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-04-04T09:23:36.000Z">
+<meta property="article:modified_time" content="2020-04-07T07:59:22.786Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="浏览器缓存">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/d9b5a8fb.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/b4ca0942.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/516d82c4.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/516d82c4.html&text=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/516d82c4.html&is_video=false&description=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题&body=Check out this article: https://feng1000.github.io/posts/516d82c4.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/516d82c4.html&name=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/516d82c4.html&t=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bug原因"><span class="toc-number">1.</span> <span class="toc-text">bug原因</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#360的兼容模式默认是IE，GET请求有缓存。"><span class="toc-number">1.0.1.</span> <span class="toc-text">360的兼容模式默认是IE，GET请求有缓存。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决办法"><span class="toc-number">2.</span> <span class="toc-text">解决办法</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-04T09:23:36.000Z" itemprop="datePublished">2019-04-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/BUG/">BUG</a> › <a class="category-link" href="/categories/BUG/%E6%8E%A5%E5%8F%A3/">接口</a> › <a class="category-link" href="/categories/Web/">Web</a> › <a class="category-link" href="/categories/Web/Ajax/">Ajax</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/" rel="tag">浏览器缓存</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="bug原因"><a href="#bug原因" class="headerlink" title="bug原因"></a>bug原因</h2><p>代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">'$&#123;root&#125;/ajax/user/or_shop_and_elect'</span>,</span><br><span class="line">    dataType: <span class="string">'json'</span>,</span><br><span class="line">    <span class="keyword">async</span>: <span class="literal">false</span>,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">rs</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> rs !== <span class="string">'boolean'</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (rs.code === <span class="number">30000</span>) &#123;</span><br><span class="line">                <span class="built_in">window</span>.location.href =</span><br><span class="line">                        $&#123;root&#125;respMsg.data</span><br><span class="line">                        + <span class="string">"?skipUrl=$&#123;root&#125;/web/user/user_center"</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (rs) &#123;</span><br><span class="line">            $.askAlert(</span><br><span class="line">                    <span class="string">'$&#123;root&#125;/web/elect_center/save_elect'</span>,</span><br><span class="line">                    <span class="string">'$&#123;root&#125;/web/company/open_free_shop'</span>);</span><br><span class="line">            e.preventDefault();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在360浏览器兼容模式下，页面通过ajax方式请求一个接口时，会将返回的结果给缓存，当第二次去请求的时候不会调用后台的接口，这就导致了当我第一次访问过此接口后返回true，当我将结果修改为false是，返回的仍是true而不是false</p>
+<h4 id="360的兼容模式默认是IE，GET请求有缓存。"><a href="#360的兼容模式默认是IE，GET请求有缓存。" class="headerlink" title="360的兼容模式默认是IE，GET请求有缓存。"></a>360的兼容模式默认是IE，GET请求有缓存。</h4><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>解决办法：</p>
+<ul>
+<li>第一种：在ajax请求的时候添加参数<code>cache: false</code></li>
+<li>第二种：将接口改为使用post请求</li>
+<li>第三种：在url后边拼一个时间戳，写法如下：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url: <span class="string">'$&#123;root&#125;/ajax/user/or_shop_and_elect?t='</span> + <span class="built_in">Date</span>.now()</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bug原因"><span class="toc-number">1.</span> <span class="toc-text">bug原因</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#360的兼容模式默认是IE，GET请求有缓存。"><span class="toc-number">1.0.1.</span> <span class="toc-text">360的兼容模式默认是IE，GET请求有缓存。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决办法"><span class="toc-number">2.</span> <span class="toc-text">解决办法</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/516d82c4.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/516d82c4.html&text=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/516d82c4.html&is_video=false&description=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题&body=Check out this article: https://feng1000.github.io/posts/516d82c4.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/516d82c4.html&title=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/516d82c4.html&name=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/516d82c4.html&t=360浏览器兼容模式下ajax请求第二次访问，不会请求接口问题" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

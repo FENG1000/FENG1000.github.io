@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="【转载自 ImportNew 公众号】地址: https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;fC0rK_1jvQMHxzDHRkh6cQ(由于我用的是Maven所以我将Gradle部分都替换成了Maven内容) 在本文中，将学习如何使用 Spring Boot 2.x 和 Redis 执行异步任务。文后附有演示代码。 Spring&#x2F;Spring BootSpring 是最流行 Java 应">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Redis 和 Spring Boot 执行异步任务">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;posts&#x2F;be076923.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="【转载自 ImportNew 公众号】地址: https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;fC0rK_1jvQMHxzDHRkh6cQ(由于我用的是Maven所以我将Gradle部分都替换成了Maven内容) 在本文中，将学习如何使用 Spring Boot 2.x 和 Redis 执行异步任务。文后附有演示代码。 Spring&#x2F;Spring BootSpring 是最流行 Java 应">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20191122163646335.jpg?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20191122163633224.jpg?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20191122163605781.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20191122163610322.jpg">
+<meta property="article:published_time" content="2019-11-22T08:36:51.000Z">
+<meta property="article:modified_time" content="2020-04-07T07:59:22.658Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="异步执行">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20191122163646335.jpg?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Redis 和 Spring Boot 执行异步任务</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/5f51e8ee.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/34f6d968.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/be076923.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/be076923.html&text=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/be076923.html&is_video=false&description=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Redis 和 Spring Boot 执行异步任务&body=Check out this article: https://feng1000.github.io/posts/be076923.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/be076923.html&name=使用 Redis 和 Spring Boot 执行异步任务&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/be076923.html&t=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Spring-Boot"><span class="toc-number">1.</span> <span class="toc-text">Spring&#x2F;Spring Boot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis"><span class="toc-number">2.</span> <span class="toc-text">Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要异步执行任务"><span class="toc-number">3.</span> <span class="toc-text">为什么需要异步执行任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟队列"><span class="toc-number">4.</span> <span class="toc-text">延迟队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rqueue"><span class="toc-number">5.</span> <span class="toc-text">Rqueue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消息传递"><span class="toc-number">6.</span> <span class="toc-text">消息传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交任务"><span class="toc-number">7.</span> <span class="toc-text">提交任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码地址"><span class="toc-number">9.</span> <span class="toc-text">源码地址</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Redis 和 Spring Boot 执行异步任务
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-22T08:36:51.000Z" itemprop="datePublished">2019-11-22</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/Redis/">Redis</a> › <a class="category-link" href="/categories/Java/Spring/">Spring</a> › <a class="category-link" href="/categories/Java/Spring/SpringBoot/">SpringBoot</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E5%BC%82%E6%AD%A5%E6%89%A7%E8%A1%8C/" rel="tag">异步执行</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><strong>【转载自 ImportNew 公众号】地址: <a href="https://mp.weixin.qq.com/s/fC0rK_1jvQMHxzDHRkh6cQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/fC0rK_1jvQMHxzDHRkh6cQ</a>(由于我用的是Maven所以我将Gradle部分都替换成了Maven内容)</strong></p>
+<p>在本文中，将学习如何使用 Spring Boot 2.x 和 Redis 执行异步任务。文后附有演示代码。</p>
+<h3 id="Spring-Spring-Boot"><a href="#Spring-Spring-Boot" class="headerlink" title="Spring/Spring Boot"></a>Spring/Spring Boot</h3><p>Spring 是最流行 Java 应用程序开发框架。因此，Spring 社区也是最大的开源社区之一。除此之外，Spring 博客还提供了最新的开发文档，内容非常丰富。涵盖了框架的内部工作原理和示例项目，在StackOverflow上有10万多个问题。 </p>
+<p>Spring 早期只支持基于XML的配置，为此饱受批评。后来 Spring 引入了基于注解的配置，情况发生了根本改变。Spring 3.0是第一个支持基于注解的配置的版本。2014年发布的 Spring Boot 1.0，彻底改变了人们对 Spring 框架生态的看法。在这里可以找到更详细的时间表。 </p>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><p>Redis 是最流行的 NoSQL 内存数据库之一，支持不同类型的数据结构，包括 Set、哈希表、List、简单键值对等。Redis 调用延迟为亚毫秒级，支持 replica set 等功能。Redis 操作的延迟也是亚毫秒级，在开发者社区中更具吸引力。</p>
+<h3 id="为什么需要异步执行任务"><a href="#为什么需要异步执行任务" class="headerlink" title="为什么需要异步执行任务"></a>为什么需要异步执行任务</h3><p>一个典型的 API 调用包括以下五个方面：</p>
+<ol>
+<li>执行数据库（RDBMS 或 NoSQL）查询</li>
+<li>在某些缓存系统（内存、分布式等）上执行操作</li>
+<li>进行计算（对一些数据进行数学计算）</li>
+<li>调用其他（内部或外部）服务</li>
+<li>调度任务稍后执行或者在后台立即执行</li>
+</ol>
+<p>任务可根据需要定时执行，例如在创建订单或装运单后7天后生成发票。同样，电子邮件通知无需立即发送，因此可以设为延期发送。  </p>
+<p>考虑到这些实际场景，有时候需要异步执行任务，减少 API 响应时间。例如，如果一次在同一个 API 调用中删除一千多条记录，那么肯定会增加 API 响应时间。为了减少 API 响应时间，可以运行一个后台任务删除这些记录。 </p>
+<h3 id="延迟队列"><a href="#延迟队列" class="headerlink" title="延迟队列"></a>延迟队列</h3><p>当计划在指定时间或者按照设定间隔执行任务时，可以使用 corn job。有很多不同的工具可以执行定时任务，比如 UNIX 风格的 crontabs、Chronos。如果用 Spring 框架，那么可以用默认提供的 <code>Scheduled</code> 注解。 </p>
+<p>大多数 cron job 会在需要执行特定操作时查找记录，例如查找所有已发货7天但未生成发票的记录。这些调度机制中大多数都会遇到扩展问题，在数据库中扫描查找相关行或者记录。多数情况会引发全表扫描，性能非常差。设想一下正在运行的应用程序与批处理系统使用相同的数据库。由于不可扩展，因此需要一些可扩展系统，可以在指定时间或按照设定时间间隔执行任务，不会出现任何性能问题。有许多扩展的方法，例如用批处理方式执行任务，或者在用户、区域子集上执行任务。另一种方法是在指定时间执行任务，任务之间没有依赖，例如 serverless 函数。定时器达到预定时间后会立即触发执行作业，这时可以使用延迟队列。有很多队列系统或软件可供使用，但很少像 SQS 这样可以设置延迟15分钟，而不是延迟7个小时或者7天。</p>
+<h3 id="Rqueue"><a href="#Rqueue" class="headerlink" title="Rqueue"></a>Rqueue</h3><p>Rqueue 是针对 Spring 框架构建的消息代理，它把数据存储到 Redis 中并且提供了一种机制可以按任意延迟执行任务。Rqueue 得到了 Redis 支持。相比 Kafka、SQS 等常见队列系统，Redis 具有一些优势。在大多数 Web 应用后端程序中，Redis 用来缓存数据或者其他用途。在当今世界，8.4％的 Web 应用程序正在使用 Redis 数据库。</p>
+<p>通常，使用 Kafka、SQS 或者其他队列系统会带来不同程度的额外开销，而 Rqueue 和 Redis 可以将费用降为零。</p>
+<p>除了使用 Kafka 带来的开销，还需配置基础架构、进行维护等等。由于大多数程序已经使用了 Redis，因此不需要其他操作开销。实际上，可以在同一个 Redis 服务器或群集上使用 Rqueue。Rqueue支持任意长度延迟<br><img src="https://img-blog.csdnimg.cn/20191122163646335.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h3><p>由于长数据不会在数据库中丢失，Rqueue 能够确保至少发送一次消息。在 Rqueue 简介中可以了解更多信息。</p>
+<p>需要的工具：</p>
+<ol>
+<li>IDE </li>
+<li>Maven</li>
+<li>Java </li>
+<li>Redis</li>
+</ol>
+<p>简单起见，这里使用 Spring Boot。通过Spring Boot初始化程序 <a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io/</a> 创建一个 Maven 项目。<br>需要添加以下依赖:</p>
+<ol>
+<li>org.springframework.boot:spring-boot-starter-data-redis</li>
+<li>org.springframework.boot:spring-boot-starter-web</li>
+<li>org.projectlombok:lombok</li>
+</ol>
+<ul>
+<li>这里不会使用lombok，不知道lombok的请网上自行搜索学习</li>
+</ul>
+<p>项目文件结构如下：<br><img src="https://img-blog.csdnimg.cn/20191122163633224.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>使用Rqueue开发库实现按任意延迟时间执行任务。Rqueue 是一个基于 Spring 的异步任务执行器，可以按照任意延迟执行任务，它基于 Spring 消息库并由 Redis 提供支持。</p>
+<p>这里将使用 <strong>com.github.sonus21:rqueue-spring-boot-starter:1.2-RELEASE添加 Rqueue spring boot starter</strong> 依赖。</p>
+<p><code>rqueue</code> 的github<a href="https://github.com/sonus21/rqueue" target="_blank" rel="noopener">地址</a></p>
+<p>完整的maven配置接口如下:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.lx<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springboot-rqueue<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>springboot-rqueue<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Springboot+Redis实现延时队列<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.vintage<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-vintage-engine<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.sonus21<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>rqueue-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2-RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>spring<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/spring<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要启用 Redis Spring Boot 功能。出于测试目的，这里还将启用 WEB MVC。<br>Application启动类 文件更新如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableRedisRepositories</span></span><br><span class="line"><span class="meta">@EnableWebMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 Rqueue 添加任务非常简单，只要对方法添加 RqueueListener 注解。RqueuListener 注解提供了一些字段，可根据使用场景设置。对于延迟任务，需要设置 <code>delayedQueue=&quot;true&quot;</code> 并且必须提供 <code>value</code>；否则注解将被忽略。value 是队列名称。设置 deadLetterQueue 可以将任务推送到另一个队列。否则，执行失败时任务会被丢弃。还可以使用 numRetries 字段设置任务重试次数。</p>
+<p>创建名为 MessageListener 的 Java 文件并增加一些方法执行任务：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageListener</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RqueueListener</span>(value = <span class="string">"$&#123;email.queue.name&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendEmail</span><span class="params">(Email email)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"Email &#123;&#125;"</span>, email);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RqueueListener</span>(delayedQueue = <span class="string">"true"</span>, value = <span class="string">"$&#123;invoice.queue.name&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generateInvoice</span><span class="params">(Invoice invoice)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"Invoice &#123;&#125;"</span>, invoice);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用 Email 和 Invoice 类分别存储电子邮件和发票数据。简单起见，这些类只包含少数几个字段。</p>
+<p><code>Invoice.java</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invoice</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String id;</span><br><span class="line">  <span class="keyword">private</span> String type;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Email.java</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Email</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String email;</span><br><span class="line">  <span class="keyword">private</span> String subject;</span><br><span class="line">  <span class="keyword">private</span> String content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h3><p>可以使用 RqueueMessageSender  bean 提交任务。根据使用场景，可以采用多种方式设置任务，例如，对于重试可以使用方法重试计数，对于延迟任务可以设置延迟。</p>
+<p>需要对 RqueueMessageSender 进行 autowire 或使用构造函数注入 bean。</p>
+<p>下面展示了如何为测试创建 Controller。 </p>
+<p>这里会在30秒内生成发票。为此，在发票队列上提交一个延迟30000（毫秒）的任务。另外，这里会尝试在后台发送一封电子邮件。为此添加两个 GET 方法，sendEmail 和  generateInvoice，当然也可以使用 POST。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> RqueueMessageSender rqueueMessageSender;</span><br><span class="line">  <span class="meta">@Value</span>(<span class="string">"$&#123;email.queue.name&#125;"</span>)</span><br><span class="line">  <span class="keyword">private</span> String emailQueueName;</span><br><span class="line">  <span class="meta">@Value</span>(<span class="string">"$&#123;invoice.queue.name&#125;"</span>)</span><br><span class="line">  <span class="keyword">private</span> String invoiceQueueName;</span><br><span class="line">  <span class="meta">@Value</span>(<span class="string">"$&#123;invoice.queue.delay&#125;"</span>)</span><br><span class="line">  <span class="keyword">private</span> Long invoiceDelay;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@GetMapping</span>(<span class="string">"email"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">sendEmail</span><span class="params">(@RequestParam String email, @RequestParam String subject,</span></span></span><br><span class="line"><span class="function"><span class="params">                          @RequestParam String content)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"Sending email"</span>);</span><br><span class="line">    rqueueMessageSender.put(emailQueueName, <span class="keyword">new</span> Email(email, subject, content));</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Please check your inbox!"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@GetMapping</span>(<span class="string">"invoice"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">generateInvoice</span><span class="params">(@RequestParam String id, @RequestParam String type)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"Generate invoice"</span>);</span><br><span class="line">    rqueueMessageSender.put(invoiceQueueName, <span class="keyword">new</span> Invoice(id, type), invoiceDelay);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Invoice would be generated in "</span> + invoiceDelay + <span class="string">" milliseconds"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>在 <code>application.yml</code> 加入以下内容(<strong>注: 此处需要自行添加redis连接配置</strong>)：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">email:</span></span><br><span class="line">  <span class="attr">queue:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">email-queue</span></span><br><span class="line"><span class="attr">invoice:</span></span><br><span class="line">  <span class="attr">queue:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">invoice-queue</span></span><br><span class="line">    <span class="comment"># 延迟3秒执行</span></span><br><span class="line">    <span class="attr">delay:</span> <span class="number">3000</span></span><br></pre></td></tr></table></figure>
+
+<p>现在可以运行该程序。程序成功启动后，访问 链接。<br>在日志中，可以看到电子邮件任务正在后台执行：<br><img src="https://img-blog.csdnimg.cn/20191122163605781.jpg" alt="在这里插入图片描述"><br>下面是延迟30秒生成发票：<br><a href="http://localhost:8080/invoice?id=INV-1234&amp;type=PROFORMA" target="_blank" rel="noopener">http://localhost:8080/invoice?id=INV-1234&amp;type=PROFORMA</a><br><img src="https://img-blog.csdnimg.cn/20191122163610322.jpg" alt="在这里插入图片描述"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>可以看到，使用 Rqueue 执行定时任务不需要冗长的模板代码！配置和使用 Rqueue 库时，进行了仔细考虑。要记住：无论是普通任务还是延迟任务，都需要尽快执行。</p>
+<h3 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址</h3><ul>
+<li><a href="https://github.com/sonus21/rqueue-task-exector" target="_blank" rel="noopener">官方demo</a></li>
+<li><a href="https://gitee.com/fengzxia/springboot_rqueue" target="_blank" rel="noopener">自己敲的</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Spring-Boot"><span class="toc-number">1.</span> <span class="toc-text">Spring&#x2F;Spring Boot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis"><span class="toc-number">2.</span> <span class="toc-text">Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要异步执行任务"><span class="toc-number">3.</span> <span class="toc-text">为什么需要异步执行任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟队列"><span class="toc-number">4.</span> <span class="toc-text">延迟队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rqueue"><span class="toc-number">5.</span> <span class="toc-text">Rqueue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消息传递"><span class="toc-number">6.</span> <span class="toc-text">消息传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交任务"><span class="toc-number">7.</span> <span class="toc-text">提交任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码地址"><span class="toc-number">9.</span> <span class="toc-text">源码地址</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/be076923.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/be076923.html&text=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/be076923.html&is_video=false&description=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Redis 和 Spring Boot 执行异步任务&body=Check out this article: https://feng1000.github.io/posts/be076923.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/be076923.html&title=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/be076923.html&name=使用 Redis 和 Spring Boot 执行异步任务&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/be076923.html&t=使用 Redis 和 Spring Boot 执行异步任务" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

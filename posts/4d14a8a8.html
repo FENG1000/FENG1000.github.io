@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="添加依赖依赖123456789101112131415&lt;!--邮件发送需要的依赖--&gt;&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot-starter-mail&lt;&#x2F;artifactId&gt;&lt;&#x2F;dependen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot邮件发送">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;posts&#x2F;4d14a8a8.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="添加依赖依赖123456789101112131415&lt;!--邮件发送需要的依赖--&gt;&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot-starter-mail&lt;&#x2F;artifactId&gt;&lt;&#x2F;dependen">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190408205742344.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190408205750542.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2019-04-08T12:58:45.000Z">
+<meta property="article:modified_time" content="2020-04-07T07:59:22.487Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="邮件发送">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190408205742344.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>SpringBoot邮件发送</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/c83b5e46.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/d9b5a8fb.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/4d14a8a8.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/4d14a8a8.html&text=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/4d14a8a8.html&is_video=false&description=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot邮件发送&body=Check out this article: https://feng1000.github.io/posts/4d14a8a8.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/4d14a8a8.html&name=SpringBoot邮件发送&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/4d14a8a8.html&t=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#添加依赖依赖"><span class="toc-number">1.</span> <span class="toc-text">添加依赖依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改配置文件"><span class="toc-number">2.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POP3-SMTP-服务"><span class="toc-number">3.</span> <span class="toc-text">POP3&#x2F;SMTP 服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送不同格式的邮件"><span class="toc-number">4.</span> <span class="toc-text">发送不同格式的邮件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模板邮件的模板"><span class="toc-number">4.1.</span> <span class="toc-text">模板邮件的模板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试结果不再展示，更改配置后可自行测试"><span class="toc-number">5.</span> <span class="toc-text">测试结果不再展示，更改配置后可自行测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo地址"><span class="toc-number">6.</span> <span class="toc-text">demo地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#来源"><span class="toc-number">7.</span> <span class="toc-text">来源</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SpringBoot邮件发送
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-08T12:58:45.000Z" itemprop="datePublished">2019-04-08</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/Spring/">Spring</a> › <a class="category-link" href="/categories/Java/Spring/SpringBoot/">SpringBoot</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E9%82%AE%E4%BB%B6%E5%8F%91%E9%80%81/" rel="tag">邮件发送</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="添加依赖依赖"><a href="#添加依赖依赖" class="headerlink" title="添加依赖依赖"></a>添加依赖依赖</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--邮件发送需要的依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-mail<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--邮件发送模板需要的依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--web请求接口用到--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>在<code>application.yml</code>中配置发送邮件相关的参数，具体如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  mail:</span><br><span class="line">    host: smtp.qq.com</span><br><span class="line">    # 填入自己申请的邮箱信息</span><br><span class="line">    username:</span><br><span class="line">    password:</span><br><span class="line">    default-encoding: UTF-8</span><br></pre></td></tr></table></figure>
+<p>重要的参数就这些，其它的使用默认的即可，以下为解释：</p>
+<ul>
+<li><code>host</code>: 邮箱服务器地址，这个根据自己使用的什么邮箱有区别，比如:  <ol>
+<li><code>smtp.163.com</code>: 163邮箱</li>
+<li><code>smtp.126.com</code>: 126邮箱</li>
+<li><code>smtp.qq.com</code>: qq邮箱</li>
+</ol>
+</li>
+<li><code>username</code>: 邮箱登录的用户名</li>
+<li><code>password</code>: 第三方登陆授权码（需要自己在邮箱中申请）</li>
+<li><code>default-encoding</code>: 编码方式</li>
+</ul>
+<h2 id="POP3-SMTP-服务"><a href="#POP3-SMTP-服务" class="headerlink" title="POP3/SMTP 服务"></a>POP3/SMTP 服务</h2><p>上面提到了授权码的概念，首先要明确一个概念就是授权码跟我们直接登陆邮箱的密码不是一样的，授权码可以理解为第三方客户端登陆邮箱的密码，要想获取授权码需要我们去自己所用邮箱的官网设置开启 <code>POP3/SMTP</code>以及<code>IMAP/SMTP</code>服务，我这里就以自己使用的<code>qq</code>账号为例介绍打开该服务以及获取授权码的步骤，如图：<br><img src="https://img-blog.csdnimg.cn/20190408205742344.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190408205750542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>登陆qq邮箱，按照图示步骤进行操作，在选择了服务之后会弹窗展示授权码，这里的授权码就是上边配置文件中<code>password</code>需要填写的值(只写<code>IMAP/SMTP</code>的授权码就可以)。</p>
+<h2 id="发送不同格式的邮件"><a href="#发送不同格式的邮件" class="headerlink" title="发送不同格式的邮件"></a>发送不同格式的邮件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailServiceImpl</span> <span class="keyword">implements</span> <span class="title">IMailService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 发送邮件接口</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> JavaMailSender jms;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 发送模板邮件时解析模板</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> TemplateEngine templateEngine;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 读取配置文件中的邮件发送者账号</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Value</span>(<span class="string">"$&#123;spring.mail.username&#125;"</span>)</span><br><span class="line">  <span class="keyword">private</span> String from;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 简单文本邮件</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> toUser 邮件接收者</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">simpleMil</span><span class="params">(String toUser)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//初始化简单的邮件对象</span></span><br><span class="line">    SimpleMailMessage message = <span class="keyword">new</span> SimpleMailMessage();</span><br><span class="line">    <span class="comment">//邮件发送者</span></span><br><span class="line">    message.setFrom(from);</span><br><span class="line">    <span class="comment">//邮件接收者</span></span><br><span class="line">    message.setTo(toUser);</span><br><span class="line">    <span class="comment">//邮件标题</span></span><br><span class="line">    message.setSubject(<span class="string">"文字格式邮件"</span>);</span><br><span class="line">    <span class="comment">//邮件内容</span></span><br><span class="line">    message.setText(<span class="string">"文字格式内容"</span>);</span><br><span class="line">    <span class="comment">//发送邮件</span></span><br><span class="line">    jms.send(message);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * html邮件</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">htmlMail</span><span class="params">(String toUser)</span> <span class="keyword">throws</span> MessagingException </span>&#123;</span><br><span class="line">    MimeMessage message = jms.createMimeMessage();</span><br><span class="line">    MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(message, <span class="keyword">true</span>);</span><br><span class="line">    helper.setFrom(from);</span><br><span class="line">    helper.setTo(toUser);</span><br><span class="line">    helper.setSubject(<span class="string">"html格式标题"</span>);</span><br><span class="line">    String content = <span class="string">"&lt;p style='color:yellow;'&gt;这是一封html格式的文件&lt;/p&gt;&lt;h1&gt;这是一封html格式的文件&lt;/h1&gt;"</span>;</span><br><span class="line">    <span class="comment">//true表示以html格式发送邮件</span></span><br><span class="line">    helper.setText(content, <span class="keyword">true</span>);</span><br><span class="line">    jms.send(message);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 带附件邮件</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attachmentMail</span><span class="params">(String toUser)</span> <span class="keyword">throws</span> MessagingException </span>&#123;</span><br><span class="line">    MimeMessage message = jms.createMimeMessage();</span><br><span class="line">    MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(message, <span class="keyword">true</span>);</span><br><span class="line">    helper.setFrom(from);</span><br><span class="line">    helper.setTo(toUser);</span><br><span class="line">    helper.setSubject(<span class="string">"带附件"</span>);</span><br><span class="line">    helper.setText(<span class="string">"这是一封带附件的邮件"</span>);</span><br><span class="line">    <span class="comment">//加载文件路径</span></span><br><span class="line">    FileSystemResource fs = <span class="keyword">new</span> FileSystemResource(<span class="keyword">new</span> File(<span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath()</span><br><span class="line">            + <span class="string">"\\自己菜与大佬菜的区别.jpg"</span>));</span><br><span class="line">    <span class="comment">//添加附件</span></span><br><span class="line">    helper.addAttachment(<span class="string">"自己菜与大佬菜的区别.jpg"</span>, fs);</span><br><span class="line">    jms.send(message);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 带图片邮件</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">imgMail</span><span class="params">(String toUser)</span> <span class="keyword">throws</span> MessagingException </span>&#123;</span><br><span class="line">    MimeMessage message = jms.createMimeMessage();</span><br><span class="line">    MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(message, <span class="keyword">true</span>);</span><br><span class="line">    helper.setFrom(from);</span><br><span class="line">    helper.setTo(toUser);</span><br><span class="line">    helper.setSubject(<span class="string">"带图片邮件"</span>);</span><br><span class="line">    <span class="comment">//设置资源的cid</span></span><br><span class="line">    String content = <span class="string">"&lt;html&gt;&lt;body&gt;小菜鸡图片&lt;img src='cid:img'/&gt;&lt;/body&gt;&lt;/html&gt;"</span>;</span><br><span class="line">    helper.setText(content, <span class="keyword">true</span>);</span><br><span class="line">    FileSystemResource fs = <span class="keyword">new</span> FileSystemResource(<span class="keyword">new</span> File(<span class="keyword">this</span>.getClass().getResource(<span class="string">"/"</span>).getPath()</span><br><span class="line">            + <span class="string">"\\自己菜与大佬菜的区别.jpg"</span>));</span><br><span class="line">    helper.addInline(<span class="string">"img"</span>, fs);</span><br><span class="line">    jms.send(message);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 模板邮件</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">templateMail</span><span class="params">(String toUser)</span> <span class="keyword">throws</span> MessagingException </span>&#123;</span><br><span class="line">    MimeMessage message = jms.createMimeMessage();</span><br><span class="line">    MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(message, <span class="keyword">true</span>);</span><br><span class="line">    helper.setFrom(from);</span><br><span class="line">    helper.setTo(toUser);</span><br><span class="line">    helper.setSubject(<span class="string">"模板邮件"</span>);</span><br><span class="line">    Context context = <span class="keyword">new</span> Context();</span><br><span class="line">    context.setVariable(<span class="string">"username"</span>, <span class="string">"段誉"</span>);</span><br><span class="line">    <span class="comment">//thymeleaf模板默认会从src/resources/templates目录下寻找文件，填入我们定义的模板名，不需要写后缀</span></span><br><span class="line">    String template = templateEngine.process(<span class="string">"MailTemplate"</span>, context);</span><br><span class="line">    helper.setText(template, <span class="keyword">true</span>);</span><br><span class="line">    jms.send(message);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模板邮件的模板"><a href="#模板邮件的模板" class="headerlink" title="模板邮件的模板"></a>模板邮件的模板</h3><p>接下来在<code>src/main/resources/templates</code>目录下新建<code>MailTemplate.html</code>文件，内容如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Insert title here<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>您好，<span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">"$&#123;username&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>:这是来自测试的邮件模板！<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="测试结果不再展示，更改配置后可自行测试"><a href="#测试结果不再展示，更改配置后可自行测试" class="headerlink" title="测试结果不再展示，更改配置后可自行测试"></a>测试结果不再展示，更改配置后可自行测试</h2><h2 id="demo地址"><a href="#demo地址" class="headerlink" title="demo地址"></a>demo地址</h2><blockquote>
+<p><a href="https://gitee.com/fengzxia/spring-boot-mail" target="_blank" rel="noopener">https://gitee.com/fengzxia/spring-boot-mail</a></p>
+</blockquote>
+<h2 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h2><blockquote>
+<p>作者：诺丨言<br>链接：<a href="https://juejin.im/post/5ca8578bf265da30893a052d" target="_blank" rel="noopener">https://juejin.im/post/5ca8578bf265da30893a052d</a><br>来源：掘金</p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#添加依赖依赖"><span class="toc-number">1.</span> <span class="toc-text">添加依赖依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改配置文件"><span class="toc-number">2.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POP3-SMTP-服务"><span class="toc-number">3.</span> <span class="toc-text">POP3&#x2F;SMTP 服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送不同格式的邮件"><span class="toc-number">4.</span> <span class="toc-text">发送不同格式的邮件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模板邮件的模板"><span class="toc-number">4.1.</span> <span class="toc-text">模板邮件的模板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试结果不再展示，更改配置后可自行测试"><span class="toc-number">5.</span> <span class="toc-text">测试结果不再展示，更改配置后可自行测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo地址"><span class="toc-number">6.</span> <span class="toc-text">demo地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#来源"><span class="toc-number">7.</span> <span class="toc-text">来源</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/4d14a8a8.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/4d14a8a8.html&text=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/4d14a8a8.html&is_video=false&description=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot邮件发送&body=Check out this article: https://feng1000.github.io/posts/4d14a8a8.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/4d14a8a8.html&title=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/4d14a8a8.html&name=SpringBoot邮件发送&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/4d14a8a8.html&t=SpringBoot邮件发送" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

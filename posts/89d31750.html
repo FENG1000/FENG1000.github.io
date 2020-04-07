@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="创建CrawlSpider爬虫上篇博客中，写的创建爬虫的方式是通过 scrapy genspider [爬虫名字] [域名] 创建的。如果想要创建 CrawlSpider 爬虫，应该通过如下命令进行 1scrapy genspider -t crawl [爬虫名字] [域名]  -t: 是选择模板生成代码，因为是要编写 CrawlSpider 爬虫所以选择 crawl 模板  输入 scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[python爬虫]CrawlSpider爬虫入门学习">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;posts&#x2F;89d31750.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="创建CrawlSpider爬虫上篇博客中，写的创建爬虫的方式是通过 scrapy genspider [爬虫名字] [域名] 创建的。如果想要创建 CrawlSpider 爬虫，应该通过如下命令进行 1scrapy genspider -t crawl [爬虫名字] [域名]  -t: 是选择模板生成代码，因为是要编写 CrawlSpider 爬虫所以选择 crawl 模板  输入 scrapy">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-12T09:44:16.000Z">
+<meta property="article:modified_time" content="2020-04-07T07:59:22.620Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="CrawlSpider">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>[python爬虫]CrawlSpider爬虫入门学习</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/3aad92e6.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/ae675e47.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/89d31750.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/89d31750.html&text=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/89d31750.html&is_video=false&description=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[python爬虫]CrawlSpider爬虫入门学习&body=Check out this article: https://feng1000.github.io/posts/89d31750.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/89d31750.html&name=[python爬虫]CrawlSpider爬虫入门学习&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/89d31750.html&t=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建CrawlSpider爬虫"><span class="toc-number">1.</span> <span class="toc-text">创建CrawlSpider爬虫</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LinkExtractor链接提取器"><span class="toc-number">1.1.</span> <span class="toc-text">LinkExtractor链接提取器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rule规则类"><span class="toc-number">1.2.</span> <span class="toc-text">Rule规则类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#糗事百科CrawlSpider案例"><span class="toc-number">2.</span> <span class="toc-text">糗事百科CrawlSpider案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo地址"><span class="toc-number">3.</span> <span class="toc-text">demo地址</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        [python爬虫]CrawlSpider爬虫入门学习
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-07-12T09:44:16.000Z" itemprop="datePublished">2019-07-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Python/">Python</a> › <a class="category-link" href="/categories/Python/%E7%88%AC%E8%99%AB/">爬虫</a> › <a class="category-link" href="/categories/Python/%E7%88%AC%E8%99%AB/Scrapy/">Scrapy</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/CrawlSpider/" rel="tag">CrawlSpider</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="创建CrawlSpider爬虫"><a href="#创建CrawlSpider爬虫" class="headerlink" title="创建CrawlSpider爬虫"></a>创建CrawlSpider爬虫</h2><p><a href="/2019/07/11/2019-07-11-python爬虫-Scrapy入门使用教程/">上篇博客</a>中，写的创建爬虫的方式是通过 <code>scrapy genspider [爬虫名字] [域名]</code> 创建的。如果想要创建 <code>CrawlSpider</code> 爬虫，应该通过如下命令进行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy genspider -t crawl [爬虫名字] [域名]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-t</code>: 是选择模板生成代码，因为是要编写 <code>CrawlSpider</code> 爬虫所以选择 <code>crawl</code> 模板</li>
+</ul>
+<p>输入 <code>scrapy genspider -t crawl qsbk_two www.qiushibaike.com</code> 后生成的python代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QsbkTwoSpider</span><span class="params">(CrawlSpider)</span>:</span></span><br><span class="line">    name = <span class="string">'qsbk_two'</span></span><br><span class="line">    allowed_domains = [<span class="string">'www.qiushibaike.com'</span>]</span><br><span class="line">    start_urls = [<span class="string">'http://www.qiushibaike.com/'</span>]</span><br><span class="line"></span><br><span class="line">    rules = (</span><br><span class="line">        Rule(LinkExtractor(allow=<span class="string">r'Items/'</span>), callback=<span class="string">'parse_item'</span>, follow=<span class="literal">True</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        i = &#123;&#125;</span><br><span class="line">        <span class="comment">#i['domain_id'] = response.xpath('//input[@id="sid"]/@value').extract()</span></span><br><span class="line">        <span class="comment">#i['name'] = response.xpath('//div[@id="name"]').extract()</span></span><br><span class="line">        <span class="comment">#i['description'] = response.xpath('//div[@id="description"]').extract()</span></span><br><span class="line">        <span class="keyword">return</span> i</span><br></pre></td></tr></table></figure>
+
+<p>查看代码可以发现除了编写爬虫需要继承的 <code>CrawlSpider</code> 类外，还多了两个新的依赖 <code>LinkExtractor</code> 和 <code>Rule</code></p>
+<h3 id="LinkExtractor链接提取器"><a href="#LinkExtractor链接提取器" class="headerlink" title="LinkExtractor链接提取器"></a>LinkExtractor链接提取器</h3><p>使用<code>LinkExtractors</code>可以不用自己提取想要的url，然后发送请求。这些工作都可以交给<code>LinkExtractors</code>，他会在所有爬的页面中找到满足规则的url，实现自动的爬取。以下对<code>LinkExtractors</code>类做一个简单的介绍：</p>
+<p><code>LinkExtractors</code> 类的构造方法如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, </span></span></span><br><span class="line"><span class="function"><span class="params">                allow=<span class="params">()</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                deny=<span class="params">()</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                allow_domains=<span class="params">()</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                deny_domains=<span class="params">()</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                restrict_xpaths=<span class="params">()</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                tags=<span class="params">(<span class="string">'a'</span>, <span class="string">'area'</span>)</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                attrs=<span class="params">(<span class="string">'href'</span>,)</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                canonicalize=False,</span></span></span><br><span class="line"><span class="function"><span class="params">                unique=True, </span></span></span><br><span class="line"><span class="function"><span class="params">                process_value=None, </span></span></span><br><span class="line"><span class="function"><span class="params">                deny_extensions=None, </span></span></span><br><span class="line"><span class="function"><span class="params">                restrict_css=<span class="params">()</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                strip=True)</span>:</span></span><br><span class="line">                <span class="comment"># 代码省略</span></span><br><span class="line">                <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>主要参数讲解</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数名</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">allow</td>
+<td align="left">允许的url。所有满足这个正则表达式的url都会被提取</td>
+</tr>
+<tr>
+<td align="center">deny</td>
+<td align="left">禁止的url。所有满足这个正则表达式的url都不会被提取</td>
+</tr>
+<tr>
+<td align="center">allow_domains</td>
+<td align="left">允许的域名。只有在这个里面指定的域名的url才会被提取</td>
+</tr>
+<tr>
+<td align="center">deny_domains</td>
+<td align="left">禁止的域名。所有在这个里面指定的域名的url都不会被提取</td>
+</tr>
+<tr>
+<td align="center">restrict_xpaths</td>
+<td align="left">严格的xpath。和allow共同过滤链接</td>
+</tr>
+</tbody></table>
+<h3 id="Rule规则类"><a href="#Rule规则类" class="headerlink" title="Rule规则类"></a>Rule规则类</h3><p>定义爬虫的规则类。以下对这个类做一个简单的介绍：</p>
+<p>构造函数如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, </span></span></span><br><span class="line"><span class="function"><span class="params">                link_extractor, </span></span></span><br><span class="line"><span class="function"><span class="params">                callback=None, </span></span></span><br><span class="line"><span class="function"><span class="params">                cb_kwargs=None, </span></span></span><br><span class="line"><span class="function"><span class="params">                follow=None, </span></span></span><br><span class="line"><span class="function"><span class="params">                process_links=None, </span></span></span><br><span class="line"><span class="function"><span class="params">                process_request=identity)</span>:</span></span><br><span class="line">    <span class="comment"># 代码省略</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>主要参数讲解</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数名</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">link_extractor</td>
+<td align="left">一个LinkExtractor对象，用于定义爬取规则</td>
+</tr>
+<tr>
+<td align="center">callback</td>
+<td align="left">满足这个规则的url，应该要执行哪个回调函数。因为CrawlSpider使用了parse作为回调函数，因此不要覆盖parse作为回调函数自己的回调函数</td>
+</tr>
+<tr>
+<td align="center">follow</td>
+<td align="left">指定根据该规则从response中提取的链接是否需要跟进</td>
+</tr>
+<tr>
+<td align="center">process_links</td>
+<td align="left">从link_extractor中获取到链接后会传递给这个函数，用来过滤不需要爬取的链接</td>
+</tr>
+</tbody></table>
+<h2 id="糗事百科CrawlSpider案例"><a href="#糗事百科CrawlSpider案例" class="headerlink" title="糗事百科CrawlSpider案例"></a>糗事百科CrawlSpider案例</h2><p>依照上篇博客的代码在<code>spiders</code>包中新添加一个 <code>CrawlSpider</code> 爬虫类<br>代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</span><br><span class="line"><span class="keyword">from</span> qsbk.items <span class="keyword">import</span> QsbkItem</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QsbkTwoSpider</span><span class="params">(CrawlSpider)</span>:</span></span><br><span class="line">    name = <span class="string">'qsbk_two'</span></span><br><span class="line">    allowed_domains = [<span class="string">'www.qiushibaike.com'</span>]</span><br><span class="line">    start_urls = [<span class="string">'https://www.qiushibaike.com/text/'</span>]</span><br><span class="line"></span><br><span class="line">    link_extractor = LinkExtractor(allow=<span class="string">'/text/page/\d+/'</span>)</span><br><span class="line">    rules = (</span><br><span class="line">        Rule(link_extractor=link_extractor, callback=<span class="string">'parse_item'</span>, follow=<span class="literal">True</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        outerbox = response.xpath(<span class="string">"//div[@id='content-left']/div"</span>)</span><br><span class="line">        items = []</span><br><span class="line">        <span class="keyword">for</span> box <span class="keyword">in</span> outerbox:</span><br><span class="line">            detail_url = str(box.xpath(<span class="string">"a[1]/@href"</span>).get()).strip()</span><br><span class="line">            author = str(box.xpath(<span class="string">"div[@class='author clearfix']/a/h2/text()"</span>).get()).strip()</span><br><span class="line">            content = str(box.xpath(<span class="string">"a/div[@class='content']/span/text()"</span>).get()).strip()</span><br><span class="line"></span><br><span class="line">            item = QsbkItem()</span><br><span class="line">            item[<span class="string">'detail_url'</span>] = detail_url</span><br><span class="line">            item[<span class="string">'author'</span>] = author</span><br><span class="line">            item[<span class="string">'content'</span>] = content</span><br><span class="line"></span><br><span class="line">            cmt_box = box.xpath(<span class="string">"a[@class='indexGodCmt']"</span>)</span><br><span class="line">            <span class="keyword">if</span> len(cmt_box) &gt; <span class="number">0</span>:</span><br><span class="line">                cmt_name = str(cmt_box[<span class="number">0</span>].xpath(<span class="string">"div/span[@class='cmt-name']/text()"</span>).get()).strip()[<span class="number">0</span>:<span class="number">-1</span>]</span><br><span class="line">                item[<span class="string">'cmt_name'</span>] = cmt_name</span><br><span class="line">                cmt_content = str(cmt_box[<span class="number">0</span>].xpath(<span class="string">"div/div/text()"</span>).get()).strip()</span><br><span class="line">                item[<span class="string">'cmt_content'</span>] = cmt_content</span><br><span class="line">            items.append(item)</span><br><span class="line">        <span class="keyword">return</span> items</span><br></pre></td></tr></table></figure>
+
+<p><code>parse_item</code>方法中的代码和之前的爬虫代码相差不大，只是多了爬取审评字段，这里直接看代码不在过多描述，主要说下 <code>link_extractor</code> 和 <code>rules</code></p>
+<ul>
+<li><p><code>link_extractor</code>: 经检查发现每页的链接是<code>/text/page/[数字]/</code>这种形式，所以我们可以通过编写一个简单的正则对链接进行过滤 <code>/text/page/\d+/</code>。链接如果前边没域名<code>CrawlSpider</code>会自动将当前网站的域名拼接上去。</p>
+</li>
+<li><p><code>rules</code>: <code>link_extractor</code>参数传入了上边创建好的<code>LinkExtractor</code>对象，<code>callback</code> 参数指定了创建的 <code>parse_item</code> 为回调方法，<code>follow</code> 参数设置为 <code>True</code> 指定如果提取到链接则请求新的链接继续执行</p>
+</li>
+</ul>
+<p>然后修改 <code>start.py</code> 中的启动命令为 <code>scrapy crawl qsbk_two</code> 来启动新创建的这个爬虫，然后可以看到<code>CrawlSpider</code>会自动爬取每页的数据，以爬取过的链接会自动过滤不会进行重复请求</p>
+<h2 id="demo地址"><a href="#demo地址" class="headerlink" title="demo地址"></a>demo地址</h2><blockquote>
+<p><a href="https://gitee.com/fengzxia/python_crawler_learning/blob/master/scrapy/qiushibaike/qsbk/spiders/qsbk_two.py" target="_blank" rel="noopener">https://gitee.com/fengzxia/python_crawler_learning/blob/master/scrapy/qiushibaike/qsbk/spiders/qsbk_two.py</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建CrawlSpider爬虫"><span class="toc-number">1.</span> <span class="toc-text">创建CrawlSpider爬虫</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LinkExtractor链接提取器"><span class="toc-number">1.1.</span> <span class="toc-text">LinkExtractor链接提取器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rule规则类"><span class="toc-number">1.2.</span> <span class="toc-text">Rule规则类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#糗事百科CrawlSpider案例"><span class="toc-number">2.</span> <span class="toc-text">糗事百科CrawlSpider案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo地址"><span class="toc-number">3.</span> <span class="toc-text">demo地址</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/89d31750.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/89d31750.html&text=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/89d31750.html&is_video=false&description=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[python爬虫]CrawlSpider爬虫入门学习&body=Check out this article: https://feng1000.github.io/posts/89d31750.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/89d31750.html&title=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/89d31750.html&name=[python爬虫]CrawlSpider爬虫入门学习&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/89d31750.html&t=[python爬虫]CrawlSpider爬虫入门学习" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
