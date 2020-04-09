@@ -15,9 +15,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Python </category>
+          
+          <category> 异常 </category>
           
           <category> 爬虫 </category>
           
@@ -50,9 +50,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Python </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -137,9 +137,9 @@
       
       <categories>
           
-          <category> Docker </category>
-          
           <category> Python </category>
+          
+          <category> Docker </category>
           
           <category> 爬虫 </category>
           
@@ -350,9 +350,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Js </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -408,9 +408,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Git </category>
+          
+          <category> 异常 </category>
           
           <category> 项目管理 </category>
           
@@ -725,9 +725,9 @@
           
           <category> BUG </category>
           
-          <category> logback </category>
-          
           <category> 异常 </category>
+          
+          <category> logback </category>
           
       </categories>
       
@@ -754,9 +754,9 @@
           
           <category> Java </category>
           
-          <category> 基础 </category>
-          
           <category> BUG </category>
+          
+          <category> 基础 </category>
           
           <category> 异常 </category>
           
@@ -791,9 +791,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Spring-data-jpa </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -828,9 +828,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Spring-data-jpa </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -886,9 +886,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Python </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -915,9 +915,9 @@
           
           <category> DB </category>
           
-          <category> NoSQL </category>
-          
           <category> BUG </category>
+          
+          <category> NoSQL </category>
           
           <category> 异常 </category>
           
@@ -1130,9 +1130,9 @@
           
           <category> Web </category>
           
-          <category> Ajax </category>
-          
           <category> BUG </category>
+          
+          <category> Ajax </category>
           
           <category> 接口 </category>
           
@@ -1196,9 +1196,9 @@
           
           <category> Elasticsearch </category>
           
-          <category> x-pack </category>
-          
           <category> Elasticsearch </category>
+          
+          <category> x-pack </category>
           
       </categories>
       
@@ -1463,9 +1463,9 @@
           
           <category> SpringBoot </category>
           
-          <category> Redis </category>
-          
           <category> BUG </category>
+          
+          <category> Redis </category>
           
           <category> 异常 </category>
           
@@ -1552,9 +1552,9 @@
           
           <category> Web </category>
           
-          <category> Ajax </category>
-          
           <category> BUG </category>
+          
+          <category> Ajax </category>
           
           <category> 跨域 </category>
           
