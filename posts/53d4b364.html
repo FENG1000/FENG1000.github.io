@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="项目依赖 12345678910111213141516&lt;parent&gt;    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;spring-boot-starter-parent&lt;&#x2F;artifactId&gt;    &lt;version&gt;2.2.5.RELEASE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot2.2.X版本懒加载的实现方法">
+<meta property="og:url" content="https:&#x2F;&#x2F;feng1000.github.io&#x2F;posts&#x2F;53d4b364.html">
+<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:description" content="项目依赖 12345678910111213141516&lt;parent&gt;    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;spring-boot-starter-parent&lt;&#x2F;artifactId&gt;    &lt;version&gt;2.2.5.RELEASE">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;10&#x2F;GTThvt.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;10&#x2F;GTTzrV.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;10&#x2F;GTbn4e.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;10&#x2F;GTbQgA.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;10&#x2F;GTLiex.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;10&#x2F;GTOGHx.png">
+<meta property="article:published_time" content="2020-04-10T12:34:29.000Z">
+<meta property="article:modified_time" content="2020-04-10T12:36:40.659Z">
+<meta property="article:author" content="Jacob">
+<meta property="article:tag" content="懒加载">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;10&#x2F;GTThvt.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>SpringBoot2.2.X版本懒加载的实现方法</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/posts/7158fbb2.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/53d4b364.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/53d4b364.html&text=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/53d4b364.html&is_video=false&description=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot2.2.X版本懒加载的实现方法&body=Check out this article: https://feng1000.github.io/posts/53d4b364.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/53d4b364.html&name=SpringBoot2.2.X版本懒加载的实现方法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/53d4b364.html&t=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-全局配置"><span class="toc-number">1.</span> <span class="toc-text">1. 全局配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#写法1"><span class="toc-number">1.1.</span> <span class="toc-text">写法1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写法2"><span class="toc-number">1.2.</span> <span class="toc-text">写法2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写法3"><span class="toc-number">1.3.</span> <span class="toc-text">写法3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#展示效果"><span class="toc-number">1.4.</span> <span class="toc-text">展示效果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Controller层代码"><span class="toc-number">1.4.1.</span> <span class="toc-text">Controller层代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Service层代码"><span class="toc-number">1.4.2.</span> <span class="toc-text">Service层代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#展示效果-1"><span class="toc-number">1.4.3.</span> <span class="toc-text">展示效果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-局部类-方法配置"><span class="toc-number">2.</span> <span class="toc-text">2. 局部类&#x2F;方法配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#局部配置比全局配置优先级要高"><span class="toc-number">2.1.</span> <span class="toc-text">局部配置比全局配置优先级要高</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SpringBoot2.2.X版本懒加载的实现方法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jacob Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-10T12:34:29.000Z" itemprop="datePublished">2020-04-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/Spring/">Spring</a> › <a class="category-link" href="/categories/Java/Spring/SpringBoot/">SpringBoot</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E6%87%92%E5%8A%A0%E8%BD%BD/" rel="tag">懒加载</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>项目依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.5.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-全局配置"><a href="#1-全局配置" class="headerlink" title="1. 全局配置"></a>1. 全局配置</h2><h3 id="写法1"><a href="#写法1" class="headerlink" title="写法1"></a>写法1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SpringApplication sa = <span class="keyword">new</span> SpringApplication(Application<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    sa.setLazyInitialization(<span class="keyword">true</span>);</span><br><span class="line">    sa.run(args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="写法2"><a href="#写法2" class="headerlink" title="写法2"></a>写法2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	SpringApplicationBuilder sab = <span class="keyword">new</span> SpringApplicationBuilder(Application<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">	sab.lazyInitialization(<span class="keyword">true</span>).run(args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="写法3"><a href="#写法3" class="headerlink" title="写法3"></a>写法3</h3><p>直接在<code>application.yml</code>文件中</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">main:</span></span><br><span class="line">    <span class="attr">lazy-initialization:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="展示效果"><a href="#展示效果" class="headerlink" title="展示效果"></a>展示效果</h3><h4 id="Controller层代码"><a href="#Controller层代码" class="headerlink" title="Controller层代码"></a><code>Controller</code>层代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lx.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lx.service.IndexService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Lazy;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Lazy</span>(<span class="keyword">false</span>)</span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">IndexController</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"[&#123;&#125;]开始初始化"</span>, IndexController<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> IndexService indexService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@GetMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    indexService.index();</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Service层代码"><a href="#Service层代码" class="headerlink" title="Service层代码"></a><code>Service</code>层代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lx.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Lazy;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Lazy</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">IndexService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"[&#123;&#125;]开始初始化"</span>, IndexService<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"index method run"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="展示效果-1"><a href="#展示效果-1" class="headerlink" title="展示效果"></a>展示效果</h4><p>启动项目后打印日志</p>
+<p><img src="https://s1.ax1x.com/2020/04/10/GTThvt.png" alt="GTThvt.png"></p>
+<p>访问<code>localhost:8080</code>后打印的日志</p>
+<p><img src="https://s1.ax1x.com/2020/04/10/GTTzrV.png" alt="GTTzrV.png"></p>
+<p>配置成功</p>
+<h2 id="2-局部类-方法配置"><a href="#2-局部类-方法配置" class="headerlink" title="2. 局部类/方法配置"></a>2. 局部<code>类/方法</code>配置</h2><p>想要实现局部<code>类/方法</code>的懒加载很简单，只需要在<code>类/方法</code>上添加<code>@Lazy</code>注解即可，默认值<code>true</code>开启懒加载，不开启可设置为<code>false</code>，例如：想要懒加载<code>IndexController</code>那么只需要在类上添加<code>@Lazy</code>。<strong>注：我这里在展示局部实现效果时，项目中以去除全局懒加载的配置</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lx.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lx.service.IndexService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Lazy;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Lazy</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">IndexController</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"[&#123;&#125;]开始初始化"</span>, IndexController<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> IndexService indexService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@GetMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    indexService.index();</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>启动项目打印日志</p>
+<p><img src="https://s1.ax1x.com/2020/04/10/GTbn4e.png" alt="GTbn4e.png"></p>
+<p>调用<code>localhost:8080</code>接口后打印的日志</p>
+<p><img src="https://s1.ax1x.com/2020/04/10/GTbQgA.png" alt="GTbQgA.png"></p>
+<p><strong>注：当设置懒加载的<code>类/方法</code>有被<code>其他类</code>初始化注入时，如果注入此<code>类/方法</code>的类没有设置懒加载的话，在启动时一样会被初始话。</strong>例如：给<code>IndexService</code>添加<code>@Lazy</code>懒加载注解，然后去掉<code>IndexController</code>的懒加载注解后再启动项目查看日志</p>
+<p><img src="https://s1.ax1x.com/2020/04/10/GTLiex.png" alt="GTLiex.png"></p>
+<h3 id="局部配置比全局配置优先级要高"><a href="#局部配置比全局配置优先级要高" class="headerlink" title="局部配置比全局配置优先级要高"></a>局部配置比全局配置优先级要高</h3><ol>
+<li><p>在<code>application.yml</code>中设置开启全局懒加载配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">main:</span></span><br><span class="line">    <span class="attr">lazy-initialization:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>给<code>IndexService</code>通过<code>@Lazy</code>设置禁用懒加载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lx.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Lazy;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Lazy</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">IndexService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"[&#123;&#125;]开始初始化"</span>, IndexService<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"index method run"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>启动项目查看日志打印，可以看到<code>IndexService</code>在项目启动时就进行了初始化，而<code>IndexController</code>在启动时并没有进行初始化</p>
+<p><img src="https://s1.ax1x.com/2020/04/10/GTOGHx.png" alt="GTOGHx.png"></p>
+</li>
+</ol>
+<blockquote>
+<p>参考博客：<a href="https://juejin.im/post/5e83f795f265da47e449f4ea" target="_blank" rel="noopener">https://juejin.im/post/5e83f795f265da47e449f4ea</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-全局配置"><span class="toc-number">1.</span> <span class="toc-text">1. 全局配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#写法1"><span class="toc-number">1.1.</span> <span class="toc-text">写法1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写法2"><span class="toc-number">1.2.</span> <span class="toc-text">写法2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写法3"><span class="toc-number">1.3.</span> <span class="toc-text">写法3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#展示效果"><span class="toc-number">1.4.</span> <span class="toc-text">展示效果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Controller层代码"><span class="toc-number">1.4.1.</span> <span class="toc-text">Controller层代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Service层代码"><span class="toc-number">1.4.2.</span> <span class="toc-text">Service层代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#展示效果-1"><span class="toc-number">1.4.3.</span> <span class="toc-text">展示效果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-局部类-方法配置"><span class="toc-number">2.</span> <span class="toc-text">2. 局部类&#x2F;方法配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#局部配置比全局配置优先级要高"><span class="toc-number">2.1.</span> <span class="toc-text">局部配置比全局配置优先级要高</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://feng1000.github.io/posts/53d4b364.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://feng1000.github.io/posts/53d4b364.html&text=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://feng1000.github.io/posts/53d4b364.html&is_video=false&description=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot2.2.X版本懒加载的实现方法&body=Check out this article: https://feng1000.github.io/posts/53d4b364.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://feng1000.github.io/posts/53d4b364.html&title=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://feng1000.github.io/posts/53d4b364.html&name=SpringBoot2.2.X版本懒加载的实现方法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://feng1000.github.io/posts/53d4b364.html&t=SpringBoot2.2.X版本懒加载的实现方法" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Jacob
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
