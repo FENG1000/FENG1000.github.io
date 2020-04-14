@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Flyway+Springboot整合使用</title>
+      <link href="/posts/dd4a526.html"/>
+      <url>/posts/dd4a526.html</url>
+      
+        <content type="html"><![CDATA[<p>flyway在非springboot中的配置方法可参考<a href="https://fengzxia.gitee.io/posts/cd84d80b.html">flyway入门使用教程</a></p><h2 id="1-项目依赖"><a href="#1-项目依赖" class="headerlink" title="1.项目依赖"></a>1.项目依赖</h2><p>项目中需要的依赖</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.lx<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flyway<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.5.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--与springboot整合时需要此包，如果是通过插件的方式则不需要--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.flywaydb<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flyway-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.2.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置flywaydb时，需要引入org.springframework:spring-jdbc包，否则会报找不到驱动bug--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="2-yml配置"><a href="#2-yml配置" class="headerlink" title="2.yml配置"></a>2.yml配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">root</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">flyway:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">encoding:</span> <span class="string">UTF-8</span></span><br><span class="line">    <span class="attr">locations:</span> <span class="string">['classpath:db/migration']</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">root</span></span><br></pre></td></tr></table></figure><p>更多配置信息可以参考<code>org.springframework.boot.autoconfigure.flyway.FlywayProperties</code>基本和<a href="https://fengzxia.gitee.io/posts/cd84d80b.html#configuration%E9%85%8D%E7%BD%AE%E7%AE%80%E4%BB%8B">flyway入门使用教程</a>中的配置参数一致，只是不需要在写<code>driver</code>驱动，而是根据链接自动识别，通过springboot引入的<code>spring-jdbc</code>引用数据源</p><h2 id="3-编写脚本"><a href="#3-编写脚本" class="headerlink" title="3.编写脚本"></a>3.编写脚本</h2><p>参照<a href="https://fengzxia.gitee.io/posts/cd84d80b.html#mvn-flyway-migrate%E8%BF%81%E7%A7%BB">flyway入门使用教程</a>编写一个数据迁移脚本<code>V1.0__Create_user_table.sql</code></p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`user`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user`</span>  (</span><br><span class="line"> <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line"> <span class="string">`create_time`</span> datetime(<span class="number">0</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</span><br><span class="line"> <span class="string">`update_time`</span> datetime(<span class="number">0</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</span><br><span class="line"> <span class="string">`valid`</span> <span class="built_in">tinyint</span>(<span class="number">2</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> <span class="keyword">COMMENT</span> <span class="string">'是否有效 0.有效 1.无效'</span>,</span><br><span class="line"> <span class="string">`delete_time`</span> datetime(<span class="number">0</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line"> <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'账号名称'</span>,</span><br><span class="line"> <span class="string">`password`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'加密后密码'</span>,</span><br><span class="line"> <span class="string">`salt`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'密码盐值'</span>,</span><br><span class="line"> <span class="string">`admin_role_ids`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'角色id（多个使用,号隔开）'</span>,</span><br><span class="line"> PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>) <span class="keyword">USING</span> BTREE</span><br><span class="line">) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span> AUTO_INCREMENT = <span class="number">1</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = utf8mb4 <span class="keyword">COLLATE</span> = utf8mb4_unicode_ci <span class="keyword">COMMENT</span> = <span class="string">'用户表'</span> ROW_FORMAT = <span class="keyword">Compact</span>;</span><br></pre></td></tr></table></figure><h2 id="4-启动项目"><a href="#4-启动项目" class="headerlink" title="4. 启动项目"></a>4. 启动项目</h2><p>到此处为止有关springboot和flyway的配置基本已经配置完毕，直接启动项目，查看控制台，可以看到flyway配置成功，可以正常执行脚本<br><img src="https://s1.ax1x.com/2020/04/14/JpEGy6.png" alt="JpEGy6.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+          <category> Spring </category>
+          
+          <category> SpringBoot </category>
+          
+          <category> Flyway </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据库版本控制 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>flyway入门使用教程</title>
       <link href="/posts/cd84d80b.html"/>
       <url>/posts/cd84d80b.html</url>
@@ -15,7 +46,7 @@
           
           <category> Java </category>
           
-          <category> flyway </category>
+          <category> Flyway </category>
           
           <category> 数据库 </category>
           
@@ -71,13 +102,13 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> BUG </category>
           
-          <category> 爬虫 </category>
+          <category> Python </category>
           
           <category> 异常 </category>
+          
+          <category> 爬虫 </category>
           
           <category> mitmproxy </category>
           
@@ -106,9 +137,9 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> BUG </category>
+          
+          <category> Python </category>
           
           <category> 异常 </category>
           
@@ -197,9 +228,9 @@
           
           <category> Python </category>
           
-          <category> 爬虫 </category>
-          
           <category> Docker </category>
+          
+          <category> 爬虫 </category>
           
           <category> mitmproxy </category>
           
@@ -317,9 +348,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringBoot </category>
+          
+          <category> 转载 </category>
           
           <category> Redis </category>
           
@@ -478,9 +509,9 @@
           
           <category> Git </category>
           
-          <category> 项目管理 </category>
-          
           <category> 异常 </category>
+          
+          <category> 项目管理 </category>
           
           <category> Git </category>
           
@@ -613,9 +644,9 @@
           
           <category> Spring </category>
           
-          <category> Validation </category>
-          
           <category> BUG </category>
+          
+          <category> Validation </category>
           
       </categories>
       
@@ -702,9 +733,9 @@
           
           <category> Java </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -799,9 +830,9 @@
           
           <category> BUG </category>
           
-          <category> logback </category>
-          
           <category> 异常 </category>
+          
+          <category> logback </category>
           
       </categories>
       
@@ -830,9 +861,9 @@
           
           <category> 基础 </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -865,9 +896,9 @@
           
           <category> Spring </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> BUG </category>
+          
+          <category> Spring-data-jpa </category>
           
           <category> 异常 </category>
           
@@ -902,11 +933,11 @@
           
           <category> Spring </category>
           
+          <category> BUG </category>
+          
           <category> 转载 </category>
           
           <category> Spring-data-jpa </category>
-          
-          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -962,9 +993,9 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> BUG </category>
+          
+          <category> Python </category>
           
           <category> 异常 </category>
           
@@ -993,9 +1024,9 @@
           
           <category> DB </category>
           
-          <category> NoSQL </category>
-          
           <category> BUG </category>
+          
+          <category> NoSQL </category>
           
           <category> 异常 </category>
           
@@ -1090,9 +1121,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringBoot </category>
+          
+          <category> 转载 </category>
           
           <category> Redis </category>
           
@@ -1123,11 +1154,11 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringBoot </category>
           
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -1158,9 +1189,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringBoot </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1185,9 +1216,9 @@
       
       <categories>
           
-          <category> DB </category>
-          
           <category> ELK </category>
+          
+          <category> DB </category>
           
           <category> NoSQL </category>
           
@@ -1216,9 +1247,9 @@
           
           <category> Web </category>
           
-          <category> Ajax </category>
-          
           <category> BUG </category>
+          
+          <category> Ajax </category>
           
           <category> 接口 </category>
           
@@ -1274,9 +1305,9 @@
       
       <categories>
           
-          <category> DB </category>
-          
           <category> ELK </category>
+          
+          <category> DB </category>
           
           <category> NoSQL </category>
           
@@ -1390,9 +1421,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringBoot </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1551,9 +1582,9 @@
           
           <category> SpringBoot </category>
           
-          <category> Redis </category>
-          
           <category> BUG </category>
+          
+          <category> Redis </category>
           
           <category> 异常 </category>
           
@@ -1642,9 +1673,9 @@
           
           <category> Web </category>
           
-          <category> Ajax </category>
-          
           <category> BUG </category>
+          
+          <category> Ajax </category>
           
           <category> 跨域 </category>
           
