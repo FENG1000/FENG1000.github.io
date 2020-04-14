@@ -73,9 +73,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
           <category> 爬虫 </category>
           
@@ -108,9 +108,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -195,9 +195,9 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> Docker </category>
+          
+          <category> Python </category>
           
           <category> 爬虫 </category>
           
@@ -319,9 +319,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -702,11 +702,11 @@
           
           <category> Java </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -799,9 +799,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> logback </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -830,11 +830,11 @@
           
           <category> 基础 </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -867,9 +867,9 @@
           
           <category> BUG </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> 异常 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -902,13 +902,13 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> 异常 </category>
+          
+          <category> 转载 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -964,9 +964,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -1026,9 +1026,9 @@
           
           <category> DB </category>
           
-          <category> 转载 </category>
-          
           <category> NoSQL </category>
+          
+          <category> 转载 </category>
           
           <category> MongoDB </category>
           
@@ -1092,9 +1092,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1125,11 +1125,11 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1191,9 +1191,9 @@
           
           <category> NoSQL </category>
           
-          <category> Elasticsearch </category>
-          
           <category> Docker </category>
+          
+          <category> Elasticsearch </category>
           
           <category> Elasticsearch </category>
           
@@ -1584,9 +1584,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringMVC </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
