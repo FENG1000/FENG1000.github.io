@@ -10,12 +10,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot项目接口返回值中Long类型超过17位导致前端js在调用时出现丢失精度问题">
 <meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;146d4389.html">
-<meta property="og:site_name" content="Jacob Blog">
+<meta property="og:site_name" content="只是学习学习的博客">
 <meta property="og:description" content="解决办法很简单将Long类型的字段转为String类型返给前端即可，解决方法有3种可根据自己项目情况来选择: 方式1在实体类种直接将Long类型的字段修改为String类型 方式2在要返回的字段上添加@JsonSerialize(using &#x3D; ToStringSerializer.class)注解，这样就能在序列化时自动将该字段类型转为String类型返给前端，相较于方式1不影响其他调用该字段的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-09T06:23:53.000Z">
 <meta property="article:modified_time" content="2020-04-07T07:59:22.629Z">
-<meta property="article:author" content="Jacob">
+<meta property="article:author" content="只是学习学习">
 <meta property="article:tag" content="数字丢失精度">
 <meta name="twitter:card" content="summary">
     
@@ -133,7 +133,7 @@
 
     <div class="meta">
       <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Jacob Blog</span>
+        <span itemprop="name">只是学习学习的博客</span>
       </span>
       
     <div class="postdate">
@@ -233,7 +233,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 Jacob
+    Copyright &copy; 2020 只是学习学习
   </div>
   <div class="footer-right">
     <nav>
