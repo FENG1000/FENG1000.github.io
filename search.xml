@@ -348,9 +348,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> 转载 </category>
+          
+          <category> SpringBoot </category>
           
           <category> Redis </category>
           
@@ -733,9 +733,9 @@
           
           <category> Java </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -861,9 +861,9 @@
           
           <category> 基础 </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -933,9 +933,9 @@
           
           <category> Spring </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> Spring-data-jpa </category>
           
@@ -1121,9 +1121,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> 转载 </category>
+          
+          <category> SpringBoot </category>
           
           <category> Redis </category>
           
@@ -1154,11 +1154,11 @@
           
           <category> Spring </category>
           
+          <category> 转载 </category>
+          
           <category> SpringBoot </category>
           
           <category> BUG </category>
-          
-          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -1189,9 +1189,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> 转载 </category>
+          
+          <category> SpringBoot </category>
           
       </categories>
       
@@ -1216,9 +1216,9 @@
       
       <categories>
           
-          <category> ELK </category>
-          
           <category> DB </category>
+          
+          <category> ELK </category>
           
           <category> NoSQL </category>
           
@@ -1305,17 +1305,17 @@
       
       <categories>
           
-          <category> ELK </category>
-          
           <category> DB </category>
+          
+          <category> ELK </category>
           
           <category> NoSQL </category>
           
           <category> Elasticsearch </category>
           
-          <category> x-pack </category>
-          
           <category> Elasticsearch </category>
+          
+          <category> x-pack </category>
           
       </categories>
       
@@ -1421,9 +1421,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> 转载 </category>
+          
+          <category> SpringBoot </category>
           
       </categories>
       
