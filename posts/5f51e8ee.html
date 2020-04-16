@@ -163,6 +163,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <blockquote>
 <p>原文链接：<a href="https://www.cnblogs.com/tangqiu/p/9914817.html" target="_blank" rel="noopener">https://www.cnblogs.com/tangqiu/p/9914817.html</a></p>
 </blockquote>
@@ -179,6 +180,7 @@
 </ol>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果要安装 <code>requirements.txt</code> 中的类库内容，那么你可以执行:  <code>pip install -r requirements.txt</code><br>或者通过:  <code>pip install -i https://pypi.doubanio.com/simple/ -r requirements.txt</code> 指定资源库地址来执行</p>
 
+    
   </div>
 </article>
 
@@ -242,7 +244,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -295,10 +301,10 @@
     btn += '<i class="far fa-clone"></i>';
     btn += '</span>'; 
     // mount it!
-    $(".highlight .code pre").before(btn);
+    $(".highlight table").before(btn);
     var clip = new ClipboardJS('.btn-copy', {
-      target: function(trigger) {
-        return trigger.nextElementSibling;
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
     clip.on('success', function(e) {

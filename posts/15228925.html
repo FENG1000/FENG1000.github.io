@@ -163,6 +163,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <h2 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h2><p>简单的说即为浏览器限制访问A站点下的js代码对B站点下的url进行ajax请求。比如说，前端域名是<code>www.abc.com</code>，那么在当前环境中运行的js代码，出于安全考虑，访问<code>www.xyz.com</code>域名下的资源，是受到限制的。现代浏览器默认都会基于安全原因而阻止跨域的ajax请求，这是现代浏览器中必备的功能。</p>
 <h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>有根据spring的版本不同有不同的解决办法：</p>
 <ol>
@@ -186,6 +187,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>cors<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.leimo.filter.myeCORSFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>cors<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 
+    
   </div>
 </article>
 
@@ -249,7 +251,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -302,10 +308,10 @@
     btn += '<i class="far fa-clone"></i>';
     btn += '</span>'; 
     // mount it!
-    $(".highlight .code pre").before(btn);
+    $(".highlight table").before(btn);
     var clip = new ClipboardJS('.btn-copy', {
-      target: function(trigger) {
-        return trigger.nextElementSibling;
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
     clip.on('success', function(e) {

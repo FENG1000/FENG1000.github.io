@@ -16,7 +16,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190323144926477.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190323144949998.png">
 <meta property="article:published_time" content="2019-03-23T06:51:08.000Z">
-<meta property="article:modified_time" content="2020-04-07T08:00:07.448Z">
+<meta property="article:modified_time" content="2020-04-16T12:11:09.232Z">
 <meta property="article:author" content="只是学习学习">
 <meta property="article:tag" content="占空间">
 <meta property="article:tag" content="Windows">
@@ -167,6 +167,15 @@
   
 
   <div class="content" itemprop="articleBody">
+    
+  <blockquote>
+      <p>
+          作者: 只是学习学习<br>
+          原文地址: <a href="https://fengzxia.gitee.io/posts/b7f6a97c.html" target="_blank" rel="noopener">https://fengzxia.gitee.io/posts/b7f6a97c.html</a><br>
+          
+      </p>
+  </blockquote>
+
     <p>Windows版Redis启动后，会在C盘自动创建一个很大的缓存文件，<code>C:\Users\{你的用户名}\AppData\Local\Redis\RedisQFolk_****.dat</code>，一个大概就有7G左右，如果系统异常关闭，还会再新建一个差不多大小的缓存文件，之前的不会自动删除掉，会导致硬盘占用量越来越大。<br>我们可以通过自定义路径即可将其转移到其他分区，并限制其大小。</p>
 <h2 id="解决办法如下："><a href="#解决办法如下：" class="headerlink" title="解决办法如下："></a>解决办法如下：</h2><p>找到redis启动时用到的配置文件redis.windows.conf，然后打开，添加配置，如果存在则修改</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 指定生成的文件最大为4G</span><br><span class="line">maxheap 4294967296</span><br><span class="line"># 指定文件生成到D盘的MyRedisSwap目录下</span><br><span class="line">heapdir D:\MyRedisSwap\</span><br></pre></td></tr></table></figure>
@@ -174,6 +183,15 @@
 <li><strong>注意:需要在D盘创建过MyRedisSwap文件夹后redis才能启动，中间要有空格，maxheap单位是byte，修改好后重启即可</strong></li>
 </ul>
 <p>启动前：<br><img src="https://img-blog.csdnimg.cn/20190323144926477.png" alt="在这里插入图片描述"><br>启动后：<br><img src="https://img-blog.csdnimg.cn/20190323144949998.png" alt="在这里插入图片描述"></p>
+
+    
+  <blockquote>
+      <p>
+          作者: 只是学习学习<br>
+          原文地址: <a href="https://fengzxia.gitee.io/posts/b7f6a97c.html" target="_blank" rel="noopener">https://fengzxia.gitee.io/posts/b7f6a97c.html</a><br>
+          版权声明: 除非另有说明，否则此博客中的所有文章均根据<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a>进行许可。
+      </p>
+  </blockquote>
 
   </div>
 </article>
@@ -238,7 +256,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -291,10 +313,10 @@
     btn += '<i class="far fa-clone"></i>';
     btn += '</span>'; 
     // mount it!
-    $(".highlight .code pre").before(btn);
+    $(".highlight table").before(btn);
     var clip = new ClipboardJS('.btn-copy', {
-      target: function(trigger) {
-        return trigger.nextElementSibling;
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
     clip.on('success', function(e) {

@@ -166,6 +166,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <blockquote>
 <p>原文链接：<a href="https://juejin.im/post/5c9e23e36fb9a05e58493c50?utm_source=gold_browser_extension" target="_blank" rel="noopener">https://juejin.im/post/5c9e23e36fb9a05e58493c50?utm_source=gold_browser_extension</a></p>
 </blockquote>
@@ -232,6 +233,7 @@
 <p>缓存之后查看<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pLmxvbGkubmV0LzIwMTkvMDQvMTEvNWNhZWNkNTMwM2IwNy5wbmc" alt="UTOOLS1554959697256.png"></p>
 <p>到此，已经完成Json的序列化。其他配置可根据<code>RedisCacheConfiguration</code>中的不同方法配置。</p>
 
+    
   </div>
 </article>
 
@@ -295,7 +297,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -348,10 +354,10 @@
     btn += '<i class="far fa-clone"></i>';
     btn += '</span>'; 
     // mount it!
-    $(".highlight .code pre").before(btn);
+    $(".highlight table").before(btn);
     var clip = new ClipboardJS('.btn-copy', {
-      target: function(trigger) {
-        return trigger.nextElementSibling;
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
     clip.on('success', function(e) {

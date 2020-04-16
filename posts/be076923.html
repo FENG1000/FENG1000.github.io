@@ -168,6 +168,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <p><strong>【转载自 ImportNew 公众号】地址: <a href="https://mp.weixin.qq.com/s/fC0rK_1jvQMHxzDHRkh6cQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/fC0rK_1jvQMHxzDHRkh6cQ</a>(由于我用的是Maven所以我将Gradle部分都替换成了Maven内容)</strong></p>
 <p>在本文中，将学习如何使用 Spring Boot 2.x 和 Redis 执行异步任务。文后附有演示代码。</p>
 <h3 id="Spring-Spring-Boot"><a href="#Spring-Spring-Boot" class="headerlink" title="Spring/Spring Boot"></a>Spring/Spring Boot</h3><p>Spring 是最流行 Java 应用程序开发框架。因此，Spring 社区也是最大的开源社区之一。除此之外，Spring 博客还提供了最新的开发文档，内容非常丰富。涵盖了框架的内部工作原理和示例项目，在StackOverflow上有10万多个问题。 </p>
@@ -243,6 +244,7 @@
 <li><a href="https://gitee.com/fengzxia/springboot_rqueue" target="_blank" rel="noopener">自己敲的</a></li>
 </ul>
 
+    
   </div>
 </article>
 
@@ -306,7 +308,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -359,10 +365,10 @@
     btn += '<i class="far fa-clone"></i>';
     btn += '</span>'; 
     // mount it!
-    $(".highlight .code pre").before(btn);
+    $(".highlight table").before(btn);
     var clip = new ClipboardJS('.btn-copy', {
-      target: function(trigger) {
-        return trigger.nextElementSibling;
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
     clip.on('success', function(e) {

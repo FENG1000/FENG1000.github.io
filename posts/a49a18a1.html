@@ -163,6 +163,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <blockquote>
 <p>原文链接：<a href="https://github.com/fxsjy/jieba/blob/master/README.md" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/README.md</a></p>
 </blockquote>
@@ -471,6 +472,7 @@ jieba.initialize()  # 手动初始化（可选）</code></pre><p>在 0.28 之前
 <p><strong>更多问题请点击</strong>：<a href="https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed</a></p>
 <h1 id="修订历史"><a href="#修订历史" class="headerlink" title="修订历史"></a>修订历史</h1><p><a href="https://github.com/fxsjy/jieba/blob/master/Changelog" target="_blank" rel="noopener">https://github.com/fxsjy/jieba/blob/master/Changelog</a></p>
 
+    
   </div>
 </article>
 
@@ -534,7 +536,11 @@ jieba.initialize()  # 手动初始化（可选）</code></pre><p>在 0.28 之前
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -587,10 +593,10 @@ jieba.initialize()  # 手动初始化（可选）</code></pre><p>在 0.28 之前
     btn += '<i class="far fa-clone"></i>';
     btn += '</span>'; 
     // mount it!
-    $(".highlight .code pre").before(btn);
+    $(".highlight table").before(btn);
     var clip = new ClipboardJS('.btn-copy', {
-      target: function(trigger) {
-        return trigger.nextElementSibling;
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
     clip.on('success', function(e) {

@@ -14,7 +14,7 @@
 <meta property="og:description" content="应用场景我们希望通过缓存来减少对关系型数据库的查询次数，减轻数据库压力。在执行DAO类的select***(), query***()方法时，先从Redis中查询有没有缓存数据，如果有则直接从Redis拿到结果，如果没有再向数据库发起查询请求取数据。 序列化问题要把对象做为key-value对保存在redis中，就必须要解决对象的序列化问题。Spring Data Redis给我们提供了一些现成的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-11T06:50:05.000Z">
-<meta property="article:modified_time" content="2020-04-09T11:43:21.435Z">
+<meta property="article:modified_time" content="2020-04-16T12:11:09.457Z">
 <meta property="article:author" content="只是学习学习">
 <meta property="article:tag" content="序列化">
 <meta name="twitter:card" content="summary">
@@ -163,6 +163,15 @@
   
 
   <div class="content" itemprop="articleBody">
+    
+  <blockquote>
+      <p>
+          作者: 只是学习学习<br>
+          原文地址: <a href="https://fengzxia.gitee.io/posts/f6f65c4b.html" target="_blank" rel="noopener">https://fengzxia.gitee.io/posts/f6f65c4b.html</a><br>
+          
+      </p>
+  </blockquote>
+
     <h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>我们希望通过缓存来减少对关系型数据库的查询次数，减轻数据库压力。在执行DAO类的<code>select***()</code>, <code>query***()</code>方法时，先从Redis中查询有没有缓存数据，如果有则直接从Redis拿到结果，如果没有再向数据库发起查询请求取数据。</p>
 <h2 id="序列化问题"><a href="#序列化问题" class="headerlink" title="序列化问题"></a>序列化问题</h2><p>要把<code>对象</code>做为<code>key-value</code>对保存在redis中，就必须要解决对象的序列化问题。Spring Data Redis给我们提供了一些现成的方案：</p>
 <ul>
@@ -232,6 +241,15 @@
 <p><a href="https://blog.csdn.net/neosmith/article/details/46800235" target="_blank" rel="noopener">https://blog.csdn.net/neosmith/article/details/46800235</a><br><a href="https://blog.csdn.net/bai_bug/article/details/81222519" target="_blank" rel="noopener">https://blog.csdn.net/bai_bug/article/details/81222519</a></p>
 </blockquote>
 
+    
+  <blockquote>
+      <p>
+          作者: 只是学习学习<br>
+          原文地址: <a href="https://fengzxia.gitee.io/posts/f6f65c4b.html" target="_blank" rel="noopener">https://fengzxia.gitee.io/posts/f6f65c4b.html</a><br>
+          版权声明: 除非另有说明，否则此博客中的所有文章均根据<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a>进行许可。
+      </p>
+  </blockquote>
+
   </div>
 </article>
 
@@ -295,7 +313,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -348,10 +370,10 @@
     btn += '<i class="far fa-clone"></i>';
     btn += '</span>'; 
     // mount it!
-    $(".highlight .code pre").before(btn);
+    $(".highlight table").before(btn);
     var clip = new ClipboardJS('.btn-copy', {
-      target: function(trigger) {
-        return trigger.nextElementSibling;
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
     clip.on('success', function(e) {

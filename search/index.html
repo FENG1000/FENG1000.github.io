@@ -119,7 +119,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 只是学习学习
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
   </div>
   <div class="footer-right">
     <nav>
@@ -192,10 +196,12 @@
     });
 
     var observer = new MutationObserver(function(mutationsList, observer) {
-      if (mutationsList[0].addedNodes) {
-        $(".search-no-result").show(200);
-      } else {
-        $(".search-no-result").hide();
+      if (mutationsList.length == 1) {
+        if (mutationsList[0].addedNodes.length) {
+          $(".search-no-result").hide();
+        } else if (mutationsList[0].removedNodes.length) {
+          $(".search-no-result").show(200);
+        }
       }
     });
 
