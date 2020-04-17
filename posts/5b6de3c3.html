@@ -165,8 +165,7 @@
   </header>
   
 
-  <div class="content" itemprop="articleBody">
-    
+  <div class="content"itemprop ="articleBody">
     <h2 id="错误分析"><a href="#错误分析" class="headerlink" title="错误分析"></a>错误分析</h2><p>在使用redis获取发送的短信验证码，偶尔会报如下错误信息</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2019</span>-<span class="number">01</span>-<span class="number">15</span> <span class="number">10</span>:<span class="number">32</span>:<span class="number">15.104</span> [http-nio-<span class="number">8080</span>-exec-<span class="number">10</span>] WARN  org.springframework.web.servlet.PageNotFound:<span class="number">1176</span> - No mapping found f lowed</span><br><span class="line"> at [Source: [B@<span class="number">2836</span>aebe; line: <span class="number">1</span>, column: <span class="number">2</span>]; nested exception is com.fasterxml.jackson.core.JsonParseException: Invalid numeric value: Leading zeroes not allowed</span><br><span class="line"> at [Source: [B@<span class="number">2836</span>aebe; line: <span class="number">1</span>, column: <span class="number">2</span>]</span><br><span class="line"> at org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer.deserialize(Jackson2JsonRedisSerializer.java:<span class="number">73</span>)</span><br><span class="line"> at org.springframework.data.redis.core.AbstractOperations.deserializeValue(AbstractOperations.java:<span class="number">318</span>)</span><br><span class="line"> at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:<span class="number">58</span>)</span><br><span class="line"> at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:<span class="number">207</span>)</span><br><span class="line"> at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:<span class="number">169</span>)</span><br></pre></td></tr></table></figure>
 <p>通过看日志发现是因为使用的jackson解析redis中存储的数据，会把<strong>纯数字</strong>的短信验证码当作是<strong>数字类型</strong>来解析，之所以偶尔会报错是因为生成的随机数验证码中可能会<strong>以0开头</strong>，导致jackson认为这是一个<strong>无效的数字</strong>才报的错，然后使用<code>RedisTemplate&lt;String, String&gt;</code>当作字符串的方式获取短信验证码仍然不行，还是使用的jackson解析短信验证码，检测redis的配置发现是因为<strong>项目中指定的redisTemplate的数据解析方式为jackson解析</strong><br><img src="https://img-blog.csdnimg.cn/20190323135041422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
@@ -180,6 +179,7 @@
     
   </div>
 </article>
+
 
 
 

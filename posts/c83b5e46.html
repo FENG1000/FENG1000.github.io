@@ -164,8 +164,7 @@
   </header>
   
 
-  <div class="content" itemprop="articleBody">
-    
+  <div class="content"itemprop ="articleBody">
     <p>今天在学习springboot结合redis实现二级缓存时，项目依赖引入完成后想要测试redis是否可以连接成功，结果在测试时出现如下错误日志</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalStateException: Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes&#x3D;...) with your test</span><br><span class="line"></span><br><span class="line">	at org.springframework.util.Assert.state(Assert.java:73)</span><br><span class="line">	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.getOrFindConfigurationClasses(SpringBootTestContextBootstrapper.java:243)</span><br><span class="line">	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.processMergedContextConfiguration(SpringBootTestContextBootstrapper.java:155)</span><br><span class="line">	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildMergedContextConfiguration(AbstractTestContextBootstrapper.java:395)</span><br><span class="line">	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildDefaultMergedContextConfiguration(AbstractTestContextBootstrapper.java:312)</span><br><span class="line">	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildMergedContextConfiguration(AbstractTestContextBootstrapper.java:265)</span><br><span class="line">	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildTestContext(AbstractTestContextBootstrapper.java:108)</span><br><span class="line">	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.buildTestContext(SpringBootTestContextBootstrapper.java:99)</span><br><span class="line">	at org.springframework.test.context.TestContextManager.&lt;init&gt;(TestContextManager.java:139)</span><br><span class="line">	at org.springframework.test.context.TestContextManager.&lt;init&gt;(TestContextManager.java:124)</span><br></pre></td></tr></table></figure>
 <p>测试用例代码</p>
@@ -179,6 +178,7 @@
     
   </div>
 </article>
+
 
 
 

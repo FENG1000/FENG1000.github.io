@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1. 确认需要版权声明的位置通常情况下都是在拷贝博客详情内容时才给拷贝的内容添加版权信息，如果不管拷贝哪里的内容都给添加版权声明，影响用户体验。所以第一步确定博文详细内容在哪个标签中。这里我用的cactus主题，他的文章主体内容在&lt;div class&#x3D;&quot;content&quot;&gt;标签中 2.编写版权声明的js所以我们需要编写一个监听该标签内的复制事件的js，如下: 1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何给Hexo博客在复制时添加版权声明">
+<meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;8fda4e9d.html">
+<meta property="og:site_name" content="只是学习学习的博客">
+<meta property="og:description" content="1. 确认需要版权声明的位置通常情况下都是在拷贝博客详情内容时才给拷贝的内容添加版权信息，如果不管拷贝哪里的内容都给添加版权声明，影响用户体验。所以第一步确定博文详细内容在哪个标签中。这里我用的cactus主题，他的文章主体内容在&lt;div class&#x3D;&quot;content&quot;&gt;标签中 2.编写版权声明的js所以我们需要编写一个监听该标签内的复制事件的js，如下: 1234">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;17&#x2F;JVZPNn.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;17&#x2F;JVn8g0.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;17&#x2F;JVK9fA.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;17&#x2F;JVMxGd.png">
+<meta property="article:published_time" content="2020-04-17T05:58:28.000Z">
+<meta property="article:modified_time" content="2020-04-17T06:03:38.211Z">
+<meta property="article:author" content="只是学习学习">
+<meta property="article:tag" content="自建博客">
+<meta property="article:tag" content="版权声明">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;17&#x2F;JVZPNn.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>如何给Hexo博客在复制时添加版权声明</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/posts/dd4a526.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/8fda4e9d.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&text=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&is_video=false&description=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如何给Hexo博客在复制时添加版权声明&body=Check out this article: https://fengzxia.gitee.io/posts/8fda4e9d.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&name=如何给Hexo博客在复制时添加版权声明&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/8fda4e9d.html&t=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-确认需要版权声明的位置"><span class="toc-number">1.</span> <span class="toc-text">1. 确认需要版权声明的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-编写版权声明的js"><span class="toc-number">2.</span> <span class="toc-text">2.编写版权声明的js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-启动测试"><span class="toc-number">3.</span> <span class="toc-text">4.启动测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-设置只有在非转载文章才会有添加版权声明"><span class="toc-number">4.</span> <span class="toc-text">5.设置只有在非转载文章才会有添加版权声明</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        如何给Hexo博客在复制时添加版权声明
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">只是学习学习的博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-17T05:58:28.000Z" itemprop="datePublished">2020-04-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Hexo/">Hexo</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E/" rel="tag">版权声明</a>, <a class="tag-link" href="/tags/%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2/" rel="tag">自建博客</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content"itemprop ="articleBody">
+    <h2 id="1-确认需要版权声明的位置"><a href="#1-确认需要版权声明的位置" class="headerlink" title="1. 确认需要版权声明的位置"></a>1. 确认需要版权声明的位置</h2><p>通常情况下都是在拷贝博客详情内容时才给拷贝的内容添加版权信息，如果不管拷贝哪里的内容都给添加版权声明，影响用户体验。所以第一步确定博文详细内容在哪个标签中。这里我用的<a href="https://github.com/probberechts/hexo-theme-cactus" target="_blank" rel="noopener">cactus</a>主题，他的文章主体内容在<code>&lt;div class=&quot;content&quot;&gt;</code>标签中<br><img src="https://s1.ax1x.com/2020/04/17/JVZPNn.png" alt="JVZPNn.png"></p>
+<h2 id="2-编写版权声明的js"><a href="#2-编写版权声明的js" class="headerlink" title="2.编写版权声明的js"></a>2.编写版权声明的js</h2><p>所以我们需要编写一个监听该标签内的复制事件的js，如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setClipboardText</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// clipboardData 对象是为通过编辑菜单、快捷菜单和快捷键执行的编辑操作所保留的，也就是你复制或者剪切内容</span></span><br><span class="line">        <span class="keyword">let</span> clipboardData = event.clipboardData || <span class="built_in">window</span>.clipboardData;</span><br><span class="line">        <span class="comment">// 如果未复制或者未剪切，则return出去</span></span><br><span class="line">        <span class="keyword">if</span> (!clipboardData) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">        event.preventDefault();</span><br><span class="line">        <span class="comment">// Selection 对象，表示用户选择的文本范围或光标的当前位置。</span></span><br><span class="line">        <span class="comment">//     声明一个变量接收 -- 用户输入的剪切或者复制的文本转化为字符串</span></span><br><span class="line">        <span class="keyword">let</span> text = <span class="built_in">window</span>.getSelection().toString();</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">if</span> (text) &#123;</span><br><span class="line">            <span class="comment">// 如果文本存在则先取消文本默认事件</span></span><br><span class="line">            event.preventDefault();</span><br><span class="line">            <span class="comment">// 通过调用常clipboardData对象的 setData(format, data) 方法；来设置相关文本</span></span><br><span class="line">            <span class="comment">// format: 一个DOMString 表示要添加到 drag object的拖动数据的类型。</span></span><br><span class="line">            <span class="comment">// data: 一个 DOMString表示要添加到 drag object的数据。</span></span><br><span class="line">            <span class="keyword">var</span> copyright = <span class="string">'\n\n'</span></span><br><span class="line">            + <span class="string">'\n著作权归作者所有。'</span></span><br><span class="line">            + <span class="string">'\n商业转载请联系作者获得授权，非商业转载请注明出处。'</span></span><br><span class="line">            + <span class="string">'\n作者: 只是学习学习'</span></span><br><span class="line">            + <span class="string">'\n邮箱: fengzxia1000@163.com'</span></span><br><span class="line">            + <span class="string">'\n原文地址: &lt;%= page.permalink %&gt;'</span></span><br><span class="line">    </span><br><span class="line">            clipboardData.setData(<span class="string">'text/plain'</span>, text + copyright);</span><br><span class="line">    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> contents = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"content"</span>);</span><br><span class="line">    <span class="comment">// 监听文章内容的copy事件</span></span><br><span class="line">    contents[<span class="number">0</span>].addEventListener(<span class="string">'copy'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">        setClipboardText(e);</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;%= page.permalink %&gt;</code>: 当前页面链接</li>
+</ul>
+<p>##　3.将js放置在博文详情模板页</p>
+<p>因为我们只是需要监听博客详情页的复制事件，所以我们可以直接将这段js放在博文详情页末尾。<code>themes/cactus[主题的名字]/layout/post.ejs</code>这个文件是生成博客详情的模板。</p>
+<h2 id="4-启动测试"><a href="#4-启动测试" class="headerlink" title="4.启动测试"></a>4.启动测试</h2><p>执行<code>hexo clean</code>和<code>hexo generate</code>清除通过修改前生成的页面，然后再根据修改后模板生成新的页面。然后执行<code>hexo server</code>启动测试。效果如下图<br><img src="https://s1.ax1x.com/2020/04/17/JVn8g0.png" alt="JVn8g0.png"></p>
+<h2 id="5-设置只有在非转载文章才会有添加版权声明"><a href="#5-设置只有在非转载文章才会有添加版权声明" class="headerlink" title="5.设置只有在非转载文章才会有添加版权声明"></a>5.设置只有在非转载文章才会有添加版权声明</h2><p>如果我们是转载其他作者的文章，这种情况下肯定是不能添加自己的版权声明要去掉。</p>
+<ol>
+<li><p>在文章头部添加一个<code>copyright</code>属性设置为<code>true</code><br><img src="https://s1.ax1x.com/2020/04/17/JVK9fA.png" alt="JVK9fA.png"></p>
+</li>
+<li><p>在<code>themes/cactus[主题的名字]/layout/post.ejs</code>文件，给之前添加的版权声明代码添加if判断，只有在<code>copyright</code>为<code>true</code>时才给设置版权声明。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">if</span> (page.copyright) &#123; %&gt;</span><br><span class="line">      &lt;script&gt;</span><br><span class="line">          <span class="function"><span class="keyword">function</span> <span class="title">setClipboardText</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">              <span class="comment">// clipboardData 对象是为通过编辑菜单、快捷菜单和快捷键执行的编辑操作所保留的，也就是你复制或者剪切内容</span></span><br><span class="line">              <span class="keyword">let</span> clipboardData = event.clipboardData || <span class="built_in">window</span>.clipboardData;</span><br><span class="line">              <span class="comment">// 如果未复制或者未剪切，则return出去</span></span><br><span class="line">              <span class="keyword">if</span> (!clipboardData) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">              event.preventDefault();</span><br><span class="line">              <span class="comment">// Selection 对象，表示用户选择的文本范围或光标的当前位置。</span></span><br><span class="line">              <span class="comment">//     声明一个变量接收 -- 用户输入的剪切或者复制的文本转化为字符串</span></span><br><span class="line">              <span class="keyword">let</span> text = <span class="built_in">window</span>.getSelection().toString();</span><br><span class="line">    </span><br><span class="line">              <span class="keyword">if</span> (text) &#123;</span><br><span class="line">                <span class="comment">// 如果文本存在则先取消文本默认事件</span></span><br><span class="line">                event.preventDefault();</span><br><span class="line">                <span class="comment">// 通过调用常clipboardData对象的 setData(format, data) 方法；来设置相关文本</span></span><br><span class="line">                <span class="comment">// format: 一个DOMString 表示要添加到 drag object的拖动数据的类型。</span></span><br><span class="line">                <span class="comment">// data: 一个 DOMString表示要添加到 drag object的数据。</span></span><br><span class="line">                <span class="keyword">var</span> copyright = <span class="string">'\n\n'</span></span><br><span class="line">                                + <span class="string">'\n著作权归作者所有。'</span></span><br><span class="line">                                + <span class="string">'\n商业转载请联系作者获得授权，非商业转载请注明出处。'</span></span><br><span class="line">                                + <span class="string">'\n作者: 只是学习学习'</span></span><br><span class="line">                                + <span class="string">'\n邮箱: fengzxia1000@163.com'</span></span><br><span class="line">                                + <span class="string">'\n原文地址: &lt;%= page.permalink %&gt;'</span></span><br><span class="line">    </span><br><span class="line">                clipboardData.setData(<span class="string">'text/plain'</span>, text + copyright);</span><br><span class="line">    </span><br><span class="line">              &#125;</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="keyword">var</span> contents = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"content"</span>);</span><br><span class="line">          <span class="comment">// 监听文章内容的copy事件</span></span><br><span class="line">          contents[<span class="number">0</span>].addEventListener(<span class="string">'copy'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">              setClipboardText(e);</span><br><span class="line">          &#125;);</span><br><span class="line">      &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;% &#125; %&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>page.copyright</code>: 就是在博客详情页设置的<code>copyright</code>属性。只有存在并且为<code>true</code>时，才会有这段代码。</p>
+<p>修改后的<code>post.ejs</code>模板页完整内容如下图：<br><img src="https://s1.ax1x.com/2020/04/17/JVMxGd.png" alt="JVMxGd.png"></p>
+</li>
+</ul>
+</li>
+<li><p>然后给每篇非转载博客添加<code>copyright: true</code>即可。</p>
+</li>
+</ol>
+
+    
+  </div>
+</article>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-确认需要版权声明的位置"><span class="toc-number">1.</span> <span class="toc-text">1. 确认需要版权声明的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-编写版权声明的js"><span class="toc-number">2.</span> <span class="toc-text">2.编写版权声明的js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-启动测试"><span class="toc-number">3.</span> <span class="toc-text">4.启动测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-设置只有在非转载文章才会有添加版权声明"><span class="toc-number">4.</span> <span class="toc-text">5.设置只有在非转载文章才会有添加版权声明</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/8fda4e9d.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&text=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&is_video=false&description=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如何给Hexo博客在复制时添加版权声明&body=Check out this article: https://fengzxia.gitee.io/posts/8fda4e9d.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&title=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/8fda4e9d.html&name=如何给Hexo博客在复制时添加版权声明&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/8fda4e9d.html&t=如何给Hexo博客在复制时添加版权声明" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?54382acbd8c4bc66535bce135e0ac166";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</html>

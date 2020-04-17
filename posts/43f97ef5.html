@@ -162,8 +162,7 @@
   </header>
   
 
-  <div class="content" itemprop="articleBody">
-    
+  <div class="content"itemprop ="articleBody">
     <h2 id="引语"><a href="#引语" class="headerlink" title="引语:"></a>引语:</h2><p>阿里巴巴java开发规范说到使用工具类<code>Arrays.asList()</code>方法把数组转换成集合时,不能使用其修改集合相关的方法,它的<code>add/remove/clear</code>方法会抛出<code>UnsupportedOperationException()</code>,我们来看一下为什么会出现这种情况.</p>
 <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析:"></a>问题分析:</h2><p>我们做个测试</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">   List&lt;String&gt; list = Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>);</span><br><span class="line">   <span class="comment">// list.clear();</span></span><br><span class="line">   <span class="comment">// list.remove("a");</span></span><br><span class="line">   <span class="comment">// list.add("g");</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -195,6 +194,7 @@
     
   </div>
 </article>
+
 
 
 

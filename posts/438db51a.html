@@ -164,8 +164,7 @@
   </header>
   
 
-  <div class="content" itemprop="articleBody">
-    
+  <div class="content"itemprop ="articleBody">
     <h2 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h2><p>在使用jpa进行添加操作的时候报错</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">2019-05-21 20:44:04.992 ERROR 13460 --- [ctor-http-nio-3] o.h.engine.jdbc.spi.SqlExceptionHelper   : Table &#39;national_marketing.hibernate_sequence&#39; doesn&#39;t exist</span><br><span class="line">277</span><br><span class="line">2019-05-21 20:44:05.044 ERROR 13460 --- [ctor-http-nio-3] a.w.r.e.AbstractErrorWebExceptionHandler : [a8da1078] 500 Server Error for HTTP PUT &quot;&#x2F;admin&#x2F;admin_user&#x2F;add_admin_user&quot;</span><br><span class="line"></span><br><span class="line">org.springframework.dao.InvalidDataAccessResourceUsageException: error performing isolated work; SQL [n&#x2F;a]; nested exception is org.hibernate.exception.SQLGrammarException: error performing isolated work</span><br><span class="line">	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:279) ~[spring-orm-5.1.6.RELEASE.jar:5.1.6.RELEASE]</span><br><span class="line">	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:253) ~[spring-orm-5.1.6.RELEASE.jar:5.1.6.RELEASE]</span><br><span class="line">	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:527) ~[spring-orm-5.1.6.RELEASE.jar:5.1.6.RELEASE]</span><br><span class="line">	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61) ~[spring-tx-5.1.6.RELEASE.jar:5.1.6.RELEASE]</span><br><span class="line">	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:242) ~[spring-tx-5.1.6.RELEASE.jar:5.1.6.RELEASE]</span><br><span class="line">	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:153) ~[spring-tx-5.1.6.RELEASE.jar:5.1.6.RELEASE]</span><br><span class="line">	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.1.6.RELEASE.jar:5.1.6.RELEASE]</span><br></pre></td></tr></table></figure>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>在使用Jpa对数据库进行操作是时，设置的自增字段在进行插入操作时也必须set,否则会报错添加失败。<br>通过使用 <code>@GeneratedValue</code> 注解能实现自增字段自动添加。<br><strong>但是只使用 <code>@GeneratedValue</code>注解在注解中不传入参数，会报错 <code>error performing isolated work</code></strong><br><img src="https://img-blog.csdnimg.cn/20190521204519962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
@@ -177,6 +176,7 @@
     
   </div>
 </article>
+
 
 
 
