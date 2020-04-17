@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>过滤搜索引擎的抓取数据</title>
+      <link href="/posts/5dddbd27.html"/>
+      <url>/posts/5dddbd27.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>作者: <a href="https://www.cnblogs.com/mysticbinary/" target="_blank" rel="noopener">Mysticbinary</a><br>原文地址: <a href="https://www.cnblogs.com/mysticbinary/p/12703036.html" target="_blank" rel="noopener">https://www.cnblogs.com/mysticbinary/p/12703036.html</a><br>声明: 本文版权归作者所有，欢迎转载，但未经作者同意请保留此段声明，请在文章页面明显位置给出原文链接</p></blockquote><h1 id="一些规定"><a href="#一些规定" class="headerlink" title="一些规定"></a>一些规定</h1><ul><li>Google限制最多搜索32个单词，包含搜索项和高级运算符。不过也有一些其他方法绕过这种限制，比如使用通配符来代替某些搜索项。</li><li>同样的搜索语法，百度有时也会得到惊喜。</li></ul><h1 id="基础型查询"><a href="#基础型查询" class="headerlink" title="基础型查询"></a>基础型查询</h1><ul><li>inurl<br>搜索包含有特定字符的URL。例如输入<code>inurl:/admin_login</code>，则可以找到带有admin_login字符的URL,通常这类网址是管理员后台的登录网址。</li><li>intext<br>搜索网页正文内容中的指定字符，例如输入<code>intext:后台登陆</code>。<br>这个语法类似我们平时在某些网站中使用的“文章内容搜索”功能，把网页中的正文内容中的某个字符做为搜索条件，</li><li>intitle<br>搜索网页标题中包含有特定字符的网页。例如输入<code>intitle:后台登陆</code>，这样网页标题中带有上科互联的网页会被搜索出来。和上面那个intext差不多，搜索网页标题中是否有我们所要找的字符，例如搜索：intitle：安全天使，将返回所有网页标题中包含“安全天使”的网页。同理allintitle也同intitle类似。<br><code>allintext:家庭住址</code></li><li>filetype<br>搜索指定类型的文件。例如输入<code>filetype:PDF</code>，将返回PDF文档。这个我要重点推荐一下，无论是撒网式攻击还是我们后面要说的搜索指定类型的文件。<br><code>doc .bak .db .mdb .inc</code></li><li>site<br>指定域名搜索，这个过滤比较精确，后门会在复合型查询时多次用到。例如输入<code>site:www.sunghost.cn</code>。所有和这个网站有关的URL都会被显示。</li><li>cache<br>有些页面已经访问不了，或者想看他的网页历史快照，可以用cashe，<code>cache:www.juwan888.com</code><br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416181020531-1506741510.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416181020531-1506741510.png" alt="img"></a></li><li>define<br>搜索某个词语的定义。搜索：<code>define:微积分</code>，将返回关于微积分的一些定义。</li><li>info<br>查找指定站点的一些基本信息。<code>info:www.douban.com</code>，返回一些关于豆瓣公司的一些介绍，动态，公告。</li><li>link<br>例如搜索：<code>link:www.cnblogs.com/mysticbinary</code>，返回所有网页包含<a href="http://www.cnblogs.com/mysticbinary链接的URL。" target="_blank" rel="noopener">www.cnblogs.com/mysticbinary链接的URL。</a></li></ul><h1 id="符号使用"><a href="#符号使用" class="headerlink" title="符号使用"></a>符号使用</h1><p>Google 不区分大小写，除了 or 被用作布尔运算符时，就必须写做OR。</p><ul><li>“特定搜索”<br>加上“ ”英文引号，指定搜索结果必须一样。<br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416182717193-678363640.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416182717193-678363640.png" alt="img"></a></li><li>通配符 *<br>必须在 “ ”中使用*，<code>&quot;kali * web渗透测试&quot;</code><br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416183100717-1519643827.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416183100717-1519643827.png" alt="img"></a></li><li>点号 .<br>与通配符星号<code>*</code>一样也必须在“” 内使用， 不一样的是点号<code>.</code>匹配的是字符，不是字、短语等内容，而是符号。保留的符号有<code>,</code>、<code>.</code>、<code>[</code>、<code>(</code>、<code>-</code>等。<br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416185502230-1040475659.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416185502230-1040475659.png" alt="img"></a></li></ul><h1 id="布尔逻辑"><a href="#布尔逻辑" class="headerlink" title="布尔逻辑"></a>布尔逻辑</h1><ul><li>逻辑与 就是空格、AND</li><li>或 （java|php）</li><li>非 -java<br>不包含</li><li>约束条件 +<br>“mysticbinar” + “不可能发送的事”<br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190107279-1207303479.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190107279-1207303479.png" alt="img"></a><br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190144168-704186430.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190144168-704186430.png" alt="img"></a></li><li>括号分组 ()<br>和正则一样</li><li>时间范围 2020..2020<br><code>&quot;美团*术&quot; 2020..2020</code></li></ul><h1 id="复合型查询"><a href="#复合型查询" class="headerlink" title="复合型查询"></a>复合型查询</h1><ul><li>子域名查询</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy# 使用site限定范围并使用*来进行泛查询，最后用-排除掉主域名，得到的就是子域名：</span><br><span class="line">site:*.jd.com -www.jd.com</span><br></pre></td></tr></table></figure><ul><li>C段查询</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy# 如果你知道这个网站的IP，你也可以使用site结合通配符来查询在C段上存在的网站</span><br><span class="line">site:18.18.18.*</span><br></pre></td></tr></table></figure><h2 id="过滤出功能"><a href="#过滤出功能" class="headerlink" title="过滤出功能"></a>过滤出功能</h2><ul><li>登陆接口查找</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">Copyallback&#x3D;|api&#x3D;|interface&#x3D;|function&#x3D;|functions&#x3D;|count&#x3D;</span><br><span class="line">passlogin|ftppwd|password|secret|credentials|token</span><br><span class="line">conf|config|security|jdbc|auth|system|db|ini|init</span><br><span class="line">security_credentials|connetionstring</span><br><span class="line">ssh2_auth_password|send_keys</span><br><span class="line">doc|docx|xls|xlsx|pdf</span><br><span class="line">oa|rem|ehr|cms|main|wp|test|ceshiboos|bossbook</span><br><span class="line">word|master|count|log|login|reg|register|phpMyAdmin</span><br><span class="line"></span><br><span class="line">site:jd.com intext:管理|后台|登陆|用户名|密码|帐号|注册|admin|login|manage</span><br><span class="line">site:jd.com intext:管理|后台|登录|用户名|密码|验证码|系统|账号|服务端|后端|phpMyAdmin</span><br><span class="line">site:jd.com intitle:管理|后台|登录|用户名|密码|验证码|系统|账号|服务端|后端|phpMyAdmin</span><br><span class="line">site:jd.com intext:(password|passcode|pass|密码) intext:(username|userid|user|用户|账户)</span><br><span class="line">site:jd.com intext:oa|rem|ehr|system|test|guanli|denglu|manager|register|houtai|guanli|forgotten</span><br><span class="line">site:ly.com intext:rem|ehr|guanli|denglu</span><br><span class="line">site:jd.com intext:&quot;Powered by&quot;</span><br><span class="line"></span><br><span class="line">site:jd.com inurl:admin|login|manage|manager|register|prelogin|logincheck</span><br><span class="line">site:jd.com inurl:admin|administration|administrator|manage|login|sys|managetem|password|username</span><br><span class="line">site:jd.com inurl:login|admin|manage|admin_login|login_admin|system|boos|master|main|cms|wp</span><br><span class="line">site:jd.com inurl:oa|rem|ehr|system|test|guanli|denglu</span><br><span class="line">site:example.com inurl:*&quot;gk&quot;*|*&quot;publick&quot;*|*&quot;pub&quot;*</span><br><span class="line"></span><br><span class="line">site:jd.com intext:&quot;sql syntax near&quot;|&quot;syntax error has occurred&quot;| &quot;incorrect syntax near&quot;|&quot;unexpected end of SQL command&quot;|&quot;mysql_connect()&quot;|&quot;mysql_query()&quot;|&quot;Warning: pg_connect()&quot;</span><br><span class="line">site:jd.com intext:&quot;&#x2F;var&#x2F;lib&#x2F;&quot;|&quot;&#x2F;var&#x2F;www&#x2F;&quot;|&quot;D:\&quot;|&quot;C:\&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">site:example.com inurl:upload|upfile|saveup intext:提交|确定|上传</span><br><span class="line">site:example.com inurl:&quot;path&#x3D;&quot;|&quot;readfile&#x3D;&quot;|&quot;file&#x3D;&quot;|&quot;url&#x3D;&quot;</span><br><span class="line">site:example.com intext:提交|确定|评论</span><br><span class="line">site:example.com intext:个人信息管理|会员|个人空间 OR inurl:member|zone</span><br><span class="line">site:example.com inurl:&quot;&#x2F;uddiexplorer&#x2F;SetupUDDIExplorer.jsp&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">木马</span><br><span class="line">site:example.com intext:剑眉大侠|不灭之魂|仗剑孤行|通杀版|法客论坛|上传的口令|&quot;导出DLL文件出错”|&quot;token虚拟机管理&quot;|老子的绝对路径|免杀版</span><br><span class="line">site:example.com intext:法克|后门|木马|小马|大马|脱库|黑客|一句话后门|挂马|清马|&quot;扫描IP”|开放端口|提权|执行命令|设置密码|提升权限</span><br><span class="line">site:example.com intext:一句话木马|过狗|安全狗|&quot;K8飞刀&quot;|&quot;K8拉登哥哥&quot;|&quot;K8搞基大队&quot;|反弹端口|&quot;hacked by&quot;</span><br><span class="line">site:example.com inurl:phpspy|udf|JFolder|JspSpyJDK5|AspxSpy2014Final</span><br><span class="line">site:example.com intext:&quot;Georg says&quot; intext:&quot;All seems fine&quot;</span><br><span class="line">site:example.com intext:&quot;Struts2 Exploit Test&quot;</span><br></pre></td></tr></table></figure><ul><li>功能点</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copysite:jd.com inurl:ewebeditor|editor|uploadfile|eweb|edit|php?id&#x3D;|asp?id&#x3D;</span><br></pre></td></tr></table></figure><h2 id="过滤出敏感文件"><a href="#过滤出敏感文件" class="headerlink" title="过滤出敏感文件"></a>过滤出敏感文件</h2><ul><li>邮箱/QQ/群</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copysite:xxx.xxx intext:qq|qq群|企鹅|腾讯|email|邮件</span><br><span class="line">site:xxx.xxx intitle:qq|qq群|企鹅|腾讯|email|邮件</span><br><span class="line">site:example.com intext:邮箱|邮件|email|e-mail</span><br><span class="line">site:example.com intext:&quot;@qq.com&quot;|&quot;@163.com&quot;</span><br><span class="line">site:example.com intext:电话|手机号|联系方式|请拨打</span><br></pre></td></tr></table></figure><ul><li>index of/ppt</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copysite:jd.com index of&#x2F;*</span><br><span class="line">site:xxx.xxx intitle:index of</span><br><span class="line">Index of &#x2F;password</span><br><span class="line">Index of &#x2F; passwd </span><br><span class="line">&quot;index?of&#x2F;&quot; config</span><br><span class="line">&quot;Index of &#x2F;&quot; password.txt</span><br><span class="line">site:example.com intitle:index .of &quot;parent directory&quot;</span><br><span class="line">site:example.com intitle:index .of name size</span><br><span class="line">site:example.com intitle:index .of inurl:admin</span><br><span class="line">site:example.com intitle:index .of &quot;Application Data&#x2F;Microsoft&#x2F;Credentials&quot;</span><br><span class="line">site:example.com intitle:index .of etc|.sh_history|.bash_history|passwd|people.lst|htpasswd</span><br></pre></td></tr></table></figure><ul><li>phpmyadmin</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copysite:ulnetworks.co.kr ?inurl:.php ?intext:CHARACTER_SETS,COLLATIONS, ?intitle:phpmyadmin</span><br></pre></td></tr></table></figure><ul><li>文件查找</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">Copy这个语法不能使用 ｜， 为什么?</span><br><span class="line">为什么我不用布尔逻辑汇总在一条查询里呢？因为在实际测试中，发现 filetype 和 ext 运算符与布尔逻辑的合作性并不是很好，经常有查不到东西的情况出现，因此我们宁愿多进行几次查询，来增加我们查询的命中率。</span><br><span class="line"></span><br><span class="line">site:jd.com filetype:db</span><br><span class="line">mdb</span><br><span class="line">ini</span><br><span class="line">php</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">jsp</span><br><span class="line">json</span><br><span class="line">xml</span><br><span class="line">pdf</span><br><span class="line">doc</span><br><span class="line">xlsx</span><br><span class="line">xls</span><br><span class="line">csv</span><br><span class="line">git</span><br><span class="line">txt</span><br><span class="line">text</span><br><span class="line">log</span><br><span class="line">sql</span><br><span class="line">cnf</span><br><span class="line">conf</span><br><span class="line">zip</span><br><span class="line">rar</span><br><span class="line">tar</span><br><span class="line">tar.gz</span><br><span class="line">7z</span><br><span class="line">cab</span><br><span class="line">gz</span><br><span class="line">iso</span><br><span class="line">bz2</span><br><span class="line">jar</span><br><span class="line">bkf</span><br><span class="line">bkp</span><br><span class="line">bak</span><br><span class="line">old</span><br><span class="line">backup</span><br><span class="line">dll</span><br><span class="line">ctl</span><br><span class="line">inf</span><br><span class="line">cfg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sql</span><br><span class="line">db</span><br><span class="line">dbf</span><br><span class="line">mdb</span><br><span class="line">wdb</span><br><span class="line">backupdb</span><br><span class="line">Copysite:example.com intext:&quot;Dumping data for table&quot;</span><br><span class="line">site:example.com intitle:&quot;apache tomcat&#x2F;&quot; &quot;Apache Tomcat examples&quot;</span><br><span class="line">site:example.com inurl:examples|jsp|snp|snoop.jsp</span><br><span class="line">site:example.com (inurl:&quot;robot.txt” | inurl:&quot;robots.txt&quot;) intext:disallow filetype:txt</span><br><span class="line">site:example.com filetype: reg HKEY_CURRENT_USER username</span><br><span class="line">site:example.com inurl:tmp|temp|cache…</span><br><span class="line">Copysite:example.com filetype:doc &quot;密码&quot;</span><br><span class="line">site:example.com filetype:xls|xlxs &quot;密码&quot;</span><br><span class="line">site:example.com filetype:doc intitle:&quot;管理&quot;</span><br></pre></td></tr></table></figure><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote><ul><li><a href="http://absec.cn/?p=751" target="_blank" rel="noopener">http://absec.cn/?p=751</a></li><li><a href="https://www.cnblogs.com/xuanhun/p/3910134.html" target="_blank" rel="noopener">https://www.cnblogs.com/xuanhun/p/3910134.html</a></li><li><a href="https://blog.csdn.net/qq_38684504/article/details/97253954" target="_blank" rel="noopener">https://blog.csdn.net/qq_38684504/article/details/97253954</a></li></ul></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 转载 </category>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 搜索引擎 </tag>
+            
+            <tag> googlehack </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>如何给Hexo博客在复制时添加版权声明</title>
       <link href="/posts/8fda4e9d.html"/>
       <url>/posts/8fda4e9d.html</url>
@@ -131,9 +160,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
           <category> 爬虫 </category>
           
@@ -166,9 +195,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -195,9 +224,9 @@
           
           <category> Java </category>
           
-          <category> Spring </category>
-          
           <category> idea </category>
+          
+          <category> Spring </category>
           
           <category> BUG </category>
           
@@ -253,9 +282,9 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> Docker </category>
+          
+          <category> Python </category>
           
           <category> 爬虫 </category>
           
@@ -377,9 +406,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -470,15 +499,15 @@
           
           <category> Spring </category>
           
-          <category> Web </category>
-          
           <category> SpringBoot </category>
+          
+          <category> Web </category>
           
           <category> BUG </category>
           
-          <category> Js </category>
-          
           <category> 异常 </category>
+          
+          <category> Js </category>
           
       </categories>
       
@@ -534,9 +563,9 @@
           
           <category> BUG </category>
           
-          <category> Git </category>
-          
           <category> 异常 </category>
+          
+          <category> Git </category>
           
           <category> 项目管理 </category>
           
@@ -762,9 +791,9 @@
           
           <category> BUG </category>
           
-          <category> 转载 </category>
-          
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -857,9 +886,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> logback </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -890,9 +919,9 @@
           
           <category> BUG </category>
           
-          <category> 转载 </category>
-          
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -925,9 +954,9 @@
           
           <category> BUG </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> 异常 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -962,11 +991,11 @@
           
           <category> BUG </category>
           
+          <category> 异常 </category>
+          
           <category> 转载 </category>
           
           <category> Spring-data-jpa </category>
-          
-          <category> 异常 </category>
           
       </categories>
       
@@ -1022,9 +1051,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -1051,9 +1080,9 @@
           
           <category> DB </category>
           
-          <category> BUG </category>
-          
           <category> NoSQL </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1084,9 +1113,9 @@
           
           <category> DB </category>
           
-          <category> 转载 </category>
-          
           <category> NoSQL </category>
+          
+          <category> 转载 </category>
           
           <category> MongoDB </category>
           
@@ -1150,9 +1179,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1185,9 +1214,9 @@
           
           <category> BUG </category>
           
-          <category> 转载 </category>
-          
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1245,13 +1274,13 @@
           
           <category> DB </category>
           
-          <category> ELK </category>
-          
           <category> NoSQL </category>
           
-          <category> Docker </category>
+          <category> ELK </category>
           
           <category> Elasticsearch </category>
+          
+          <category> Docker </category>
           
           <category> Elasticsearch </category>
           
@@ -1334,9 +1363,9 @@
           
           <category> DB </category>
           
-          <category> ELK </category>
-          
           <category> NoSQL </category>
+          
+          <category> ELK </category>
           
           <category> Elasticsearch </category>
           
@@ -1576,9 +1605,9 @@
           
           <category> SpringBoot </category>
           
-          <category> logback </category>
-          
           <category> SpringMVC </category>
+          
+          <category> logback </category>
           
       </categories>
       
@@ -1642,9 +1671,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringMVC </category>
+          
+          <category> 转载 </category>
           
       </categories>
       

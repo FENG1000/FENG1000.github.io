@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="作者: Mysticbinary原文地址: https:&#x2F;&#x2F;www.cnblogs.com&#x2F;mysticbinary&#x2F;p&#x2F;12703036.html声明: 本文版权归作者所有，欢迎转载，但未经作者同意请保留此段声明，请在文章页面明显位置给出原文链接  一些规定 Google限制最多搜索32个单词，包含搜索项和高级运算符。不过也有一些其他方法绕过这种限制，比如使用通配符来代替某些搜索项。 同样的搜">
+<meta property="og:type" content="article">
+<meta property="og:title" content="过滤搜索引擎的抓取数据">
+<meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;5dddbd27.html">
+<meta property="og:site_name" content="只是学习学习的博客">
+<meta property="og:description" content="作者: Mysticbinary原文地址: https:&#x2F;&#x2F;www.cnblogs.com&#x2F;mysticbinary&#x2F;p&#x2F;12703036.html声明: 本文版权归作者所有，欢迎转载，但未经作者同意请保留此段声明，请在文章页面明显位置给出原文链接  一些规定 Google限制最多搜索32个单词，包含搜索项和高级运算符。不过也有一些其他方法绕过这种限制，比如使用通配符来代替某些搜索项。 同样的搜">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2020.cnblogs.com&#x2F;blog&#x2F;1552062&#x2F;202004&#x2F;1552062-20200416181020531-1506741510.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2020.cnblogs.com&#x2F;blog&#x2F;1552062&#x2F;202004&#x2F;1552062-20200416182717193-678363640.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2020.cnblogs.com&#x2F;blog&#x2F;1552062&#x2F;202004&#x2F;1552062-20200416183100717-1519643827.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2020.cnblogs.com&#x2F;blog&#x2F;1552062&#x2F;202004&#x2F;1552062-20200416185502230-1040475659.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2020.cnblogs.com&#x2F;blog&#x2F;1552062&#x2F;202004&#x2F;1552062-20200416190107279-1207303479.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2020.cnblogs.com&#x2F;blog&#x2F;1552062&#x2F;202004&#x2F;1552062-20200416190144168-704186430.png">
+<meta property="article:published_time" content="2020-04-17T10:18:04.000Z">
+<meta property="article:modified_time" content="2020-04-17T10:20:02.502Z">
+<meta property="article:author" content="只是学习学习">
+<meta property="article:tag" content="搜索引擎">
+<meta property="article:tag" content="googlehack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img2020.cnblogs.com&#x2F;blog&#x2F;1552062&#x2F;202004&#x2F;1552062-20200416181020531-1506741510.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>过滤搜索引擎的抓取数据</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/posts/8fda4e9d.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/5dddbd27.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/5dddbd27.html&text=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/5dddbd27.html&is_video=false&description=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=过滤搜索引擎的抓取数据&body=Check out this article: https://fengzxia.gitee.io/posts/5dddbd27.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/5dddbd27.html&name=过滤搜索引擎的抓取数据&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/5dddbd27.html&t=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一些规定"><span class="toc-number">1.</span> <span class="toc-text">一些规定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基础型查询"><span class="toc-number">2.</span> <span class="toc-text">基础型查询</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#符号使用"><span class="toc-number">3.</span> <span class="toc-text">符号使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#布尔逻辑"><span class="toc-number">4.</span> <span class="toc-text">布尔逻辑</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#复合型查询"><span class="toc-number">5.</span> <span class="toc-text">复合型查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过滤出功能"><span class="toc-number">5.1.</span> <span class="toc-text">过滤出功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过滤出敏感文件"><span class="toc-number">5.2.</span> <span class="toc-text">过滤出敏感文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        过滤搜索引擎的抓取数据
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">只是学习学习的博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-17T10:18:04.000Z" itemprop="datePublished">2020-04-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E8%BD%AC%E8%BD%BD/">转载</a> › <a class="category-link" href="/categories/%E8%BD%AC%E8%BD%BD/%E5%85%B6%E4%BB%96/">其他</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/googlehack/" rel="tag">googlehack</a>, <a class="tag-link" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" rel="tag">搜索引擎</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content"itemprop ="articleBody">
+    <blockquote>
+<p>作者: <a href="https://www.cnblogs.com/mysticbinary/" target="_blank" rel="noopener">Mysticbinary</a><br>原文地址: <a href="https://www.cnblogs.com/mysticbinary/p/12703036.html" target="_blank" rel="noopener">https://www.cnblogs.com/mysticbinary/p/12703036.html</a><br>声明: 本文版权归作者所有，欢迎转载，但未经作者同意请保留此段声明，请在文章页面明显位置给出原文链接</p>
+</blockquote>
+<h1 id="一些规定"><a href="#一些规定" class="headerlink" title="一些规定"></a>一些规定</h1><ul>
+<li>Google限制最多搜索32个单词，包含搜索项和高级运算符。不过也有一些其他方法绕过这种限制，比如使用通配符来代替某些搜索项。</li>
+<li>同样的搜索语法，百度有时也会得到惊喜。</li>
+</ul>
+<h1 id="基础型查询"><a href="#基础型查询" class="headerlink" title="基础型查询"></a>基础型查询</h1><ul>
+<li>inurl<br>搜索包含有特定字符的URL。例如输入<code>inurl:/admin_login</code>，则可以找到带有admin_login字符的URL,通常这类网址是管理员后台的登录网址。</li>
+<li>intext<br>搜索网页正文内容中的指定字符，例如输入<code>intext:后台登陆</code>。<br>这个语法类似我们平时在某些网站中使用的“文章内容搜索”功能，把网页中的正文内容中的某个字符做为搜索条件，</li>
+<li>intitle<br>搜索网页标题中包含有特定字符的网页。例如输入<code>intitle:后台登陆</code>，这样网页标题中带有上科互联的网页会被搜索出来。和上面那个intext差不多，搜索网页标题中是否有我们所要找的字符，例如搜索：intitle：安全天使，将返回所有网页标题中包含“安全天使”的网页。同理allintitle也同intitle类似。<br><code>allintext:家庭住址</code></li>
+<li>filetype<br>搜索指定类型的文件。例如输入<code>filetype:PDF</code>，将返回PDF文档。这个我要重点推荐一下，无论是撒网式攻击还是我们后面要说的搜索指定类型的文件。<br><code>doc .bak .db .mdb .inc</code></li>
+<li>site<br>指定域名搜索，这个过滤比较精确，后门会在复合型查询时多次用到。例如输入<code>site:www.sunghost.cn</code>。所有和这个网站有关的URL都会被显示。</li>
+<li>cache<br>有些页面已经访问不了，或者想看他的网页历史快照，可以用cashe，<code>cache:www.juwan888.com</code><br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416181020531-1506741510.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416181020531-1506741510.png" alt="img"></a></li>
+<li>define<br>搜索某个词语的定义。搜索：<code>define:微积分</code>，将返回关于微积分的一些定义。</li>
+<li>info<br>查找指定站点的一些基本信息。<code>info:www.douban.com</code>，返回一些关于豆瓣公司的一些介绍，动态，公告。</li>
+<li>link<br>例如搜索：<code>link:www.cnblogs.com/mysticbinary</code>，返回所有网页包含<a href="http://www.cnblogs.com/mysticbinary链接的URL。" target="_blank" rel="noopener">www.cnblogs.com/mysticbinary链接的URL。</a></li>
+</ul>
+<h1 id="符号使用"><a href="#符号使用" class="headerlink" title="符号使用"></a>符号使用</h1><p>Google 不区分大小写，除了 or 被用作布尔运算符时，就必须写做OR。</p>
+<ul>
+<li>“特定搜索”<br>加上“ ”英文引号，指定搜索结果必须一样。<br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416182717193-678363640.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416182717193-678363640.png" alt="img"></a></li>
+<li>通配符 *<br>必须在 “ ”中使用*，<code>&quot;kali * web渗透测试&quot;</code><br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416183100717-1519643827.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416183100717-1519643827.png" alt="img"></a></li>
+<li>点号 .<br>与通配符星号<code>*</code>一样也必须在“” 内使用， 不一样的是点号<code>.</code>匹配的是字符，不是字、短语等内容，而是符号。保留的符号有<code>,</code>、<code>.</code>、<code>[</code>、<code>(</code>、<code>-</code>等。<br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416185502230-1040475659.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416185502230-1040475659.png" alt="img"></a></li>
+</ul>
+<h1 id="布尔逻辑"><a href="#布尔逻辑" class="headerlink" title="布尔逻辑"></a>布尔逻辑</h1><ul>
+<li>逻辑与 就是空格、AND</li>
+<li>或 （java|php）</li>
+<li>非 -java<br>不包含</li>
+<li>约束条件 +<br>“mysticbinar” + “不可能发送的事”<br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190107279-1207303479.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190107279-1207303479.png" alt="img"></a><br><a href="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190144168-704186430.png" target="_blank" rel="noopener"><img src="https://img2020.cnblogs.com/blog/1552062/202004/1552062-20200416190144168-704186430.png" alt="img"></a></li>
+<li>括号分组 ()<br>和正则一样</li>
+<li>时间范围 2020..2020<br><code>&quot;美团*术&quot; 2020..2020</code></li>
+</ul>
+<h1 id="复合型查询"><a href="#复合型查询" class="headerlink" title="复合型查询"></a>复合型查询</h1><ul>
+<li>子域名查询</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy# 使用site限定范围并使用*来进行泛查询，最后用-排除掉主域名，得到的就是子域名：</span><br><span class="line">site:*.jd.com -www.jd.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>C段查询</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Copy# 如果你知道这个网站的IP，你也可以使用site结合通配符来查询在C段上存在的网站</span><br><span class="line">site:18.18.18.*</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="过滤出功能"><a href="#过滤出功能" class="headerlink" title="过滤出功能"></a>过滤出功能</h2><ul>
+<li>登陆接口查找</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">Copyallback&#x3D;|api&#x3D;|interface&#x3D;|function&#x3D;|functions&#x3D;|count&#x3D;</span><br><span class="line">passlogin|ftppwd|password|secret|credentials|token</span><br><span class="line">conf|config|security|jdbc|auth|system|db|ini|init</span><br><span class="line">security_credentials|connetionstring</span><br><span class="line">ssh2_auth_password|send_keys</span><br><span class="line">doc|docx|xls|xlsx|pdf</span><br><span class="line">oa|rem|ehr|cms|main|wp|test|ceshiboos|bossbook</span><br><span class="line">word|master|count|log|login|reg|register|phpMyAdmin</span><br><span class="line"></span><br><span class="line">site:jd.com intext:管理|后台|登陆|用户名|密码|帐号|注册|admin|login|manage</span><br><span class="line">site:jd.com intext:管理|后台|登录|用户名|密码|验证码|系统|账号|服务端|后端|phpMyAdmin</span><br><span class="line">site:jd.com intitle:管理|后台|登录|用户名|密码|验证码|系统|账号|服务端|后端|phpMyAdmin</span><br><span class="line">site:jd.com intext:(password|passcode|pass|密码) intext:(username|userid|user|用户|账户)</span><br><span class="line">site:jd.com intext:oa|rem|ehr|system|test|guanli|denglu|manager|register|houtai|guanli|forgotten</span><br><span class="line">site:ly.com intext:rem|ehr|guanli|denglu</span><br><span class="line">site:jd.com intext:&quot;Powered by&quot;</span><br><span class="line"></span><br><span class="line">site:jd.com inurl:admin|login|manage|manager|register|prelogin|logincheck</span><br><span class="line">site:jd.com inurl:admin|administration|administrator|manage|login|sys|managetem|password|username</span><br><span class="line">site:jd.com inurl:login|admin|manage|admin_login|login_admin|system|boos|master|main|cms|wp</span><br><span class="line">site:jd.com inurl:oa|rem|ehr|system|test|guanli|denglu</span><br><span class="line">site:example.com inurl:*&quot;gk&quot;*|*&quot;publick&quot;*|*&quot;pub&quot;*</span><br><span class="line"></span><br><span class="line">site:jd.com intext:&quot;sql syntax near&quot;|&quot;syntax error has occurred&quot;| &quot;incorrect syntax near&quot;|&quot;unexpected end of SQL command&quot;|&quot;mysql_connect()&quot;|&quot;mysql_query()&quot;|&quot;Warning: pg_connect()&quot;</span><br><span class="line">site:jd.com intext:&quot;&#x2F;var&#x2F;lib&#x2F;&quot;|&quot;&#x2F;var&#x2F;www&#x2F;&quot;|&quot;D:\&quot;|&quot;C:\&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">site:example.com inurl:upload|upfile|saveup intext:提交|确定|上传</span><br><span class="line">site:example.com inurl:&quot;path&#x3D;&quot;|&quot;readfile&#x3D;&quot;|&quot;file&#x3D;&quot;|&quot;url&#x3D;&quot;</span><br><span class="line">site:example.com intext:提交|确定|评论</span><br><span class="line">site:example.com intext:个人信息管理|会员|个人空间 OR inurl:member|zone</span><br><span class="line">site:example.com inurl:&quot;&#x2F;uddiexplorer&#x2F;SetupUDDIExplorer.jsp&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">木马</span><br><span class="line">site:example.com intext:剑眉大侠|不灭之魂|仗剑孤行|通杀版|法客论坛|上传的口令|&quot;导出DLL文件出错”|&quot;token虚拟机管理&quot;|老子的绝对路径|免杀版</span><br><span class="line">site:example.com intext:法克|后门|木马|小马|大马|脱库|黑客|一句话后门|挂马|清马|&quot;扫描IP”|开放端口|提权|执行命令|设置密码|提升权限</span><br><span class="line">site:example.com intext:一句话木马|过狗|安全狗|&quot;K8飞刀&quot;|&quot;K8拉登哥哥&quot;|&quot;K8搞基大队&quot;|反弹端口|&quot;hacked by&quot;</span><br><span class="line">site:example.com inurl:phpspy|udf|JFolder|JspSpyJDK5|AspxSpy2014Final</span><br><span class="line">site:example.com intext:&quot;Georg says&quot; intext:&quot;All seems fine&quot;</span><br><span class="line">site:example.com intext:&quot;Struts2 Exploit Test&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>功能点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copysite:jd.com inurl:ewebeditor|editor|uploadfile|eweb|edit|php?id&#x3D;|asp?id&#x3D;</span><br></pre></td></tr></table></figure>
+
+<h2 id="过滤出敏感文件"><a href="#过滤出敏感文件" class="headerlink" title="过滤出敏感文件"></a>过滤出敏感文件</h2><ul>
+<li>邮箱/QQ/群</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Copysite:xxx.xxx intext:qq|qq群|企鹅|腾讯|email|邮件</span><br><span class="line">site:xxx.xxx intitle:qq|qq群|企鹅|腾讯|email|邮件</span><br><span class="line">site:example.com intext:邮箱|邮件|email|e-mail</span><br><span class="line">site:example.com intext:&quot;@qq.com&quot;|&quot;@163.com&quot;</span><br><span class="line">site:example.com intext:电话|手机号|联系方式|请拨打</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>index of/ppt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Copysite:jd.com index of&#x2F;*</span><br><span class="line">site:xxx.xxx intitle:index of</span><br><span class="line">Index of &#x2F;password</span><br><span class="line">Index of &#x2F; passwd </span><br><span class="line">&quot;index?of&#x2F;&quot; config</span><br><span class="line">&quot;Index of &#x2F;&quot; password.txt</span><br><span class="line">site:example.com intitle:index .of &quot;parent directory&quot;</span><br><span class="line">site:example.com intitle:index .of name size</span><br><span class="line">site:example.com intitle:index .of inurl:admin</span><br><span class="line">site:example.com intitle:index .of &quot;Application Data&#x2F;Microsoft&#x2F;Credentials&quot;</span><br><span class="line">site:example.com intitle:index .of etc|.sh_history|.bash_history|passwd|people.lst|htpasswd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>phpmyadmin</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copysite:ulnetworks.co.kr ?inurl:.php ?intext:CHARACTER_SETS,COLLATIONS, ?intitle:phpmyadmin</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文件查找</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">Copy这个语法不能使用 ｜， 为什么?</span><br><span class="line">为什么我不用布尔逻辑汇总在一条查询里呢？因为在实际测试中，发现 filetype 和 ext 运算符与布尔逻辑的合作性并不是很好，经常有查不到东西的情况出现，因此我们宁愿多进行几次查询，来增加我们查询的命中率。</span><br><span class="line"></span><br><span class="line">site:jd.com filetype:db</span><br><span class="line">mdb</span><br><span class="line">ini</span><br><span class="line">php</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">jsp</span><br><span class="line">json</span><br><span class="line">xml</span><br><span class="line">pdf</span><br><span class="line">doc</span><br><span class="line">xlsx</span><br><span class="line">xls</span><br><span class="line">csv</span><br><span class="line">git</span><br><span class="line">txt</span><br><span class="line">text</span><br><span class="line">log</span><br><span class="line">sql</span><br><span class="line">cnf</span><br><span class="line">conf</span><br><span class="line">zip</span><br><span class="line">rar</span><br><span class="line">tar</span><br><span class="line">tar.gz</span><br><span class="line">7z</span><br><span class="line">cab</span><br><span class="line">gz</span><br><span class="line">iso</span><br><span class="line">bz2</span><br><span class="line">jar</span><br><span class="line">bkf</span><br><span class="line">bkp</span><br><span class="line">bak</span><br><span class="line">old</span><br><span class="line">backup</span><br><span class="line">dll</span><br><span class="line">ctl</span><br><span class="line">inf</span><br><span class="line">cfg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sql</span><br><span class="line">db</span><br><span class="line">dbf</span><br><span class="line">mdb</span><br><span class="line">wdb</span><br><span class="line">backupdb</span><br><span class="line">Copysite:example.com intext:&quot;Dumping data for table&quot;</span><br><span class="line">site:example.com intitle:&quot;apache tomcat&#x2F;&quot; &quot;Apache Tomcat examples&quot;</span><br><span class="line">site:example.com inurl:examples|jsp|snp|snoop.jsp</span><br><span class="line">site:example.com (inurl:&quot;robot.txt” | inurl:&quot;robots.txt&quot;) intext:disallow filetype:txt</span><br><span class="line">site:example.com filetype: reg HKEY_CURRENT_USER username</span><br><span class="line">site:example.com inurl:tmp|temp|cache…</span><br><span class="line">Copysite:example.com filetype:doc &quot;密码&quot;</span><br><span class="line">site:example.com filetype:xls|xlxs &quot;密码&quot;</span><br><span class="line">site:example.com filetype:doc intitle:&quot;管理&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote>
+<ul>
+<li><a href="http://absec.cn/?p=751" target="_blank" rel="noopener">http://absec.cn/?p=751</a></li>
+<li><a href="https://www.cnblogs.com/xuanhun/p/3910134.html" target="_blank" rel="noopener">https://www.cnblogs.com/xuanhun/p/3910134.html</a></li>
+<li><a href="https://blog.csdn.net/qq_38684504/article/details/97253954" target="_blank" rel="noopener">https://blog.csdn.net/qq_38684504/article/details/97253954</a></li>
+</ul>
+</blockquote>
+
+    
+  </div>
+</article>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一些规定"><span class="toc-number">1.</span> <span class="toc-text">一些规定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基础型查询"><span class="toc-number">2.</span> <span class="toc-text">基础型查询</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#符号使用"><span class="toc-number">3.</span> <span class="toc-text">符号使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#布尔逻辑"><span class="toc-number">4.</span> <span class="toc-text">布尔逻辑</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#复合型查询"><span class="toc-number">5.</span> <span class="toc-text">复合型查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过滤出功能"><span class="toc-number">5.1.</span> <span class="toc-text">过滤出功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过滤出敏感文件"><span class="toc-number">5.2.</span> <span class="toc-text">过滤出敏感文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/5dddbd27.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/5dddbd27.html&text=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/5dddbd27.html&is_video=false&description=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=过滤搜索引擎的抓取数据&body=Check out this article: https://fengzxia.gitee.io/posts/5dddbd27.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/5dddbd27.html&title=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/5dddbd27.html&name=过滤搜索引擎的抓取数据&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/5dddbd27.html&t=过滤搜索引擎的抓取数据" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?54382acbd8c4bc66535bce135e0ac166";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</html>
