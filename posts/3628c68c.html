@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="有两种设置方式1.对单个文件直接在通知栏设置View &gt; Active Editor &gt; Use Soft Wraps 2.设置全局的自动换行打开设置，依次按照下图找到File &gt; Settings &gt; Editor &gt; General &gt; Soft Wraos然后勾选Use soft wraps in editor 3.效果">
+    <meta name="description" content="有两种设置方式1.对单个文件直接在通知栏设置View &gt; Active Editor &gt; Use Soft Wraps 2.设置全局的自动换行打开设置，依次按照下图找到File &gt; Settings &gt; Editor &gt; General &gt; Soft Wraos然后勾选Use soft wraps in editor 3.效果     		 		var gita">
 <meta property="og:type" content="article">
 <meta property="og:title" content="idea设置代码根据屏幕的大小自适应换行">
 <meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;3628c68c.html">
 <meta property="og:site_name" content="只是学习学习的博客">
-<meta property="og:description" content="有两种设置方式1.对单个文件直接在通知栏设置View &gt; Active Editor &gt; Use Soft Wraps 2.设置全局的自动换行打开设置，依次按照下图找到File &gt; Settings &gt; Editor &gt; General &gt; Soft Wraos然后勾选Use soft wraps in editor 3.效果">
+<meta property="og:description" content="有两种设置方式1.对单个文件直接在通知栏设置View &gt; Active Editor &gt; Use Soft Wraps 2.设置全局的自动换行打开设置，依次按照下图找到File &gt; Settings &gt; Editor &gt; General &gt; Soft Wraos然后勾选Use soft wraps in editor 3.效果     		 		var gita">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190319192059152.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190319192319540.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
@@ -172,6 +172,15 @@
 <h2 id="2-设置全局的自动换行"><a href="#2-设置全局的自动换行" class="headerlink" title="2.设置全局的自动换行"></a>2.设置全局的自动换行</h2><p>打开设置，依次按照下图找到<code>File &gt; Settings &gt; Editor &gt; General &gt; Soft Wraos</code>然后勾选<code>Use soft wraps in editor</code><br><img src="https://img-blog.csdnimg.cn/20190319192319540.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt=""><br><img src="https://img-blog.csdnimg.cn/20190319192443471.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt=""></p>
 <h2 id="3-效果"><a href="#3-效果" class="headerlink" title="3.效果"></a>3.效果</h2><p><img src="https://img-blog.csdnimg.cn/20190319192906699.png" alt=""></p>
 
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
     
   <blockquote>
       <p>

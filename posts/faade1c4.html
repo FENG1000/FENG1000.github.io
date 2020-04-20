@@ -199,6 +199,15 @@
 <h3 id="2-将容器中的文件拷贝置宿主机上"><a href="#2-将容器中的文件拷贝置宿主机上" class="headerlink" title="2.将容器中的文件拷贝置宿主机上"></a>2.将容器中的文件拷贝置宿主机上</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 容器名:容器中的文件路径 宿主机的文件目录</span><br></pre></td></tr></table></figure>
 <h3 id="kibana在docker中安装，服务器内存必须大于2G才可以安装成功"><a href="#kibana在docker中安装，服务器内存必须大于2G才可以安装成功" class="headerlink" title="kibana在docker中安装，服务器内存必须大于2G才可以安装成功"></a>kibana在docker中安装，服务器内存必须大于2G才可以安装成功</h3><p><strong>注意：在kibana中安装x-pack时要求服务器内存必须要大于2G才可以安装，否则无法安装成功,内存不够请参考<a href="https://blog.csdn.net/qq_33430083/article/details/89028840" target="_blank" rel="noopener">docker将服务器上的kibana容器打包并导入这篇博客</a></strong></p>
 
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
     
   <blockquote>
       <p>

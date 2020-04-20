@@ -173,6 +173,15 @@
 <p><code>git fetch</code> 是下载远程的仓库的内容，不做任何的合并，<code>git reset</code> 是把本地代码指向刚刚下载的最新的版本，<strong><code>origin/master</code>是主干代码名，如果是分支则要换成分支名。</strong></p>
 <p>然后再去合并其他分支的代码就可以了，如过在合并的时候提示有未完成的合并，是因为之前合并回滚的代码没有删掉，找到本地项目中红色的文件全部删掉后就可以正常合并了</p>
 
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
     
   <blockquote>
       <p>

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="有些时候在本地调试需要启动3，4个项目，但是因为电脑内存不足，在启动后很容易崩溃，在网上浏览找到了一种比较实用的解决方法：很简单无论是jar项目还是war包项目只需要在项目运行的配置VM options添加-Xmx128m -Xms64m -Xmn32m -Xss16m这段代码就可以了启动前启动后如上图所示连启动4个项目也就占用了10%的内存，我的电脑只有8G内存">
+    <meta name="description" content="有些时候在本地调试需要启动3，4个项目，但是因为电脑内存不足，在启动后很容易崩溃，在网上浏览找到了一种比较实用的解决方法：很简单无论是jar项目还是war包项目只需要在项目运行的配置VM options添加-Xmx128m -Xms64m -Xmn32m -Xss16m这段代码就可以了启动前启动后如上图所示连启动4个项目也就占用了10%的内存，我的电脑只有8G内存     		 		var git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="idea减小启动项目时占用的内存">
 <meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;e30ff31b.html">
 <meta property="og:site_name" content="只是学习学习的博客">
-<meta property="og:description" content="有些时候在本地调试需要启动3，4个项目，但是因为电脑内存不足，在启动后很容易崩溃，在网上浏览找到了一种比较实用的解决方法：很简单无论是jar项目还是war包项目只需要在项目运行的配置VM options添加-Xmx128m -Xms64m -Xmn32m -Xss16m这段代码就可以了启动前启动后如上图所示连启动4个项目也就占用了10%的内存，我的电脑只有8G内存">
+<meta property="og:description" content="有些时候在本地调试需要启动3，4个项目，但是因为电脑内存不足，在启动后很容易崩溃，在网上浏览找到了一种比较实用的解决方法：很简单无论是jar项目还是war包项目只需要在项目运行的配置VM options添加-Xmx128m -Xms64m -Xmn32m -Xss16m这段代码就可以了启动前启动后如上图所示连启动4个项目也就占用了10%的内存，我的电脑只有8G内存     		 		var git">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190404155320420.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190404155650677.png">
@@ -169,6 +169,15 @@
   <div class="content"itemprop ="articleBody">
     <p>有些时候在本地调试需要启动3，4个项目，但是因为电脑内存不足，在启动后很容易崩溃，在网上浏览找到了一种比较实用的解决方法：<br>很简单无论是jar项目还是war包项目只需要在项目运行的配置VM options添加<code>-Xmx128m -Xms64m -Xmn32m -Xss16m</code>这段代码就可以了<br><img src="https://img-blog.csdnimg.cn/20190404155320420.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>启动前<br><img src="https://img-blog.csdnimg.cn/20190404155650677.png" alt="在这里插入图片描述"><br>启动后<br><img src="https://img-blog.csdnimg.cn/20190404160017338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>如上图所示连启动4个项目也就占用了10%的内存，我的电脑只有8G内存</p>
 
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
     
   <blockquote>
       <p>

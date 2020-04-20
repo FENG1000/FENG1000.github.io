@@ -177,6 +177,15 @@
 
 <p>在<code>@GroupSequence</code>注解中指定设置的接口数组顺序，然后在参数进行校验的时候直接在<code>@Validated</code>注解中放入<code>UserGroup.ADD.class</code>这个接口类即可<code>public Result add(@Validated(UserGroup.ADD.class) @RequestBody User user)</code>，<code>validation</code>就会按照顺序返回错误信息，在异常拦截器中直接这样取出第一个错误信息即可<code>MethodArgumentNotValidException.getBindingResult().getAllErrors().get(0).getDefaultMessage()</code></p>
 
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
     
   <blockquote>
       <p>

@@ -194,6 +194,15 @@
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">### 演示POST请求</span><br><span class="line">POST https://httpbin.org/post</span><br><span class="line"><span class="attribute">Content-Type</span>: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "user": "admin",</span><br><span class="line">  "password": "123456"</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; &#123;% client.global.set("auth_token", response.body.json.token); %&#125;</span><br><span class="line">### 演示GET请求</span><br><span class="line"></span><br><span class="line">GET https://httpbin.org/headers</span><br><span class="line"><span class="attribute">Authorization</span>: Bearer &#123;&#123;auth_token&#125;&#125;</span><br></pre></td></tr></table></figure>
 <p>在第一个认证的请求结束后，可以在response里拿到返回的token信息，然后我们通过脚本设置到了全局变量里，那么在接下来的接口请求中，就可以直接使用双大括号占位符的方式获取到这个token了</p>
 
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
     
   </div>
 </article>

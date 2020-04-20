@@ -169,6 +169,15 @@
 <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>是因为我之前不小心升级了<code>brotlipy</code>这个库，<strong>注：虽然报的错误是<code>brotli._brotli</code>的依赖找不到，但实际使用的是<code>brotlipy</code>库</strong>，新版为<code>0.7.0</code>版本其内没有<code>_brotli</code>文件</p>
 <h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>将其降至<code>0.6.0</code>版本即可，在安装<code>brotlipy 0.6.0</code>版本时可能会报<code>error: Microsoft Visual C++ 14.0 is required. Get it with &quot;Microsoft Visual C++ Build Tools&quot;</code>错误可参考 <a href="/posts/60796a12.html">此篇博客解决</a></p>
 
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
     
   <blockquote>
       <p>
