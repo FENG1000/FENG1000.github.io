@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="原创出处 http:&#x2F;&#x2F;www.iocoder.cn&#x2F;Spring-Boot&#x2F;datasource-pool&#x2F; 「芋道源码」本文在提供完整代码示例，可见 https:&#x2F;&#x2F;github.com&#x2F;YunaiV&#x2F;SpringBoot-Labs 的 lab-19 目录。  1. 概述在我们的项目中，数据库连接池基本是必不可少的组件。在目前数据库连接池的选型中，主要是  Druid ，为监控而生的数据库连">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot 数据库连接池入门">
+<meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;812771cf.html">
+<meta property="og:site_name" content="只是学习学习的博客">
+<meta property="og:description" content="原创出处 http:&#x2F;&#x2F;www.iocoder.cn&#x2F;Spring-Boot&#x2F;datasource-pool&#x2F; 「芋道源码」本文在提供完整代码示例，可见 https:&#x2F;&#x2F;github.com&#x2F;YunaiV&#x2F;SpringBoot-Labs 的 lab-19 目录。  1. 概述在我们的项目中，数据库连接池基本是必不可少的组件。在目前数据库连接池的选型中，主要是  Druid ，为监控而生的数据库连">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;20&#x2F;JMx8pV.jpg">
+<meta property="article:published_time" content="2020-04-20T02:02:59.000Z">
+<meta property="article:modified_time" content="2020-04-20T02:21:17.415Z">
+<meta property="article:author" content="只是学习学习">
+<meta property="article:tag" content="连接池">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;04&#x2F;20&#x2F;JMx8pV.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Spring Boot 数据库连接池入门</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/posts/5dddbd27.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/812771cf.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/812771cf.html&text=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/812771cf.html&is_video=false&description=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Spring Boot 数据库连接池入门&body=Check out this article: https://fengzxia.gitee.io/posts/812771cf.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/812771cf.html&name=Spring Boot 数据库连接池入门&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/812771cf.html&t=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-概述"><span class="toc-number">1.</span> <span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HikariCP-单数据源"><span class="toc-number">2.</span> <span class="toc-text">2. HikariCP 单数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-引入依赖"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-应用配置文件"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 应用配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-Application"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 Application</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HikariCP-多数据源"><span class="toc-number">3.</span> <span class="toc-text">3. HikariCP 多数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-引入依赖"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-应用配置文件"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 应用配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-数据源配置类"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 数据源配置类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-错误的示例"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 错误的示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-正确的示例"><span class="toc-number">3.3.2.</span> <span class="toc-text">3.3.2 正确的示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-Application"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 Application</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Druid-单数据源"><span class="toc-number">4.</span> <span class="toc-text">4. Druid 单数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-引入依赖"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-应用配置文件"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 应用配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-Application"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Application</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-监控功能"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 监控功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Druid-多数据源"><span class="toc-number">5.</span> <span class="toc-text">5. Druid 多数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-引入依赖"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-应用配置"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 应用配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-数据源配置类"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 数据源配置类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-Application"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 Application</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-监控功能"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 监控功能</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Spring Boot 数据库连接池入门
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">只是学习学习的博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-20T02:02:59.000Z" itemprop="datePublished">2020-04-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/Spring/">Spring</a> › <a class="category-link" href="/categories/Java/Spring/SpringBoot/">SpringBoot</a> › <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a> › <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E8%BF%9E%E6%8E%A5%E6%B1%A0/">连接池</a> › <a class="category-link" href="/categories/%E8%BD%AC%E8%BD%BD/">转载</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E8%BF%9E%E6%8E%A5%E6%B1%A0/" rel="tag">连接池</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content"itemprop ="articleBody">
+    <blockquote>
+<p>原创出处 <a href="http://www.iocoder.cn/Spring-Boot/datasource-pool/" target="_blank" rel="noopener">http://www.iocoder.cn/Spring-Boot/datasource-pool/</a> 「芋道源码」<br>本文在提供完整代码示例，可见 <a href="https://github.com/YunaiV/SpringBoot-Labs" target="_blank" rel="noopener">https://github.com/YunaiV/SpringBoot-Labs</a> 的 lab-19 目录。</p>
+</blockquote>
+<h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h1><p>在我们的项目中，数据库连接池基本是必不可少的组件。在目前数据库连接池的选型中，主要是</p>
+<ul>
+<li>Druid ，为<strong>监控</strong>而生的数据库连接池。</li>
+<li>HikariCP ，号称<strong>性能</strong>最好的数据库连接池。</li>
+</ul>
+<p>至于怎么选择，两者都非常优秀，不用过多纠结。</p>
+<ul>
+<li>Spring Boot 2.X 版本，默认采用 HikariCP 。</li>
+<li>阿里大规模采用 Druid 。</li>
+</ul>
+<p>当然，如下有一些资料，胖友可以阅读参考：</p>
+<ul>
+<li>《Druid 连接池介绍》</li>
+<li>《为什么 HikariCP 被号称为性能最好的 Java 数据库连接池，如何配置使用》</li>
+<li>《alibaba/druid pool analysis》 ，一个小小的“撕逼”。</li>
+</ul>
+<p>下面，我们来进行 HikariCP 和 Druid 的入门，会配置单数据源和多数据源情况下的连接池。</p>
+<h1 id="2-HikariCP-单数据源"><a href="#2-HikariCP-单数据源" class="headerlink" title="2. HikariCP 单数据源"></a>2. HikariCP 单数据源</h1><blockquote>
+<p>示例代码对应仓库：lab-19-datasource-pool-hikaricp-single 。</p>
+</blockquote>
+<p>在本小节，我们会使用配置一个数据源的 HikariCP 连接池。</p>
+<blockquote>
+<p>艿艿：推荐入门后，可以看看 HikariCP 的文档：<a href="https://github.com/brettwooldridge/HikariCP/wiki" target="_blank" rel="noopener">https://github.com/brettwooldridge/HikariCP/wiki</a> 。</p>
+</blockquote>
+<h2 id="2-1-引入依赖"><a href="#2-1-引入依赖" class="headerlink" title="2.1 引入依赖"></a>2.1 引入依赖</h2><p>在 <code>pom.xml</code> 文件中，引入相关依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.3.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lab-19-datasource-pool-hikaricp-single<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 实现对数据库连接池的自动化配置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span> <span class="comment">&lt;!-- 本示例，我们使用 MySQL --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.48<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 方便等会写单元测试 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>无需主动引入 HikariCP 的依赖。因为在 Spring Boot 2.X 中，<code>spring-boot-starter-jdbc</code> 默认引入 <code>com.zaxxer.HikariCP</code> 依赖。</li>
+</ul>
+<h2 id="2-2-应用配置文件"><a href="#2-2-应用配置文件" class="headerlink" title="2.2 应用配置文件"></a>2.2 应用配置文件</h2><p>在 <code>application.yml</code> 中，添加 HikariCP 配置，如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="comment"># datasource 数据源配置内容，对应 DataSourceProperties 配置属性类</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span> <span class="comment"># 数据库账号</span></span><br><span class="line">    <span class="attr">password:</span> <span class="comment"># 数据库密码</span></span><br><span class="line">    <span class="comment"># HikariCP 自定义配置，对应 HikariConfig 配置属性类</span></span><br><span class="line">    <span class="attr">hikari:</span></span><br><span class="line">      <span class="attr">minimum-idle:</span> <span class="number">10</span> <span class="comment"># 池中维护的最小空闲连接数，默认为 10 个。</span></span><br><span class="line">      <span class="attr">maximum-pool-size:</span> <span class="number">10</span> <span class="comment"># 池中最大连接数，包括闲置和使用中的连接，默认为 10 个。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 <code>spring.datasource</code> 配置项下，我们可以添加数据源的<strong>通用</strong>配置。</li>
+<li>在 <code>spring.datasource.hikari</code> 配置项下，我们可以添加 HikariCP 连接池的<strong>自定义</strong>配置。然后 <code>DataSourceConfiguration.Hikari</code> 会自动化配置 HikariCP 连接池。</li>
+</ul>
+<p>HikariCP 更多配置项，可以看看如下表格：s</p>
+<blockquote>
+<p>FROM 《HikariCP 连接池及其在 Spring Boot 中的配置》</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">描述</th>
+<th align="left">构造器默认值</th>
+<th align="left">默认配置validate之后的值</th>
+<th align="left">validate重置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">autoCommit</td>
+<td align="left">自动提交从池中返回的连接</td>
+<td align="left">true</td>
+<td align="left">true</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">connectionTimeout</td>
+<td align="left">等待来自池的连接的最大毫秒数</td>
+<td align="left">SECONDS.toMillis(30) = 30000</td>
+<td align="left">30000</td>
+<td align="left">如果小于250毫秒，则被重置回30秒</td>
+</tr>
+<tr>
+<td align="left">idleTimeout</td>
+<td align="left">连接允许在池中闲置的最长时间</td>
+<td align="left">MINUTES.toMillis(10) = 600000</td>
+<td align="left">600000</td>
+<td align="left">如果idleTimeout+1秒&gt;maxLifetime 且 maxLifetime&gt;0，则会被重置为0（代表永远不会退出）；如果idleTimeout!=0且小于10秒，则会被重置为10秒</td>
+</tr>
+<tr>
+<td align="left">maxLifetime</td>
+<td align="left">池中连接最长生命周期</td>
+<td align="left">MINUTES.toMillis(30) = 1800000</td>
+<td align="left">1800000</td>
+<td align="left">如果不等于0且小于30秒则会被重置回30分钟</td>
+</tr>
+<tr>
+<td align="left">connectionTestQuery</td>
+<td align="left">如果您的驱动程序支持JDBC4，我们强烈建议您不要设置此属性</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">minimumIdle</td>
+<td align="left">池中维护的最小空闲连接数</td>
+<td align="left">-1</td>
+<td align="left">10</td>
+<td align="left">minIdle&lt;0或者minIdle&gt;maxPoolSize,则被重置为maxPoolSize</td>
+</tr>
+<tr>
+<td align="left">maximumPoolSize</td>
+<td align="left">池中最大连接数，包括闲置和使用中的连接</td>
+<td align="left">-1</td>
+<td align="left">10</td>
+<td align="left">如果maxPoolSize小于1，则会被重置。当minIdle&lt;=0被重置为DEFAULT_POOL_SIZE则为10;如果minIdle&gt;0则重置为minIdle的值</td>
+</tr>
+<tr>
+<td align="left">metricRegistry</td>
+<td align="left">该属性允许您指定一个 Codahale / Dropwizard <code>MetricRegistry</code> 的实例，供池使用以记录各种指标</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">healthCheckRegistry</td>
+<td align="left">该属性允许您指定池使用的Codahale / Dropwizard HealthCheckRegistry的实例来报告当前健康信息</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">poolName</td>
+<td align="left">连接池的用户定义名称，主要出现在日志记录和JMX管理控制台中以识别池和池配置</td>
+<td align="left">null</td>
+<td align="left">HikariPool-1</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">initializationFailTimeout</td>
+<td align="left">如果池无法成功初始化连接，则此属性控制池是否将 <code>fail fast</code></td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">isolateInternalQueries</td>
+<td align="left">是否在其自己的事务中隔离内部池查询，例如连接活动测试</td>
+<td align="left">false</td>
+<td align="left">false</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">allowPoolSuspension</td>
+<td align="left">控制池是否可以通过JMX暂停和恢复</td>
+<td align="left">false</td>
+<td align="left">false</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">readOnly</td>
+<td align="left">从池中获取的连接是否默认处于只读模式</td>
+<td align="left">false</td>
+<td align="left">false</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">registerMbeans</td>
+<td align="left">是否注册JMX管理Bean（<code>MBeans</code>）</td>
+<td align="left">false</td>
+<td align="left">false</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">catalog</td>
+<td align="left">为支持 <code>catalog</code> 概念的数据库设置默认 <code>catalog</code></td>
+<td align="left">driver default</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">connectionInitSql</td>
+<td align="left">该属性设置一个SQL语句，在将每个新连接创建后，将其添加到池中之前执行该语句。</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">driverClassName</td>
+<td align="left">HikariCP将尝试通过仅基于jdbcUrl的DriverManager解析驱动程序，但对于一些较旧的驱动程序，还必须指定driverClassName</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">transactionIsolation</td>
+<td align="left">控制从池返回的连接的默认事务隔离级别</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">validationTimeout</td>
+<td align="left">连接将被测试活动的最大时间量</td>
+<td align="left">SECONDS.toMillis(5) = 5000</td>
+<td align="left">5000</td>
+<td align="left">如果小于250毫秒，则会被重置回5秒</td>
+</tr>
+<tr>
+<td align="left">leakDetectionThreshold</td>
+<td align="left">记录消息之前连接可能离开池的时间量，表示可能的连接泄漏</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">如果大于0且不是单元测试，则进一步判断：(leakDetectionThreshold &lt; SECONDS.toMillis(2) or (leakDetectionThreshold &gt; maxLifetime &amp;&amp; maxLifetime &gt; 0)，会被重置为0 . 即如果要生效则必须&gt;0，而且不能小于2秒，而且当maxLifetime &gt; 0时不能大于maxLifetime</td>
+</tr>
+<tr>
+<td align="left">dataSource</td>
+<td align="left">这个属性允许你直接设置数据源的实例被池包装，而不是让HikariCP通过反射来构造它</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">schema</td>
+<td align="left">该属性为支持模式概念的数据库设置默认模式</td>
+<td align="left">driver default</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">threadFactory</td>
+<td align="left">此属性允许您设置将用于创建池使用的所有线程的java.util.concurrent.ThreadFactory的实例。</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left">scheduledExecutor</td>
+<td align="left">此属性允许您设置将用于各种内部计划任务的java.util.concurrent.ScheduledExecutorService实例</td>
+<td align="left">null</td>
+<td align="left">null</td>
+<td align="left">-</td>
+</tr>
+</tbody></table>
+<h2 id="2-3-Application"><a href="#2-3-Application" class="headerlink" title="2.3 Application"></a>2.3 Application</h2><p>创建 <code>Application.java</code> 类，配置 <code>@SpringBootApplication</code> 注解即可。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Application.java</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class Application implements CommandLineRunner &#123;</span><br><span class="line"></span><br><span class="line">    private Logger logger &#x3D; LoggerFactory.getLogger(Application.class);</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        &#x2F;&#x2F; 启动 Spring Boot 应用</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run(String... args) &#123;</span><br><span class="line">        try (Connection conn &#x3D; dataSource.getConnection()) &#123;</span><br><span class="line">            &#x2F;&#x2F; 这里，可以做点什么</span><br><span class="line">            logger.info(&quot;[run][获得连接：&#123;&#125;]&quot;, conn);</span><br><span class="line">        &#125; catch (SQLException e) &#123;</span><br><span class="line">            throw new RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过实现 CommandLineRunner 接口，应用启动完成后，回调 <code>#run(String... args)</code> 方法，输出下 Connection 信息。执行日志如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-11-12 11:15:32.303  INFO 41198 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...</span><br><span class="line">2019-11-12 11:15:32.472  INFO 41198 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.</span><br><span class="line">2019-11-12 11:15:32.473  INFO 41198 --- [           main] c.i.s.lab19.datasourcepool.Application   : [run][获得连接：HikariProxyConnection@1561745898 wrapping com.mysql.jdbc.JDBC4Connection@793138bd]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到，HikariDataSource 成功初始化。</li>
+</ul>
+<h1 id="3-HikariCP-多数据源"><a href="#3-HikariCP-多数据源" class="headerlink" title="3. HikariCP 多数据源"></a>3. HikariCP 多数据源</h1><blockquote>
+<p>示例代码对应仓库：lab-19-datasource-pool-hikaricp-multiple 。</p>
+</blockquote>
+<p>在本小节，我们会使用配置<strong>两个</strong>数据源的 HikariCP 连接池。</p>
+<h2 id="3-1-引入依赖"><a href="#3-1-引入依赖" class="headerlink" title="3.1 引入依赖"></a>3.1 引入依赖</h2><p>和 「2.1 引入依赖」 是一致。</p>
+<h2 id="3-2-应用配置文件"><a href="#3-2-应用配置文件" class="headerlink" title="3.2 应用配置文件"></a>3.2 应用配置文件</h2><p>在 <code>application.yml</code> 中，添加 HikariCP 配置，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  # datasource 数据源配置内容</span><br><span class="line">  datasource:</span><br><span class="line">    # 订单数据源配置</span><br><span class="line">    orders:</span><br><span class="line">      url: jdbc:mysql:&#x2F;&#x2F;127.0.0.1:3306&#x2F;test_orders?useSSL&#x3D;false&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8</span><br><span class="line">      driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">      username: root</span><br><span class="line">      password:</span><br><span class="line">      # HikariCP 自定义配置，对应 HikariConfig 配置属性类</span><br><span class="line">      hikari:</span><br><span class="line">        minimum-idle: 20 # 池中维护的最小空闲连接数，默认为 10 个。</span><br><span class="line">        maximum-pool-size: 20 # 池中最大连接数，包括闲置和使用中的连接，默认为 10 个。</span><br><span class="line">    # 用户数据源配置</span><br><span class="line">    users:</span><br><span class="line">      url: jdbc:mysql:&#x2F;&#x2F;127.0.0.1:3306&#x2F;test_users?useSSL&#x3D;false&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8</span><br><span class="line">      driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">      username: root</span><br><span class="line">      password:</span><br><span class="line">      # HikariCP 自定义配置，对应 HikariConfig 配置属性类</span><br><span class="line">      hikari:</span><br><span class="line">        minimum-idle: 15 # 池中维护的最小空闲连接数，默认为 10 个。</span><br><span class="line">        maximum-pool-size: 15 # 池中最大连接数，包括闲置和使用中的连接，默认为 10 个。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们在 <code>spring.datasource</code> 配置项下，定义了 <code>orders</code> 和 <code>users</code> 两个数据源的配置。而每个数据源的配置，和我们在 「2.2 应用配置文件」 是一致的。</li>
+</ul>
+<h2 id="3-3-数据源配置类"><a href="#3-3-数据源配置类" class="headerlink" title="3.3 数据源配置类"></a>3.3 数据源配置类</h2><h3 id="3-3-1-错误的示例"><a href="#3-3-1-错误的示例" class="headerlink" title="3.3.1 错误的示例"></a>3.3.1 错误的示例</h3><p>在网上，我们会看到这样配置多个数据源的配置类。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span>(name = <span class="string">"ordersDataSource"</span>)</span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.orders"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">ordersDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span>(name = <span class="string">"usersDataSource"</span>)</span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.users"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">ordersDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>实际上，这样做的话，在部分场景下，会存在问题，这是为什么呢？</p>
+</li>
+<li><p>我们先来理解这段程序的用途。以 <code>#ordersDataSource()</code> 方法为例子：</p>
+</li>
+<li><ul>
+<li><code>DataSourceBuilder.create().build()</code> 代码段，会创建一个 DataSource 数据源。</li>
+<li>搭配上 <code>@Bean(name = &quot;ordersDataSource&quot;)</code> 注解，会创建一个名字为 <code>&quot;ordersDataSource&quot;</code> 的 DataSource Bean 。这里，我们使用 HikariCP ，所以返回的是 HikariDataSource Bean 。</li>
+<li><code>@ConfigurationProperties(prefix = &quot;spring.datasource.orders&quot;)</code> 注解，会将 <code>&quot;spring.datasource.orders&quot;</code> 配置项，逐个属性赋值给 DataSource Bean 。</li>
+</ul>
+</li>
+<li><p>看起来貌似没问题，但是如果每个数据源如果有 HikariCP 的 <code>&quot;hikari&quot;</code> 自定义配置项时，<strong>它的自定义配置项无法设置到 HikariDataSource Bean 中</strong>。因为，<code>&quot;spring.datasource.orders.hikari&quot;</code> 是 <code>&quot;spring.datasource.orders&quot;</code> 的<strong>第二层</strong>属性。而 HikariDataSource 的配置属性在<strong>第一层</strong>，这就导致无法正确的设置。</p>
+</li>
+</ul>
+<p>虽然存在该问题，但是大多数项目，我们并不会自定义 HikariCP 的 <code>&quot;hikari&quot;</code> 配置项，所以这个问题就偷偷藏起来，<strong>“不存在”</strong>了。</p>
+<h3 id="3-3-2-正确的示例"><a href="#3-3-2-正确的示例" class="headerlink" title="3.3.2 正确的示例"></a>3.3.2 正确的示例</h3><p>当然，作为入门的示例，艿艿还是希望提供正确的做法。</p>
+<p>在 <code>cn.iocoder.springboot.lab19.datasourcepool.config</code> 包路径下，我们会创建 DataSourceConfig 配置类。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DataSourceConfig.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建 orders 数据源的配置对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"ordersDataSourceProperties"</span>)</span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.orders"</span>) <span class="comment">// 读取 spring.datasource.orders 配置到 DataSourceProperties 对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSourceProperties <span class="title">ordersDataSourceProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DataSourceProperties();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建 orders 数据源</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"ordersDataSource"</span>)</span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.orders.hikari"</span>) <span class="comment">// 读取 spring.datasource.orders 配置到 HikariDataSource 对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSource <span class="title">ordersDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// &lt;1.1&gt; 获得 DataSourceProperties 对象</span></span><br><span class="line">        DataSourceProperties properties =  <span class="keyword">this</span>.ordersDataSourceProperties();</span><br><span class="line">        <span class="comment">// &lt;1.2&gt; 创建 HikariDataSource 对象</span></span><br><span class="line">        <span class="keyword">return</span> createHikariDataSource(properties);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建 users 数据源的配置对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"usersDataSourceProperties"</span>)</span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.users"</span>) <span class="comment">// 读取 spring.datasource.users 配置到 DataSourceProperties 对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSourceProperties <span class="title">usersDataSourceProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DataSourceProperties();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建 users 数据源</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"usersDataSource"</span>)</span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.users.hikari"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSource <span class="title">usersDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获得 DataSourceProperties 对象</span></span><br><span class="line">        DataSourceProperties properties =  <span class="keyword">this</span>.usersDataSourceProperties();</span><br><span class="line">        <span class="comment">// 创建 HikariDataSource 对象</span></span><br><span class="line">        <span class="keyword">return</span> createHikariDataSource(properties);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> HikariDataSource <span class="title">createHikariDataSource</span><span class="params">(DataSourceProperties properties)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 创建 HikariDataSource 对象</span></span><br><span class="line">        HikariDataSource dataSource = properties.initializeDataSourceBuilder().type(HikariDataSource<span class="class">.<span class="keyword">class</span>).<span class="title">build</span>()</span>;</span><br><span class="line">        <span class="comment">// 设置线程池名</span></span><br><span class="line">        <span class="keyword">if</span> (StringUtils.hasText(properties.getName())) &#123;</span><br><span class="line">            dataSource.setPoolName(properties.getName());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dataSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>这块代码，我们是参考 Spring Boot <code>DataSourceConfiguration.Hikari</code> 配置类来实现的。</p>
+</li>
+<li><p><code>#ordersDataSourceProperties()</code> 方法，创建 <code>&quot;orders&quot;</code> 数据源的 DataSourceProperties 配置对象。</p>
+</li>
+<li><ul>
+<li><code>@Primary</code> 注解，保证项目中有一个<strong>主</strong>的 DataSourceProperties Bean 。</li>
+<li><code>new DataSourceProperties()</code> 代码段，会创建一个 DataSourceProperties 数据源的配置对象。</li>
+<li>搭配上 <code>@Bean(name = &quot;ordersDataSourceProperties&quot;)</code> 注解，会创建一个名字为 <code>&quot;ordersDataSourceProperties&quot;</code> 的 DataSourceProperties Bean 。</li>
+<li><code>@ConfigurationProperties(prefix = &quot;spring.datasource.orders&quot;)</code> 注解，会将 <code>&quot;spring.datasource.orders&quot;</code> 配置项，逐个属性赋值给 DataSourceProperties Bean 。</li>
+</ul>
+</li>
+<li><p><code>#ordersDataSource()</code> 方法，创建 <code>orders</code> 数据源。</p>
+</li>
+<li><ul>
+<li><code>&lt;1.1&gt;</code> 处，调用 <code>#ordersDataSourceProperties()</code> 方法，获得 <code>orders</code> 数据源的 DataSourceProperties 。</li>
+<li><code>&lt;1.2&gt;</code> 处，调用 <code>#createHikariDataSource(DataSourceProperties properties)</code>方法，创建 HikariDataSource 对象。这样，<code>&quot;spring.datasource.orders&quot;</code> 配置项，逐个属性赋值给 HikariDataSource Bean 。</li>
+<li>搭配上 <code>@Bean(name = &quot;ordersDataSource&quot;)</code> 注解，会创建一个名字为 <code>&quot;ordersDataSource&quot;</code> 的 HikariDataSource Bean 。</li>
+<li><code>@ConfigurationProperties(prefix = &quot;spring.datasource.orders.hikari&quot;)</code> 注解，会将 HikariCP 的 <code>&quot;spring.datasource.orders.hikari&quot;</code> 自定义配置项，逐个属性赋值给 HikariDataSource Bean 。</li>
+</ul>
+</li>
+<li><p><code>users</code> 数据源的配置，同上，就不重复解释了。</p>
+</li>
+</ul>
+<h2 id="3-4-Application"><a href="#3-4-Application" class="headerlink" title="3.4 Application"></a>3.4 Application</h2><p>创建 <code>Application.java</code> 类，配置 <code>@SpringBootApplication</code> 注解即可。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Application.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">implements</span> <span class="title">CommandLineRunner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(Application<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span>(name = <span class="string">"ordersDataSource"</span>)</span><br><span class="line">    <span class="keyword">private</span> DataSource ordersDataSource;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span>(name = <span class="string">"usersDataSource"</span>)</span><br><span class="line">    <span class="keyword">private</span> DataSource usersDataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 启动 Spring Boot 应用</span></span><br><span class="line">        SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// orders 数据源</span></span><br><span class="line">        <span class="keyword">try</span> (Connection conn = ordersDataSource.getConnection()) &#123;</span><br><span class="line">            <span class="comment">// 这里，可以做点什么</span></span><br><span class="line">            logger.info(<span class="string">"[run][ordersDataSource 获得连接：&#123;&#125;]"</span>, conn);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// users 数据源</span></span><br><span class="line">        <span class="keyword">try</span> (Connection conn = usersDataSource.getConnection()) &#123;</span><br><span class="line">            <span class="comment">// 这里，可以做点什么</span></span><br><span class="line">            logger.info(<span class="string">"[run][usersDataSource 获得连接：&#123;&#125;]"</span>, conn);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行日志如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2019-11-12 15:30:35.060  INFO 45868 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...</span><br><span class="line">2019-11-12 15:30:35.365  INFO 45868 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.</span><br><span class="line">2019-11-12 15:30:35.367  INFO 45868 --- [           main] c.i.s.lab19.datasourcepool.Application   : [run][ordersDataSource 获得连接：HikariProxyConnection@1041547629 wrapping com.mysql.jdbc.JDBC4Connection@3c989952]</span><br><span class="line">2019-11-12 15:30:35.371  INFO 45868 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...</span><br><span class="line">2019-11-12 15:30:35.376  INFO 45868 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.</span><br><span class="line">2019-11-12 15:30:35.376  INFO 45868 --- [           main] c.i.s.lab19.datasourcepool.Application   : [run][usersDataSource 获得连接：HikariProxyConnection@795748540 wrapping com.mysql.jdbc.JDBC4Connection@7c098bb3]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到，两个 HikariDataSource 成功初始化。</li>
+</ul>
+<p>多数据源和 JPA、MyBatis、JdbcTemplate 的集成，可以看看 《芋道 Spring Boot 多数据源（读写分离）入门》 文章。</p>
+<h1 id="4-Druid-单数据源"><a href="#4-Druid-单数据源" class="headerlink" title="4. Druid 单数据源"></a>4. Druid 单数据源</h1><blockquote>
+<p>示例代码对应仓库：lab-19-datasource-pool-druid-single 。</p>
+</blockquote>
+<p>在本小节，我们会使用配置一个数据源的 Druid 连接池。并简单看看 Druid 的监控功能。</p>
+<blockquote>
+<p>艿艿：推荐入门后，可以看看 Druid 的文档：<a href="https://github.com/alibaba/druid/wiki/" target="_blank" rel="noopener">https://github.com/alibaba/druid/wiki/</a> 。</p>
+</blockquote>
+<h2 id="4-1-引入依赖"><a href="#4-1-引入依赖" class="headerlink" title="4.1 引入依赖"></a>4.1 引入依赖</h2><p>在 <code>pom.xml</code> 文件中，引入相关依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.3.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lab-19-datasource-pool-druid-single<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 保证 Spring JDBC 的依赖健全 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 实现对 Druid 连接池的自动化配置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.21<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span> <span class="comment">&lt;!-- 本示例，我们使用 MySQL --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.48<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 实现对 Spring MVC 的自动化配置，因为我们需要看看 Druid 的监控功能 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 方便等会写单元测试 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>具体每个依赖的作用，胖友自己认真看下艿艿添加的所有注释噢。S</p>
+<h2 id="4-2-应用配置文件"><a href="#4-2-应用配置文件" class="headerlink" title="4.2 应用配置文件"></a>4.2 应用配置文件</h2><p>在 <code>application.yml</code> 中，添加 Druid 配置，如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="comment"># datasource 数据源配置内容，对应 DataSourceProperties 配置属性类</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span> <span class="comment"># 数据库账号</span></span><br><span class="line">    <span class="attr">password:</span> <span class="comment"># 数据库密码</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span> <span class="comment"># 设置类型为 DruidDataSource</span></span><br><span class="line">    <span class="comment"># Druid 自定义配置，对应 DruidDataSource 中的 setting 方法的属性</span></span><br><span class="line">    <span class="attr">druid:</span></span><br><span class="line">      <span class="attr">min-idle:</span> <span class="number">0</span> <span class="comment"># 池中维护的最小空闲连接数，默认为 0 个。</span></span><br><span class="line">      <span class="attr">max-active:</span> <span class="number">20</span> <span class="comment"># 池中最大连接数，包括闲置和使用中的连接，默认为 8 个。</span></span><br><span class="line">      <span class="attr">filter:</span></span><br><span class="line">        <span class="attr">stat:</span> <span class="comment"># 配置 StatFilter ，对应文档 https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatFilter</span></span><br><span class="line">          <span class="attr">log-slow-sql:</span> <span class="literal">true</span> <span class="comment"># 开启慢查询记录</span></span><br><span class="line">          <span class="attr">slow-sql-millis:</span> <span class="number">5000</span> <span class="comment"># 慢 SQL 的标准，单位：毫秒</span></span><br><span class="line">      <span class="attr">stat-view-servlet:</span> <span class="comment"># 配置 StatViewServlet ，对应文档 https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 是否开启 StatViewServlet</span></span><br><span class="line">        <span class="attr">login-username:</span> <span class="string">yudaoyuanma</span> <span class="comment"># 账号</span></span><br><span class="line">        <span class="attr">login-password:</span> <span class="string">javaniubi</span> <span class="comment"># 密码</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>spring.datasource</code> 配置项，设置 Spring 数据源的通用配置。其中，<code>spring.datasource.type</code> 配置项，<strong>需要主动</strong>设置使用 DruidDataSource 。因为默认情况下，<code>spring-boot-starter-jdbc</code> 的 DataSourceBuilder 会按照 <code>DATA_SOURCE_TYPE_NAMES</code> 的顺序，尝试推断数据源的类型。</p>
+</li>
+<li><p><code>spring.datasource.druid</code> 配置项，设置 Druid 连接池的自定义配置。然后 DruidDataSourceAutoConfigure 会自动化配置 Druid 连接池。</p>
+</li>
+<li><ul>
+<li>在 《Druid —— 配置属性》 和 《DruidDataSource 配置属性列表》 下，提供了各种 Druid 的配置项，胖友可以自己看看。</li>
+<li><code>filter.stat</code> 配置项，我们配置了 Druid StatFilter ，用于统计监控信息。对应文档 《Druid —— 配置_StatFilter》 。要注意，StatFilter 并不是我们说的 <code>javax.servlet.Filter</code> ，而是 Druid 提供的 Filter 拓展机制。</li>
+<li><code>filter.stat-view-servlet</code> 配置项，我们配置了 Druid StatViewServlet ，用于提供监控信息的<strong>展示的 html 页面</strong>和 <strong>JSON API</strong> 。对应文档 《Druid —— 配置_StatViewServlet 配置》 。StatViewServlet 就是我们说的 <code>javax.servlet.Filter</code>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-3-Application"><a href="#4-3-Application" class="headerlink" title="4.3 Application"></a>4.3 Application</h2><p>创建 <code>Application.java</code> 类，配置 <code>@SpringBootApplication</code> 注解即可。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">implements</span> <span class="title">CommandLineRunner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(Application<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 启动 Spring Boot 应用</span></span><br><span class="line">        SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">"[run][获得数据源：&#123;&#125;]"</span>, dataSource.getClass());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行日志如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2019-11-12 19:34:12.079  INFO 48359 --- [           main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource</span><br><span class="line">2019-11-12 19:34:12.156  INFO 48359 --- [           main] com.alibaba.druid.pool.DruidDataSource   : &#123;dataSource-1&#125; inited</span><br><span class="line"></span><br><span class="line">2019-11-12 19:34:12.560  INFO 48359 --- [           main] c.i.s.lab19.datasourcepool.Application   : [run][获得数据源：class com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到，DruidDataSource 成功初始化。</li>
+</ul>
+<h2 id="4-4-监控功能"><a href="#4-4-监控功能" class="headerlink" title="4.4 监控功能"></a>4.4 监控功能</h2><p>因为我们在 「4.2 应用配置中」 中，做了如下操作：</p>
+<ul>
+<li>通过 <code>spring.datasource.filter.stat</code> 配置了 StatFilter ，统计监控信息。</li>
+<li>通过 <code>spring.datasource.filter.stat-view-servlet</code> 配置了 StatViewServlet ，提供监控信息的展示的 html 页面和 JSON API 。</li>
+</ul>
+<p>所以我们在启动项目后，访问 <code>http://127.0.0.1:8080/druid</code> 地址，可以看到监控 html 页面。如下图所示：<img src="https://s1.ax1x.com/2020/04/20/JMx8pV.jpg" alt="JMx8pV.jpg"></p>
+<ul>
+<li><p>在界面的顶部，提供了数据源、SQL 监控、SQL 防火墙等等功能。</p>
+</li>
+<li><p>每个界面上，可以通过 View JSON API 获得数据的来源。同时，我们可以在 JSON API( <code>http://127.0.0.1:8080/druid/api.html</code> ) 菜单对应的界面中，看到 StatViewServlet 内置的监控信息的 JSON API 列表。</p>
+</li>
+<li><p>因为监控信息是存储在 JVM 内存中，在 JVM 进程重启时，信息将会丢失。如果我们希望持久化到 MySQL、Elasticsearch、HBase 等存储器中，可以通过 StatViewServlet 提供的 JSON API 接口，采集监控信息。另外，有个 druid-aggregated-monitor 开源项目，提供了 集中监控分布式服务中的 Druid 连接池的方案和思路。</p>
+</li>
+<li><p>如果 StatViewServlet 提供的 JSON API 接口，无法满足我们的诉求，我们可以通过自定义 API 接口，使用 DruidStatManagerFacade 获得监控信息。使用示例 DruidStatController 代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DruidStatController.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DruidStatController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/monitor/druid/stat"</span>)</span><br><span class="line">    <span class="meta">@Deprecated</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">druidStat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// `DruidStatManagerFacade#getDataSourceStatDataList()` 方法，可以获取所有数据源的监控数据。</span></span><br><span class="line">        <span class="comment">// 除此之外，DruidStatManagerFacade 还提供了一些其他方法，你可以按需选择使用。</span></span><br><span class="line">        <span class="keyword">return</span> DruidStatManagerFacade.getInstance().getDataSourceStatDataList();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当然，绝大多数情况下，我们并不需要做这方面的拓展。</p>
+</li>
+</ul>
+<h1 id="5-Druid-多数据源"><a href="#5-Druid-多数据源" class="headerlink" title="5. Druid 多数据源"></a>5. Druid 多数据源</h1><blockquote>
+<p>示例代码对应仓库：lab-19-datasource-pool-druid-multiple 。</p>
+</blockquote>
+<p>在本小节，我们会使用配置<strong>两个</strong>数据源的 Druid 连接池。</p>
+<h2 id="5-1-引入依赖"><a href="#5-1-引入依赖" class="headerlink" title="5.1 引入依赖"></a>5.1 引入依赖</h2><p>和 「4.1 引入依赖」 是一致。</p>
+<h2 id="5-2-应用配置"><a href="#5-2-应用配置" class="headerlink" title="5.2 应用配置"></a>5.2 应用配置</h2><p>在 <code>application.yml</code> 中，添加 Druid 配置，如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="comment"># datasource 数据源配置内容</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="comment"># 订单数据源配置</span></span><br><span class="line">    <span class="attr">orders:</span></span><br><span class="line">      <span class="attr">url:</span> <span class="string">jdbc:mysql://127.0.0.1:3306/test_orders?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8</span></span><br><span class="line">      <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">      <span class="attr">password:</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span> <span class="comment"># 设置类型为 DruidDataSource</span></span><br><span class="line">      <span class="comment"># Druid 自定义配置，对应 DruidDataSource 中的 setting 方法的属性</span></span><br><span class="line">      <span class="attr">min-idle:</span> <span class="number">0</span> <span class="comment"># 池中维护的最小空闲连接数，默认为 0 个。</span></span><br><span class="line">      <span class="attr">max-active:</span> <span class="number">20</span> <span class="comment"># 池中最大连接数，包括闲置和使用中的连接，默认为 8 个。</span></span><br><span class="line">    <span class="comment"># 用户数据源配置</span></span><br><span class="line">    <span class="attr">users:</span></span><br><span class="line">      <span class="attr">url:</span> <span class="string">jdbc:mysql://127.0.0.1:3306/test_users?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8</span></span><br><span class="line">      <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">      <span class="attr">password:</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span> <span class="comment"># 设置类型为 DruidDataSource</span></span><br><span class="line">      <span class="comment"># Druid 自定义配置，对应 DruidDataSource 中的 setting 方法的属性</span></span><br><span class="line">      <span class="attr">min-idle:</span> <span class="number">0</span> <span class="comment"># 池中维护的最小空闲连接数，默认为 0 个。</span></span><br><span class="line">      <span class="attr">max-active:</span> <span class="number">20</span> <span class="comment"># 池中最大连接数，包括闲置和使用中的连接，默认为 8 个。</span></span><br><span class="line">    <span class="comment"># Druid 自定已配置</span></span><br><span class="line">    <span class="attr">druid:</span></span><br><span class="line">      <span class="comment"># 过滤器配置</span></span><br><span class="line">      <span class="attr">filter:</span></span><br><span class="line">        <span class="attr">stat:</span> <span class="comment"># 配置 StatFilter ，对应文档 https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatFilter</span></span><br><span class="line">          <span class="attr">log-slow-sql:</span> <span class="literal">true</span> <span class="comment"># 开启慢查询记录</span></span><br><span class="line">          <span class="attr">slow-sql-millis:</span> <span class="number">5000</span> <span class="comment"># 慢 SQL 的标准，单位：毫秒</span></span><br><span class="line">      <span class="comment"># StatViewServlet 配置</span></span><br><span class="line">      <span class="attr">stat-view-servlet:</span> <span class="comment"># 配置 StatViewServlet ，对应文档 https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 是否开启 StatViewServlet</span></span><br><span class="line">        <span class="attr">login-username:</span> <span class="string">yudaoyuanma</span> <span class="comment"># 账号</span></span><br><span class="line">        <span class="attr">login-password:</span> <span class="string">javaniubi</span> <span class="comment"># 密码</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不同于我们在 「3.2 应用配置文件」 中，我们将 Druid 的自定义配置，和 <code>url</code>、<code>driver-class-name</code> 等数据源的通用配置放在同一级，这样后续我们只需要使用 <code>@ConfigurationProperties(prefix = &quot;spring.datasource.orders&quot;)</code> 的方式，就能完成 DruidDataSource 的配置属性设置。</li>
+<li>在 <code>spring.datasource.druid</code> 配置项下，我们还是配置了 <code>filter.stat</code> 和 <code>stat-view-servlet</code> 配置项，用于 Druid 监控功能。</li>
+</ul>
+<h2 id="5-3-数据源配置类"><a href="#5-3-数据源配置类" class="headerlink" title="5.3 数据源配置类"></a>5.3 数据源配置类</h2><p>在 <code>cn.iocoder.springboot.lab19.datasourcepool.config</code> 包路径下，我们会创建 DataSourceConfig 配置类。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DataSourceConfig.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建 orders 数据源</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"ordersDataSource"</span>)</span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.orders"</span>) <span class="comment">// 读取 spring.datasource.orders 配置到 HikariDataSource 对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSource <span class="title">ordersDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> DruidDataSourceBuilder.create().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建 users 数据源</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"usersDataSource"</span>)</span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.users"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSource <span class="title">usersDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> DruidDataSourceBuilder.create().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>因为我们在 「5.2 应用配置」 中，将 Druid 自定义的配置项，和数据源的通用配置放在了同一级，所以我们只需使用 <code>@ConfigurationProperties(prefix = &quot;spring.datasource.orders&quot;)</code> 这样的方式即可。</li>
+<li>当然，「3.3.2 正确的示例」 也是可以这么做的。实际情况下，比较推荐本小节的方式。</li>
+</ul>
+<h2 id="5-4-Application"><a href="#5-4-Application" class="headerlink" title="5.4 Application"></a>5.4 Application</h2><p>创建 <code>Application.java</code> 类，配置 <code>@SpringBootApplication</code> 注解即可。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Application.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">implements</span> <span class="title">CommandLineRunner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(Application<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span>(name = <span class="string">"ordersDataSource"</span>)</span><br><span class="line">    <span class="keyword">private</span> DataSource ordersDataSource;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span>(name = <span class="string">"usersDataSource"</span>)</span><br><span class="line">    <span class="keyword">private</span> DataSource usersDataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 启动 Spring Boot 应用</span></span><br><span class="line">        SpringApplication.run(Application<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// orders 数据源</span></span><br><span class="line">        logger.info(<span class="string">"[run][获得数据源：&#123;&#125;]"</span>, ordersDataSource.getClass());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// users 数据源</span></span><br><span class="line">        logger.info(<span class="string">"[run][获得数据源：&#123;&#125;]"</span>, usersDataSource.getClass());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行日志如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2019-11-12 21:39:24.063  INFO 49670 --- [           main] c.i.s.lab19.datasourcepool.Application   : [run][获得数据源：class com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper]</span><br><span class="line">2019-11-12 21:39:24.064  INFO 49670 --- [           main] c.i.s.lab19.datasourcepool.Application   : [run][获得数据源：class com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到，两个 DruidDataSource 成功初始化。</li>
+</ul>
+<h2 id="5-5-监控功能"><a href="#5-5-监控功能" class="headerlink" title="5.5 监控功能"></a>5.5 监控功能</h2><p>和 「4.4 监控功能」 一致。</p>
+<p>不过呢，我们在监控页面上，可以看到两个 Druid 数据库连接池。</p>
+
+    
+  </div>
+</article>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-概述"><span class="toc-number">1.</span> <span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HikariCP-单数据源"><span class="toc-number">2.</span> <span class="toc-text">2. HikariCP 单数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-引入依赖"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-应用配置文件"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 应用配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-Application"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 Application</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HikariCP-多数据源"><span class="toc-number">3.</span> <span class="toc-text">3. HikariCP 多数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-引入依赖"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-应用配置文件"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 应用配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-数据源配置类"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 数据源配置类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-错误的示例"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 错误的示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-正确的示例"><span class="toc-number">3.3.2.</span> <span class="toc-text">3.3.2 正确的示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-Application"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 Application</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Druid-单数据源"><span class="toc-number">4.</span> <span class="toc-text">4. Druid 单数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-引入依赖"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-应用配置文件"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 应用配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-Application"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Application</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-监控功能"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 监控功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Druid-多数据源"><span class="toc-number">5.</span> <span class="toc-text">5. Druid 多数据源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-引入依赖"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-应用配置"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 应用配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-数据源配置类"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 数据源配置类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-Application"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 Application</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-监控功能"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 监控功能</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/812771cf.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/812771cf.html&text=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/812771cf.html&is_video=false&description=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Spring Boot 数据库连接池入门&body=Check out this article: https://fengzxia.gitee.io/posts/812771cf.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/812771cf.html&title=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/812771cf.html&name=Spring Boot 数据库连接池入门&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/812771cf.html&t=Spring Boot 数据库连接池入门" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?54382acbd8c4bc66535bce135e0ac166";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</html>
