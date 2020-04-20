@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>通过Gitalk免费给你的Hexo博客添加评论模块</title>
+      <link href="/posts/6aa8e662.html"/>
+      <url>/posts/6aa8e662.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-申请Github第三方登录授权"><a href="#1-申请Github第三方登录授权" class="headerlink" title="1.申请Github第三方登录授权"></a>1.申请Github第三方登录授权</h2><p><a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">申请地址</a><br><img src="https://s1.ax1x.com/2020/04/20/JQoLO1.jpg" alt="JQoLO1.jpg"></p><table><thead><tr><th align="center">字段</th><th align="left">说明</th></tr></thead><tbody><tr><td align="center"><code>Application name</code></td><td align="left">应用名，可以随便填</td></tr><tr><td align="center"><code>Homepage URL</code></td><td align="left">主页地址，填写博客首页即可。例如: <code>https://fengzxia.gitee.io/</code></td></tr><tr><td align="center"><code>Application description</code></td><td align="left">应用说明，可以随便填</td></tr><tr><td align="center"><code>Authorization callback URL</code></td><td align="left">回调地址，填首页即可<code>https://fengzxia.gitee.io/</code></td></tr></tbody></table><p>申请成功后会生成<code>Client ID</code>和<code>Client Secret</code>保存稍后备用<br><img src="https://s1.ax1x.com/2020/04/20/JQTL9g.jpg" alt="JQTL9g.jpg"></p><p>也可在<code>Settings-&gt;Developer settings-&gt;OAuth Apps</code>下找到我们刚才申请的应用<br><img src="https://s1.ax1x.com/2020/04/20/JQ7ZuR.jpg" alt="JQ7ZuR.jpg"></p><h2 id="2-安装Gitalk插件"><a href="#2-安装Gitalk插件" class="headerlink" title="2.安装Gitalk插件"></a>2.安装Gitalk插件</h2><ul><li><a href="https://github.com/snowdreams1006/hexo-plugin-gitalk" target="_blank" rel="noopener">hexo-plugin-gitalk</a>: Hexo 整合 gitalk 组件实现博客评论功能<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-plugin-gitalk --save</span><br></pre></td></tr></table></figure></li></ul><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ol><li><p>在根目录下的<code>_config.yml</code>，添加如下配置</p> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins:</span></span><br><span class="line">  <span class="attr">gitalk:</span></span><br><span class="line">    <span class="attr">clientID:</span> <span class="string">xxx</span></span><br><span class="line">    <span class="attr">clientSecret:</span> <span class="string">xxxxxx</span></span><br><span class="line">    <span class="attr">repo:</span> <span class="string">blog_comment</span></span><br><span class="line">    <span class="attr">owner:</span> <span class="string">FENG1000</span></span><br><span class="line">    <span class="attr">admin:</span> </span><br><span class="line">      <span class="bullet">-</span> <span class="string">FENG1000</span></span><br><span class="line">    <span class="attr">distractionFreeMode:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure><ul><li><p><code>clientID</code>: 刚才保存的<code>clientID</code></p></li><li><p><code>clientSecret</code>: 刚才保存的<code>clientSecret</code></p></li><li><p><code>repo</code>: 仓库名(可以自己随意填写)。需要再创建一个专门存放评论的仓库，只需要写仓库名即可</p></li><li><p><code>owner</code>: 所有者。填自己的用户名即可</p></li><li><p><code>admin</code>: 管理员。填用户名即可，如果还有其他用户为管理员也可添加他的用户名</p></li><li><p><code>distractionFreeMode</code>: 是否开启。类似Facebook评论框的全屏遮罩效果.</p></li><li><p><em>注: <code>repo</code>创建的仓库必须是<code>Public</code>，并且该仓库要开始<code>issue</code>。还要在<code>issue</code>中创建一个<code>Gitalk</code>的标签(<code>label</code>)进行初始化。否则会报<code>Error Note Found.</code>错误*</em><br><img src="https://s1.ax1x.com/2020/04/20/JQLUyQ.jpg" alt="JQLUyQ.jpg"></p><p>添加标签</p></li></ul><ol><li><img src="https://s1.ax1x.com/2020/04/20/JQODnH.jpg" alt="JQODnH.jpg"></li></ol><hr><ol start="2"><li><img src="https://s1.ax1x.com/2020/04/20/JQOM1U.jpg" alt="JQOM1U.jpg"></li></ol></li><li><p>重新<code>hexo clean</code>，<code>hexo generate</code>重新生成页面。<code>hexo server</code>本地启动即可看到效果：<br> <img src="https://s1.ax1x.com/2020/04/20/JQjFds.jpg" alt="JQjFds.jpg"><br> 之所以看到此页面是因为他需要<strong>管理员</strong>先登录一次，因为在管理员登录后会自动在评论仓库<code>blog_comment</code>的<code>issue</code>中初始化该篇文章的评论信息。管理员登录访问过后效果：<br> <img src="https://s1.ax1x.com/2020/04/20/JQjiZj.jpg" alt="JQjiZj.jpg"></p></li></ol><p>这样基于Gitalk的评论模块就配置成功了，有些主题可能没有适配Gitalk，样式可能会不太好看</p><div id="gitalk-container"></div><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};    gitalkConfig.id = md5(location.pathname);var gitalk = new Gitalk(gitalkConfig);    gitalk.render("gitalk-container");    </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 自建博客 </tag>
+            
+            <tag> 添加评论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Spring Boot 数据库连接池入门</title>
       <link href="/posts/812771cf.html"/>
       <url>/posts/812771cf.html</url>
@@ -319,9 +346,9 @@
           
           <category> Python </category>
           
-          <category> 爬虫 </category>
-          
           <category> Docker </category>
+          
+          <category> 爬虫 </category>
           
           <category> mitmproxy </category>
           
@@ -824,9 +851,9 @@
           
           <category> Java </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -921,9 +948,9 @@
           
           <category> BUG </category>
           
-          <category> logback </category>
-          
           <category> 异常 </category>
+          
+          <category> logback </category>
           
       </categories>
       
@@ -952,9 +979,9 @@
           
           <category> 基础 </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -1024,9 +1051,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> Spring-data-jpa </category>
           
@@ -1247,9 +1274,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -1313,9 +1340,9 @@
           
           <category> NoSQL </category>
           
-          <category> Docker </category>
-          
           <category> Elasticsearch </category>
+          
+          <category> Docker </category>
           
           <category> Elasticsearch </category>
           
