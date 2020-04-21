@@ -222,9 +222,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
           <category> 爬虫 </category>
           
@@ -257,9 +257,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -344,9 +344,9 @@
       
       <categories>
           
-          <category> Python </category>
-          
           <category> Docker </category>
+          
+          <category> Python </category>
           
           <category> 爬虫 </category>
           
@@ -567,9 +567,9 @@
           
           <category> BUG </category>
           
-          <category> Js </category>
-          
           <category> 异常 </category>
+          
+          <category> Js </category>
           
       </categories>
       
@@ -625,9 +625,9 @@
           
           <category> BUG </category>
           
-          <category> Git </category>
-          
           <category> 异常 </category>
+          
+          <category> Git </category>
           
           <category> 项目管理 </category>
           
@@ -851,9 +851,9 @@
           
           <category> Java </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -979,9 +979,9 @@
           
           <category> 基础 </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1016,9 +1016,9 @@
           
           <category> BUG </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> 异常 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -1051,13 +1051,13 @@
           
           <category> Spring </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
           
-          <category> Spring-data-jpa </category>
+          <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -1113,9 +1113,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -1274,9 +1274,9 @@
           
           <category> SpringBoot </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1340,9 +1340,9 @@
           
           <category> NoSQL </category>
           
-          <category> Elasticsearch </category>
-          
           <category> Docker </category>
+          
+          <category> Elasticsearch </category>
           
           <category> Elasticsearch </category>
           
@@ -1418,7 +1418,7 @@
       <link href="/posts/faade1c4.html"/>
       <url>/posts/faade1c4.html</url>
       
-        <content type="html"><![CDATA[<p>我安装的es版本是5.6的，其他版本同样适用：</p><h2 id="1-给ElasricSearch和Kibana安装X-Pack"><a href="#1-给ElasricSearch和Kibana安装X-Pack" class="headerlink" title="1.给ElasricSearch和Kibana安装X-Pack"></a>1.给ElasricSearch和Kibana安装X-Pack</h2><h3 id="1-ElasticSearch安装X-Pack"><a href="#1-ElasticSearch安装X-Pack" class="headerlink" title="1.ElasticSearch安装X-Pack"></a>1.ElasticSearch安装X-Pack</h3><p>进入es的bin目录，执行下边的命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;elasticsearch-plugin install x-pack                  #在线安装</span><br></pre></td></tr></table></figure><p>在线安装可能会很慢，建议使用离线安装，官网下载地址：<a href="https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.6.13.zip" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.6.13.zip</a><br>我下载好的压缩文件在<code>/opt/myapp</code>目录</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;elasticsearch-plugin install file:&#x2F;&#x2F;&#x2F;opt&#x2F;myapp&#x2F;x-pack-5.6.12.zip            #离线安装</span><br></pre></td></tr></table></figure><p>安装成功后，需要先禁用x-pack的权限功能，打开es的配置文件，<code>./config/elasticsearch.yml</code>,在末尾添加</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#禁用权限功能</span><br><span class="line">xpack.security.enabled: false</span><br></pre></td></tr></table></figure><h3 id="2-kibana安装X-Pack"><a href="#2-kibana安装X-Pack" class="headerlink" title="2.kibana安装X-Pack"></a>2.kibana安装X-Pack</h3><ul><li><strong>kibana在安装X-Pack时，服务器内存必须大于2G才可以安装成功</strong><br>同ElasticSearch一样，进入kibana的bin目录安装，下载的x-pack离线文件中包含了elasticsearch和kibana的x-pack插件，所以kibana在安装的时候不需要再进行下载<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;kibana-plugin install x-pack                   #在线安装</span><br><span class="line">.&#x2F;kibana-plugin install file:&#x2F;&#x2F;&#x2F;opt&#x2F;myapp&#x2F;x-pack-5.6.12.zip    #离线安装</span><br></pre></td></tr></table></figure></li></ul><h2 id="2-替换X-Pack文件"><a href="#2-替换X-Pack文件" class="headerlink" title="2.替换X-Pack文件"></a>2.替换X-Pack文件</h2><p>安装成功后，进入es的<code>./plugins/x-pack</code>目录找到<code>x-pack-5.6.9.jar</code>这个jar包,用解压工具打开，分别进入到<br><code>org\elasticsearch\license</code>目录和<code>org\elasticsearch\xpack</code>找到<code>LicenseVerifier</code>、<code>XPackBuild.class</code>这两个文件替换，使用<strong>下边的项目</strong>按照jar包中的路径进行调整包路径，然后编辑把这两个文件替换置x-pack-5.6.9.jar包中</p><blockquote><p><a href="https://gitee.com/fengzxia/es_crack_x_pack" target="_blank" rel="noopener">https://gitee.com/fengzxia/es_crack_x_pack</a></p></blockquote><h2 id="3-去官网申请license证书"><a href="#3-去官网申请license证书" class="headerlink" title="3.去官网申请license证书"></a>3.去官网申请license证书</h2><blockquote><p><a href="https://license.elastic.co/registration" target="_blank" rel="noopener">https://license.elastic.co/registration</a></p></blockquote><ol><li>邮箱认真写，用来接收json文件的</li><li>country写china,其它都可以随便写</li><li>点击申请后邮箱马上会收到一个证书JSON文件</li></ol><p>下载证书json文件后修改以下几个内容</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. &quot;type&quot;:&quot;basic&quot; 替换为 “type”:&quot;platinum&quot; # 基础版变更为铂金版</span><br><span class="line">2. &quot;expiry_date_in_millis&quot;:1561420799999 替换为 &quot;expiry_date_in_millis&quot;:3107746200000# 1年变为50年</span><br></pre></td></tr></table></figure><h2 id="4-上传license证书"><a href="#4-上传license证书" class="headerlink" title="4.上传license证书"></a>4.上传license证书</h2><p>启动elasticsearch、kibana，根据邮件中发送的上传证书教程，将修改后的证书上传到es中，打开kibana进入Monitoring中查看激活日期，如下图已经变成到2068年表示激活成功<br><img src="https://img-blog.csdnimg.cn/20190404164935487.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="5-启用权限功能"><a href="#5-启用权限功能" class="headerlink" title="5.启用权限功能"></a>5.启用权限功能</h2><p>打开elasticsearch的<code>./config/elasticsearch.yml</code>文件将<code>xpack.security.enabled</code>设置为<code>true</code>，重启elasticserch，再访问kibana,就会跳转置登陆页面，然后输入默认的账号：<code>elastic</code>，密码：<code>changeme</code>，便能登陆成功<br><img src="https://img-blog.csdnimg.cn/20190404165127431.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="6-破解在docker中安装的elasticsearch和kibana的X-Pack"><a href="#6-破解在docker中安装的elasticsearch和kibana的X-Pack" class="headerlink" title="6.破解在docker中安装的elasticsearch和kibana的X-Pack"></a>6.破解在docker中安装的elasticsearch和kibana的X-Pack</h2><p>在docker中安装和直接在linux中安装操作一样，docker容器中的es和kibana配置都在<code>/usr/share/</code>目录下，相较于在linux中安装多了一步将修改后x-pack.jar拷贝至docker容器中：</p><h3 id="1-将宿主机的文件拷贝置容器中"><a href="#1-将宿主机的文件拷贝置容器中" class="headerlink" title="1.将宿主机的文件拷贝置容器中"></a>1.将宿主机的文件拷贝置容器中</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 宿主机的文件路径 容器名称:容器的目录</span><br></pre></td></tr></table></figure><h3 id="2-将容器中的文件拷贝置宿主机上"><a href="#2-将容器中的文件拷贝置宿主机上" class="headerlink" title="2.将容器中的文件拷贝置宿主机上"></a>2.将容器中的文件拷贝置宿主机上</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 容器名:容器中的文件路径 宿主机的文件目录</span><br></pre></td></tr></table></figure><h3 id="kibana在docker中安装，服务器内存必须大于2G才可以安装成功"><a href="#kibana在docker中安装，服务器内存必须大于2G才可以安装成功" class="headerlink" title="kibana在docker中安装，服务器内存必须大于2G才可以安装成功"></a>kibana在docker中安装，服务器内存必须大于2G才可以安装成功</h3><p><strong>注意：在kibana中安装x-pack时要求服务器内存必须要大于2G才可以安装，否则无法安装成功,内存不够请参考<a href="https://blog.csdn.net/qq_33430083/article/details/89028840" target="_blank" rel="noopener">docker将服务器上的kibana容器打包并导入这篇博客</a></strong></p><div id="gitalk-container"></div><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};    gitalkConfig.id = md5(location.pathname);var gitalk = new Gitalk(gitalkConfig);    gitalk.render("gitalk-container");    </script>]]></content>
+        <content type="html"><![CDATA[<p>我安装的es版本是5.6的，其他版本同样适用：</p><h2 id="1-给ElasricSearch和Kibana安装X-Pack"><a href="#1-给ElasricSearch和Kibana安装X-Pack" class="headerlink" title="1.给ElasricSearch和Kibana安装X-Pack"></a>1.给ElasricSearch和Kibana安装X-Pack</h2><h3 id="1-ElasticSearch安装X-Pack"><a href="#1-ElasticSearch安装X-Pack" class="headerlink" title="1.ElasticSearch安装X-Pack"></a>1.ElasticSearch安装X-Pack</h3><p>进入es的bin目录，执行下边的命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;elasticsearch-plugin install x-pack                  #在线安装</span><br></pre></td></tr></table></figure><p>在线安装可能会很慢，建议使用离线安装，官网下载地址：<a href="https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.6.13.zip" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.6.13.zip</a><br>我下载好的压缩文件在<code>/opt/myapp</code>目录</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;elasticsearch-plugin install file:&#x2F;&#x2F;&#x2F;opt&#x2F;myapp&#x2F;x-pack-5.6.12.zip            #离线安装</span><br></pre></td></tr></table></figure><p>安装成功后，需要先禁用x-pack的权限功能，打开es的配置文件，<code>./config/elasticsearch.yml</code>,在末尾添加</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#禁用权限功能</span><br><span class="line">xpack.security.enabled: false</span><br></pre></td></tr></table></figure><h3 id="2-kibana安装X-Pack"><a href="#2-kibana安装X-Pack" class="headerlink" title="2.kibana安装X-Pack"></a>2.kibana安装X-Pack</h3><ul><li><strong>kibana在安装X-Pack时，服务器内存必须大于2G才可以安装成功</strong><br>同ElasticSearch一样，进入kibana的bin目录安装，下载的x-pack离线文件中包含了elasticsearch和kibana的x-pack插件，所以kibana在安装的时候不需要再进行下载<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;kibana-plugin install x-pack                   #在线安装</span><br><span class="line">.&#x2F;kibana-plugin install file:&#x2F;&#x2F;&#x2F;opt&#x2F;myapp&#x2F;x-pack-5.6.12.zip    #离线安装</span><br></pre></td></tr></table></figure></li></ul><h2 id="2-替换X-Pack文件"><a href="#2-替换X-Pack文件" class="headerlink" title="2.替换X-Pack文件"></a>2.替换X-Pack文件</h2><p>安装成功后，进入es的<code>./plugins/x-pack</code>目录找到<code>x-pack-5.6.9.jar</code>这个jar包,用解压工具打开，分别进入到<br><code>org\elasticsearch\license</code>目录和<code>org\elasticsearch\xpack</code>找到<code>LicenseVerifier</code>、<code>XPackBuild.class</code>这两个文件替换，使用<strong>下边的项目</strong>按照jar包中的路径进行调整包路径，然后编辑把这两个文件替换置x-pack-5.6.9.jar包中</p><blockquote><p><a href="https://gitee.com/fengzxia/es_crack_x_pack" target="_blank" rel="noopener">https://gitee.com/fengzxia/es_crack_x_pack</a></p></blockquote><h2 id="3-去官网申请license证书"><a href="#3-去官网申请license证书" class="headerlink" title="3.去官网申请license证书"></a>3.去官网申请license证书</h2><blockquote><p><a href="https://license.elastic.co/registration" target="_blank" rel="noopener">https://license.elastic.co/registration</a></p></blockquote><ol><li>邮箱认真写，用来接收json文件的</li><li>country写china,其它都可以随便写</li><li>点击申请后邮箱马上会收到一个证书JSON文件</li></ol><p>下载证书json文件后修改以下几个内容</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. &quot;type&quot;:&quot;basic&quot; 替换为 “type”:&quot;platinum&quot; # 基础版变更为铂金版</span><br><span class="line">2. &quot;expiry_date_in_millis&quot;:1561420799999 替换为 &quot;expiry_date_in_millis&quot;:3107746200000# 1年变为50年</span><br></pre></td></tr></table></figure><h2 id="4-上传license证书"><a href="#4-上传license证书" class="headerlink" title="4.上传license证书"></a>4.上传license证书</h2><p>启动elasticsearch、kibana，根据邮件中发送的上传证书教程，将修改后的证书上传到es中，打开kibana进入Monitoring中查看激活日期，如下图已经变成到2068年表示激活成功<br><img src="https://img-blog.csdnimg.cn/20190404164935487.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="5-启用权限功能"><a href="#5-启用权限功能" class="headerlink" title="5.启用权限功能"></a>5.启用权限功能</h2><p>打开elasticsearch的<code>./config/elasticsearch.yml</code>文件将<code>xpack.security.enabled</code>设置为<code>true</code>，重启elasticserch，再访问kibana,就会跳转置登陆页面，然后输入默认的账号：<code>elastic</code>，密码：<code>changeme</code>，便能登陆成功<br><img src="https://img-blog.csdnimg.cn/20190404165127431.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDMwMDgz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="6-破解在docker中安装的elasticsearch和kibana的X-Pack"><a href="#6-破解在docker中安装的elasticsearch和kibana的X-Pack" class="headerlink" title="6.破解在docker中安装的elasticsearch和kibana的X-Pack"></a>6.破解在docker中安装的elasticsearch和kibana的X-Pack</h2><p>在docker中安装和直接在linux中安装操作一样，docker容器中的es和kibana配置都在<code>/usr/share/</code>目录下，相较于在linux中安装多了一步将修改后x-pack.jar拷贝至docker容器中：</p><h3 id="1-将宿主机的文件拷贝置容器中"><a href="#1-将宿主机的文件拷贝置容器中" class="headerlink" title="1.将宿主机的文件拷贝置容器中"></a>1.将宿主机的文件拷贝置容器中</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 宿主机的文件路径 容器名称:容器的目录</span><br></pre></td></tr></table></figure><h3 id="2-将容器中的文件拷贝置宿主机上"><a href="#2-将容器中的文件拷贝置宿主机上" class="headerlink" title="2.将容器中的文件拷贝置宿主机上"></a>2.将容器中的文件拷贝置宿主机上</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 容器名:容器中的文件路径 宿主机的文件目录</span><br></pre></td></tr></table></figure><h3 id="kibana在docker中安装，服务器内存必须大于2G才可以安装成功"><a href="#kibana在docker中安装，服务器内存必须大于2G才可以安装成功" class="headerlink" title="kibana在docker中安装，服务器内存必须大于2G才可以安装成功"></a>kibana在docker中安装，服务器内存必须大于2G才可以安装成功</h3><p><strong>注意：在kibana中安装x-pack时要求服务器内存必须要大于2G才可以安装，否则无法安装成功,内存不够请参考<a href="https://fengzxia.gitee.io/posts/b4ca0942.html">docker将服务器上的kibana容器打包并导入这篇博客</a></strong></p><div id="gitalk-container"></div><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};    gitalkConfig.id = md5(location.pathname);var gitalk = new Gitalk(gitalkConfig);    gitalk.render("gitalk-container");    </script>]]></content>
       
       
       <categories>
@@ -1700,9 +1700,9 @@
           
           <category> SpringBoot </category>
           
-          <category> BUG </category>
-          
           <category> Redis </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
