@@ -222,9 +222,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Python </category>
+          
+          <category> 异常 </category>
           
           <category> 爬虫 </category>
           
@@ -257,9 +257,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Python </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -344,9 +344,9 @@
       
       <categories>
           
-          <category> Docker </category>
-          
           <category> Python </category>
+          
+          <category> Docker </category>
           
           <category> 爬虫 </category>
           
@@ -567,9 +567,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Js </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -625,9 +625,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Git </category>
+          
+          <category> 异常 </category>
           
           <category> 项目管理 </category>
           
@@ -1016,9 +1016,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Spring-data-jpa </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -1055,9 +1055,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Spring-data-jpa </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -1113,9 +1113,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> Python </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -1700,9 +1700,9 @@
           
           <category> SpringBoot </category>
           
-          <category> Redis </category>
-          
           <category> BUG </category>
+          
+          <category> Redis </category>
           
           <category> 异常 </category>
           
