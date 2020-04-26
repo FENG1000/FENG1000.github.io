@@ -346,9 +346,9 @@
           
           <category> Python </category>
           
-          <category> Docker </category>
-          
           <category> 爬虫 </category>
+          
+          <category> Docker </category>
           
           <category> mitmproxy </category>
           
@@ -1142,9 +1142,9 @@
           
           <category> DB </category>
           
-          <category> BUG </category>
-          
           <category> NoSQL </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1667,9 +1667,9 @@
           
           <category> SpringBoot </category>
           
-          <category> SpringMVC </category>
-          
           <category> logback </category>
+          
+          <category> SpringMVC </category>
           
       </categories>
       
