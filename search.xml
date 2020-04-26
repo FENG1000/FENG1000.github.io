@@ -286,9 +286,9 @@
           
           <category> Java </category>
           
-          <category> idea </category>
-          
           <category> Spring </category>
+          
+          <category> idea </category>
           
           <category> BUG </category>
           
@@ -851,9 +851,9 @@
           
           <category> Java </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -979,9 +979,9 @@
           
           <category> 基础 </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -1051,9 +1051,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> Spring-data-jpa </category>
           
@@ -1142,9 +1142,9 @@
           
           <category> DB </category>
           
-          <category> NoSQL </category>
-          
           <category> BUG </category>
+          
+          <category> NoSQL </category>
           
           <category> 异常 </category>
           
@@ -1274,9 +1274,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
+          
+          <category> 转载 </category>
           
           <category> 异常 </category>
           
@@ -1667,9 +1667,9 @@
           
           <category> SpringBoot </category>
           
-          <category> logback </category>
-          
           <category> SpringMVC </category>
+          
+          <category> logback </category>
           
       </categories>
       
