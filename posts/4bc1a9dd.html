@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="说明 Java版本: Java8 系统版本: Windows10 开发工具: intellij idea   后续文章，如无特殊声明均采用以上环境  数据类型Java中一共有八种基本数据类型，其中有4种整型，2种浮点类型，1用字符类型char，1种表示boolean类型 整型整型用于表示没有小数部分的数值，它允许是负数。    类型 存储要求 取值范围    int 4字节 -2147483648">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础复习-数据类型">
+<meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;4bc1a9dd.html">
+<meta property="og:site_name" content="只是学习学习的博客">
+<meta property="og:description" content="说明 Java版本: Java8 系统版本: Windows10 开发工具: intellij idea   后续文章，如无特殊声明均采用以上环境  数据类型Java中一共有八种基本数据类型，其中有4种整型，2种浮点类型，1用字符类型char，1种表示boolean类型 整型整型用于表示没有小数部分的数值，它允许是负数。    类型 存储要求 取值范围    int 4字节 -2147483648">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-29T05:20:25.000Z">
+<meta property="article:modified_time" content="2020-04-29T05:22:47.714Z">
+<meta property="article:author" content="只是学习学习">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Spider">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="Mybatis">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Java基础复习-数据类型</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    
+      <script data-ad-client="ca-pub-8192777052967166" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/java/">Java基础</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/posts/6aa8e662.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/4bc1a9dd.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&text=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&is_video=false&description=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java基础复习-数据类型&body=Check out this article: https://fengzxia.gitee.io/posts/4bc1a9dd.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&name=Java基础复习-数据类型&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/4bc1a9dd.html&t=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">2.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#整型"><span class="toc-number">2.1.</span> <span class="toc-text">整型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浮点类型"><span class="toc-number">2.2.</span> <span class="toc-text">浮点类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#char类型"><span class="toc-number">2.3.</span> <span class="toc-text">char类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#boolean类型"><span class="toc-number">2.4.</span> <span class="toc-text">boolean类型</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java基础复习-数据类型
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">只是学习学习的博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-29T05:20:25.000Z" itemprop="datePublished">2020-04-29</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/%E5%9F%BA%E7%A1%80/">基础</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content"itemprop ="articleBody">
+    <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<li>Java版本: Java8</li>
+<li>系统版本: Windows10</li>
+<li>开发工具: intellij idea</li>
+</ul>
+<blockquote>
+<p>后续文章，如无特殊声明均采用以上环境</p>
+</blockquote>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>Java中一共有八种基本数据类型，其中有4种整型，2种浮点类型，1用字符类型<code>char</code>，1种表示<code>boolean</code>类型</p>
+<h3 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h3><p>整型用于表示没有小数部分的数值，它允许是负数。</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">存储要求</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>int</code></td>
+<td align="center">4字节</td>
+<td>-2147483648（-2^31）~2147483647（2^31-1）（整好超过20亿）</td>
+</tr>
+<tr>
+<td align="center"><code>short</code></td>
+<td align="center">2字节</td>
+<td>-32768（-2^15）~32767（2^15-1）</td>
+</tr>
+<tr>
+<td align="center"><code>long</code></td>
+<td align="center">8字节</td>
+<td>-9223372036854775808（-2^63）~9223372036854775807（2^63-1）</td>
+</tr>
+<tr>
+<td align="center"><code>byte</code></td>
+<td align="center">1字节</td>
+<td>-128（-2^7）~127（2^7-1）</td>
+</tr>
+</tbody></table>
+<p>通常情况下<code>int</code>类型最常用。但如果表示星球上的居住人数，就需要使用<code>long</code>类型。<code>byte</code>和<code>short</code>类型主要用于特定的应用场合。例如：底层文件的处理或者需要控制占用存储空间量的大数组。</p>
+<ul>
+<li>在Java中，整型的范围与运行Java代码的机器无关。这就解决了软件从一个平台移植到另一个平台，或者在同一个平台中的不同操作系统之间进行移植带来的诸多问题。</li>
+</ul>
+<p>长整型<code>long</code>数值有一个后缀<code>L</code>或者<code>l</code><strong>小写的<code>L</code></strong>(如<code>4000000000L</code>)。十六进制数值有一个前缀<code>0x</code>或者<code>0X</code>(如<code>0xCAFE</code>)。八进制有一个前缀<code>0</code>，例如,<code>010</code>对应八进制中的<code>8</code>。很显然，8进制表示法比较容易混淆，所以建议最好不要使用进制常数。</p>
+<p>从Java7开始，加上前缀<code>0b</code>或者<code>0B</code>就可以写二进制数。例如，<code>0b1001</code>就是<code>9</code>。另外同样从Java7开始，还可以为数字字面量加下划线，如用<code>1_000_000</code>（或者<code>0b111_0100_0010_0100_0000</code>）表示一百万。这些下划线只是为了让人更易读。Java编译器会去除这些下滑线。</p>
+<h3 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h3><p>浮点类型用于用于表示有小数部分的数值。</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">存储需求</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>float</code></td>
+<td align="center">4字节</td>
+<td>大约<code>±3.40282347E+38F</code>(有效位数为6~7)</td>
+</tr>
+<tr>
+<td align="center"><code>double</code></td>
+<td align="center">8字节</td>
+<td>大约<code>±1.79769313486231570E+308</code>(有效位数为15位)</td>
+</tr>
+</tbody></table>
+<p><code>double</code>表示这种类型的数据精度是<code>float</code>类型的两倍（有人称之为双精度数值）。大部分应用程序都采用<code>double</code>类型。在很多情况下，<code>float</code>类型的精度很难满足需求。只有在很少的i情况下适合使用<code>float</code>类型，例如，需要单精度数据的库，或者需要存储大量数据。</p>
+<p><code>float</code>类型的数值有一个后缀<code>F</code>或<code>f</code>(例如，<code>3.14F</code>)。没有后缀<code>F</code>的浮点数值（如<code>3.14</code>）默认未<code>double</code>类型。也可以在浮点数值后面添加后缀<code>D</code>或<code>d</code>（例如，<code>3.14D</code>）。</p>
+<p>所有的浮点数值计算都遵循<code>IEEE 754</code>规范。具体来说，下命是用于表示溢出和出错情况的三个特殊的浮点数值:</p>
+<ul>
+<li>正无穷大</li>
+<li>负无穷大</li>
+<li>NaN（不是一个数字）</li>
+</ul>
+<p>例如，一个正整数除以<code>0</code>的结果为正无穷大。计算<code>0/0</code>或者负数的平方根结果为<code>NaN</code>.</p>
+<blockquote>
+<p>常量 <code>Double.POSITIVE_INFINITY</code>（正无穷大）、<code>Double.NEGATIVE_INFINITY</code>（负无穷大）和<code>Double.NaN</code>（不是一个数字）以及相对应的<code>Float</code>类型的常量，分别表示这三个特殊的值，但在实际应用中很少遇到。</p>
+<p><strong>特别说明：不能这样检测一个特定的值是否等于<code>Double.NaN</code></strong> :</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x == Double.NaN) <span class="comment">//永远为false</span></span><br></pre></td></tr></table></figure>
+
+<p>所有“非数值”的值都认为是不相同的。然而可用使用<code>Double.isNaN</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Double.isNaN(x)) <span class="comment">//验证x是否不是数字</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>浮点数值不适用与无法接受舍入误差的金融计算中。例如，命令<code>System.out.println(2.0-1.1);</code>将打印出<code>0.8999999999999999</code>，而不是<code>0.9</code>。这种舍入的误差主要原因是浮点数值采用二进制系统表示，而在二进制中系统无法准确地表示分数<code>1/10</code>。如果在数值计算中不允许有任何舍入误差，就应该使用<code>BigDecimal</code>类。</strong></p>
+<hr>
+<h3 id="char类型"><a href="#char类型" class="headerlink" title="char类型"></a>char类型</h3><p><code>char</code>类型原本用于表示单个字符。不过， 现在情况已经有所变化 。如今， 有些<code>Unicode字符</code>可以用一个<code>char</code>值描述，另外一些<code>Unicode字</code>符则需要两个<code>char</code>值。 </p>
+<p><code>char</code>类型的字面量值要用单引号括起来。例如：<code>&#39;A&#39;</code> 是编码值为<code>65</code>所对应的字符常量 。它与 <code>&quot; A &quot;</code> 不同，<code>&quot;A&quot;</code>是包含一个字符<code>A</code>的字符串 , <code>char</code> 类型的值可以表示为十六进制值，其范围从 <code>\u0000</code>到<code>\Uffff</code>。例如：<code>\u2122</code>表示注册符号(<code>™</code>) ,<code>\u03C0</code>表示希腊字母<code>π</code>。</p>
+<p>除了转义序列<code>\u</code>之外 ，还有一些用于表示特殊字符的转义序列，请参考下表。所有这些转义序列都可以出现在加引号的字符字面量或字符串中。例如 ，  <code>&#39;\02122&#39;</code> 或 <code>&quot;Hello\n&quot;</code>。转义序列<code>\u</code>还可以出现在加引号的字符常量或字符串之外（而其他所有转义序列不可以）。例如 ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String \u005B\u005D args)</span></span></span><br></pre></td></tr></table></figure>
+<p>就完全符合语法规则 ， <code>\u005B</code>和<code>\u005D</code> 是 <code>[</code>和 <code>]</code> 的编码 。</p>
+<table>
+<thead>
+<tr>
+<th align="center">转义序列</th>
+<th align="center">名称</th>
+<th align="center">Unicode值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>\b</code></td>
+<td align="center">退格</td>
+<td align="center"><code>\u0008</code></td>
+</tr>
+<tr>
+<td align="center"><code>\t</code></td>
+<td align="center">制表</td>
+<td align="center"><code>\u0009</code></td>
+</tr>
+<tr>
+<td align="center"><code>\n</code></td>
+<td align="center">换行</td>
+<td align="center"><code>\u000a</code></td>
+</tr>
+<tr>
+<td align="center"><code>\r</code></td>
+<td align="center">回车</td>
+<td align="center"><code>\u000d</code></td>
+</tr>
+<tr>
+<td align="center"><code>&quot;</code></td>
+<td align="center">双引号</td>
+<td align="center"><code>\u0022</code></td>
+</tr>
+<tr>
+<td align="center"><code>&#39;</code></td>
+<td align="center">单引号</td>
+<td align="center"><code>\u0027</code></td>
+</tr>
+<tr>
+<td align="center"><code>\</code></td>
+<td align="center">反斜杠</td>
+<td align="center"><code>\u005c</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><strong>Unicode转义序列会在解析代码之前得到处理。例如，<code>&quot;\u0022+\u0022&quot;</code>并不是一个有引号(<code>U+0022</code>)包围加号构成的字符串。实际上，<code>\u0022</code>会在解析之前转换为<code>&quot;</code>，这会得到<code>&quot;&quot;+&quot;&quot;</code>，也就是一个空串</strong>。</p>
+<ul>
+<li><p>更隐秘地，一定要注意代码注释中的<code>\u</code>，注释</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// \u00A0 is a newline</span></span><br></pre></td></tr></table></figure>
+
+<p>会产生一个语法错误，因为读程序时<code>\u00A0</code>会被替换为一个换行符。类似地，下面这个注释：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Loog inside c:\user</span></span><br></pre></td></tr></table></figure>
+
+<p>也会产生一个语法错误，因为<code>\u</code>后边并未跟着4个十六进制数</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="boolean类型"><a href="#boolean类型" class="headerlink" title="boolean类型"></a>boolean类型</h3><p><code>boolean(布尔)</code>类型有两个值:<code>false</code>和<code>true</code>，用来判定逻辑条件。整型值和布尔值之间不能进行相互转换。</p>
+
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
+    
+  </div>
+</article>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/java/">Java基础</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">2.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#整型"><span class="toc-number">2.1.</span> <span class="toc-text">整型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浮点类型"><span class="toc-number">2.2.</span> <span class="toc-text">浮点类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#char类型"><span class="toc-number">2.3.</span> <span class="toc-text">char类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#boolean类型"><span class="toc-number">2.4.</span> <span class="toc-text">boolean类型</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/4bc1a9dd.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&text=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&is_video=false&description=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java基础复习-数据类型&body=Check out this article: https://fengzxia.gitee.io/posts/4bc1a9dd.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&title=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/4bc1a9dd.html&name=Java基础复习-数据类型&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/4bc1a9dd.html&t=Java基础复习-数据类型" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/java/">Java基础</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</html>
