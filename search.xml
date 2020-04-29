@@ -4,6 +4,48 @@
   
     
     <entry>
+      <title>Java保留字表</title>
+      <link href="/posts/dae09912.html"/>
+      <url>/posts/dae09912.html</url>
+      
+        <content type="html"><![CDATA[<table><thead><tr><th align="center">关键字</th><th align="left">含义</th></tr></thead><tbody><tr><td align="center">abstract</td><td align="left">表明类或者成员方法具有抽象属性</td></tr><tr><td align="center">assert</td><td align="left">断言，用来进行程序调试</td></tr><tr><td align="center">boolean</td><td align="left">基本数据类型之一，声明布尔类型的关键字</td></tr><tr><td align="center">break</td><td align="left">提前跳出一个块</td></tr><tr><td align="center">byte</td><td align="left">基本数据类型之一，字节类型</td></tr><tr><td align="center">case</td><td align="left">用在switch语句之中，表示其中的一个分支</td></tr><tr><td align="center">catch</td><td align="left">用在异常处理中，用来捕捉异常</td></tr><tr><td align="center">char</td><td align="left">基本数据类型之一，字符类型</td></tr><tr><td align="center">class</td><td align="left">声明一个类</td></tr><tr><td align="center">const</td><td align="left">保留关键字，没有具体含义</td></tr><tr><td align="center">continue</td><td align="left">回到一个块的开始处</td></tr><tr><td align="center">default</td><td align="left">默认，例如，用在switch语句中，表明一个默认的分支</td></tr><tr><td align="center">do</td><td align="left">用在do-while循环结构中</td></tr><tr><td align="center">double</td><td align="left">基本数据类型之一，双精度浮点数类型</td></tr><tr><td align="center">else</td><td align="left">用在条件语句中，表明当条件不成立时的分支</td></tr><tr><td align="center">enum</td><td align="left">枚举</td></tr><tr><td align="center">extends</td><td align="left">表明一个类型是另一个类型的子类型，这里常见的类型有类和接口</td></tr><tr><td align="center">final</td><td align="left">用来说明最终属性，表明一个类不能派生出子类，或者成员方法不能被覆盖，或者成员域的值不能被改变，用来定义常量</td></tr><tr><td align="center">finally</td><td align="left">用于处理异常情况，用来声明一个基本肯定会被执行到的语句块</td></tr><tr><td align="center">float</td><td align="left">基本数据类型之一，单精度浮点数类型</td></tr><tr><td align="center">for</td><td align="left">一种循环结构的引导词</td></tr><tr><td align="center">goto</td><td align="left">保留关键字，没有具体含义</td></tr><tr><td align="center">if</td><td align="left">条件语句的引导词</td></tr><tr><td align="center">implements</td><td align="left">表明一个类实现了给定的接口</td></tr><tr><td align="center">import</td><td align="left">表明要访问指定的类或包</td></tr><tr><td align="center">instanceof</td><td align="left">用来测试一个对象是否是指定类型的实例对象</td></tr><tr><td align="center">int</td><td align="left">基本数据类型之一，整数类型</td></tr><tr><td align="center">interface</td><td align="left">接口</td></tr><tr><td align="center">long</td><td align="left">基本数据类型之一，长整数类型</td></tr><tr><td align="center">native</td><td align="left">用来声明一个方法是由与计算机相关的语言（如C/C++/FORTRAN语言）实现的</td></tr><tr><td align="center">new</td><td align="left">用来创建新实例对象</td></tr><tr><td align="center">package</td><td align="left">包</td></tr><tr><td align="center">private</td><td align="left">一种访问控制方式：私用模式</td></tr><tr><td align="center">protected</td><td align="left">一种访问控制方式：保护模式</td></tr><tr><td align="center">public</td><td align="left">一种访问控制方式：共用模式</td></tr><tr><td align="center">return</td><td align="left">从成员方法中返回数据</td></tr><tr><td align="center">short</td><td align="left">基本数据类型之一,短整数类型</td></tr><tr><td align="center">static</td><td align="left">表明具有静态属性</td></tr><tr><td align="center">strictfp</td><td align="left">用来声明FP_strict（单精度或双精度浮点数）表达式遵循<a href="https://blog.csdn.net/weixin_42158633/article/details/88920080#" target="_blank" rel="noopener">IEEE 754</a>算术规范</td></tr><tr><td align="center">super</td><td align="left">表明当前对象的父类型的引用或者父类型的构造方法</td></tr><tr><td align="center">switch</td><td align="left">分支语句结构的引导词</td></tr><tr><td align="center">synchronized</td><td align="left">表明一段代码需要同步执行</td></tr><tr><td align="center">this</td><td align="left">当前类的一个方法或构造函数的隐含参数</td></tr><tr><td align="center">throw</td><td align="left">抛出一个异常</td></tr><tr><td align="center">throws</td><td align="left">声明一个方法可能拋出的异常</td></tr><tr><td align="center">transient</td><td align="left">声明不用序列化的成员域</td></tr><tr><td align="center">try</td><td align="left">捕获异常的代码块</td></tr><tr><td align="center">void</td><td align="left">指示一个方法不返回任何值</td></tr><tr><td align="center">volatile</td><td align="left">确保一个字段可以由多个线程访问</td></tr><tr><td align="center">while</td><td align="left">用在循环结构中</td></tr></tbody></table><div id="gitalk-container"></div><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};    gitalkConfig.id = md5(location.pathname);var gitalk = new Gitalk(gitalkConfig);    gitalk.render("gitalk-container");    </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+          <category> 基础 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java基础复习-变量</title>
+      <link href="/posts/3fb5008c.html"/>
+      <url>/posts/3fb5008c.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>在Java中，每个变量都有一个类型（type）。在声明变量时，变量的类型位于变量名之前。这里举例一些声明变量的实例：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> salary;</span><br><span class="line"><span class="keyword">int</span> vacationDays;</span><br><span class="line"><span class="keyword">long</span> earthPopulation;</span><br><span class="line"><span class="keyword">boolean</span> done;</span><br></pre></td></tr></table></figure><p>由于声明是一条完整的Java语句，所以必须以分号结束。</p><p>变量名必须是一个以数字开头并由字母或者数字构成的序列。字母包括<code>A~Z</code>、<code>a~z</code>、<code>_</code>、<code>$</code>或者在某种语言中表示字母的任何Unicode字符。例如，德国的用户可以在变量名中使用字母<code>ä</code>；希腊人可以用<code>π</code>。同样，数字包括<code>0~9</code>和在某种语言中表示数字的任何Unicode字符。但<code>+</code>和<code>©</code>这样的符号不能出现在变量名中，空格也不行。变量名中所有的字符都是有意义的，并且区分大小写，例如：<code>hireday</code>和<code>hireDay</code>是两个不同的变量名。变量名长度基本上没有限制。</p><ul><li><p>尽管<code>$</code>是一个合法的Java字符，但不要在自己的代码中使用这个字符。它只用在Java编译器或其它工具生成的名字中。<br><strong>另外不能使用Java保留字作为变量名</strong>，参考<a href="https://feng1000.github.io/posts/dae09912.html" target="_blank" rel="noopener">Java保留字表</a></p><p>可以在一行中声明多个变量:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i, j;</span><br></pre></td></tr></table></figure></li></ul><h3 id="变量初始化"><a href="#变量初始化" class="headerlink" title="变量初始化"></a>变量初始化</h3><p>声明一个变量之后，必须用赋值语句对变量进行显式初始化，千万不要使用未初始化的变量。例如，Java编译器认为下边的语句序列是错误的，无法通过编译:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line">System.out.println(a);</span><br></pre></td></tr></table></figure><p><img src="https://s1.ax1x.com/2020/04/29/JTt1at.png" alt="JTt1at.png"></p><p>想要对以已经声明过的变量进行赋值，就需要将变量名放到等号(=)左侧，相应取值的Java表达是放在等号的右侧。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line">a = <span class="number">12</span>;</span><br></pre></td></tr></table></figure><p>也可以将变量的声明和初始化放在同一行中。例如：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">12</span>;</span><br></pre></td></tr></table></figure><p>在Java中可以将声明放在代码中的任何地方。例如，下例代码书写形式在Java中完全合法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> money = <span class="number">25.23</span>;</span><br><span class="line">System.out.println(money);</span><br><span class="line"><span class="keyword">int</span> buyNum = <span class="number">12</span>;</span><br></pre></td></tr></table></figure><p>在Java中，变量的声明尽可能的靠近变量第一次使用的地方，这是一种良好的编码风格。</p><h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>Java中用关键字<code>final</code>表示常量。例如：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> PAGE_SIZE = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> pageNum = <span class="number">2</span>;</span><br><span class="line">    System.out.println(<span class="string">"展示条数"</span> + PAGE_SIZE + <span class="string">"，页码"</span> + pageNum);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>关键字<code>final</code>表示这个变量只能被赋值一次。一但被赋值之后，就不能再更改了。习惯上常量名使用全大写，单词之间用下划线<code>_</code>分割。</p><p>在Java中，经常希望某个常量可以在一个类中的多个方法中使用，通常将这些常量称之为类常量。可以使用关键字<code>static final</code>设置类常量。下面是使用类常量的示例：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PAGE_SIZE = <span class="number">10</span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pageNum = <span class="number">2</span>;</span><br><span class="line">    System.out.println(<span class="string">"展示条数"</span> + PAGE_SIZE + <span class="string">"，页码"</span> + pageNum);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>常量定义位于<code>main</code>方法外部。因此，在同一个类的其他方法中也可使用这个常量。而且如果一个常量被声明为<code>public</code>，那么其他类方法也可使用这个常量。在示例中，<code>Main.PAGE_SIZE</code>就是这样一个常量。</li></ul><div id="gitalk-container"></div><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};    gitalkConfig.id = md5(location.pathname);var gitalk = new Gitalk(gitalkConfig);    gitalk.render("gitalk-container");    </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+          <category> 基础 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java基础复习-数据类型</title>
       <link href="/posts/4bc1a9dd.html"/>
       <url>/posts/4bc1a9dd.html</url>
@@ -243,9 +285,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
           <category> 爬虫 </category>
           
@@ -278,9 +320,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -365,11 +407,11 @@
       
       <categories>
           
+          <category> Docker </category>
+          
           <category> Python </category>
           
           <category> 爬虫 </category>
-          
-          <category> Docker </category>
           
           <category> mitmproxy </category>
           
@@ -454,9 +496,9 @@
       
       <categories>
           
-          <category> 转载 </category>
-          
           <category> Python </category>
+          
+          <category> 转载 </category>
           
           <category> 基础 </category>
           
@@ -489,9 +531,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -547,9 +589,9 @@
       
       <categories>
           
-          <category> 转载 </category>
-          
           <category> Python </category>
+          
+          <category> 转载 </category>
           
           <category> 基础 </category>
           
@@ -582,11 +624,11 @@
           
           <category> Spring </category>
           
-          <category> Web </category>
-          
           <category> SpringBoot </category>
           
           <category> BUG </category>
+          
+          <category> Web </category>
           
           <category> 异常 </category>
           
@@ -694,9 +736,9 @@
       
       <categories>
           
-          <category> Web </category>
-          
           <category> BUG </category>
+          
+          <category> Web </category>
           
       </categories>
       
@@ -750,9 +792,9 @@
       
       <categories>
           
-          <category> 转载 </category>
-          
           <category> Python </category>
+          
+          <category> 转载 </category>
           
           <category> Jieba </category>
           
@@ -872,11 +914,11 @@
           
           <category> Java </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -969,9 +1011,9 @@
           
           <category> BUG </category>
           
-          <category> 异常 </category>
-          
           <category> logback </category>
+          
+          <category> 异常 </category>
           
       </categories>
       
@@ -1000,11 +1042,11 @@
           
           <category> 基础 </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1037,9 +1079,9 @@
           
           <category> BUG </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> 异常 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -1072,13 +1114,13 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
-          <category> Spring-data-jpa </category>
-          
           <category> 异常 </category>
+          
+          <category> 转载 </category>
+          
+          <category> Spring-data-jpa </category>
           
       </categories>
       
@@ -1134,9 +1176,9 @@
           
           <category> BUG </category>
           
-          <category> Python </category>
-          
           <category> 异常 </category>
+          
+          <category> Python </category>
           
       </categories>
       
@@ -1161,15 +1203,15 @@
       
       <categories>
           
+          <category> BUG </category>
+          
           <category> DB </category>
           
-          <category> BUG </category>
+          <category> 异常 </category>
           
           <category> NoSQL </category>
           
           <category> MongoDB </category>
-          
-          <category> 异常 </category>
           
       </categories>
       
@@ -1196,9 +1238,9 @@
           
           <category> DB </category>
           
-          <category> 转载 </category>
-          
           <category> NoSQL </category>
+          
+          <category> 转载 </category>
           
           <category> MongoDB </category>
           
@@ -1262,9 +1304,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1295,11 +1337,11 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1355,13 +1397,13 @@
       
       <categories>
           
-          <category> DB </category>
-          
           <category> ELK </category>
           
-          <category> NoSQL </category>
-          
           <category> Docker </category>
+          
+          <category> DB </category>
+          
+          <category> NoSQL </category>
           
           <category> Elasticsearch </category>
           
@@ -1384,9 +1426,9 @@
       
       <categories>
           
-          <category> Web </category>
-          
           <category> BUG </category>
+          
+          <category> Web </category>
           
           <category> Ajax </category>
           
@@ -1444,17 +1486,17 @@
       
       <categories>
           
-          <category> DB </category>
-          
           <category> ELK </category>
+          
+          <category> DB </category>
           
           <category> NoSQL </category>
           
           <category> Elasticsearch </category>
           
-          <category> Elasticsearch </category>
-          
           <category> x-pack </category>
+          
+          <category> Elasticsearch </category>
           
       </categories>
       
@@ -1754,9 +1796,9 @@
           
           <category> Spring </category>
           
-          <category> 转载 </category>
-          
           <category> SpringMVC </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1810,9 +1852,9 @@
           
           <category> Spring </category>
           
-          <category> Web </category>
-          
           <category> BUG </category>
+          
+          <category> Web </category>
           
           <category> Ajax </category>
           

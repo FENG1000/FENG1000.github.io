@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="关键字 含义    abstract 表明类或者成员方法具有抽象属性   assert 断言，用来进行程序调试   boolean 基本数据类型之一，声明布尔类型的关键字   break 提前跳出一个块   byte 基本数据类型之一，字节类型   case 用在switch语句之中，表示其中的一个分支   catch 用在异常处理中，用来捕捉异常   char 基本数据类型之一，字符类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java保留字表">
+<meta property="og:url" content="https:&#x2F;&#x2F;fengzxia.gitee.io&#x2F;posts&#x2F;dae09912.html">
+<meta property="og:site_name" content="只是学习学习的博客">
+<meta property="og:description" content="关键字 含义    abstract 表明类或者成员方法具有抽象属性   assert 断言，用来进行程序调试   boolean 基本数据类型之一，声明布尔类型的关键字   break 提前跳出一个块   byte 基本数据类型之一，字节类型   case 用在switch语句之中，表示其中的一个分支   catch 用在异常处理中，用来捕捉异常   char 基本数据类型之一，字符类型">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-29T09:16:35.000Z">
+<meta property="article:modified_time" content="2020-04-29T09:18:46.291Z">
+<meta property="article:author" content="只是学习学习">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Spider">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="Mybatis">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Java保留字表</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    
+      <script data-ad-client="ca-pub-8192777052967166" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/java/">Java基础</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/posts/3fb5008c.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/dae09912.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/dae09912.html&text=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/dae09912.html&is_video=false&description=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java保留字表&body=Check out this article: https://fengzxia.gitee.io/posts/dae09912.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/dae09912.html&name=Java保留字表&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/dae09912.html&t=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java保留字表
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">只是学习学习的博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-29T09:16:35.000Z" itemprop="datePublished">2020-04-29</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/%E5%9F%BA%E7%A1%80/">基础</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content"itemprop ="articleBody">
+    <table>
+<thead>
+<tr>
+<th align="center">关键字</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">abstract</td>
+<td align="left">表明类或者成员方法具有抽象属性</td>
+</tr>
+<tr>
+<td align="center">assert</td>
+<td align="left">断言，用来进行程序调试</td>
+</tr>
+<tr>
+<td align="center">boolean</td>
+<td align="left">基本数据类型之一，声明布尔类型的关键字</td>
+</tr>
+<tr>
+<td align="center">break</td>
+<td align="left">提前跳出一个块</td>
+</tr>
+<tr>
+<td align="center">byte</td>
+<td align="left">基本数据类型之一，字节类型</td>
+</tr>
+<tr>
+<td align="center">case</td>
+<td align="left">用在switch语句之中，表示其中的一个分支</td>
+</tr>
+<tr>
+<td align="center">catch</td>
+<td align="left">用在异常处理中，用来捕捉异常</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="left">基本数据类型之一，字符类型</td>
+</tr>
+<tr>
+<td align="center">class</td>
+<td align="left">声明一个类</td>
+</tr>
+<tr>
+<td align="center">const</td>
+<td align="left">保留关键字，没有具体含义</td>
+</tr>
+<tr>
+<td align="center">continue</td>
+<td align="left">回到一个块的开始处</td>
+</tr>
+<tr>
+<td align="center">default</td>
+<td align="left">默认，例如，用在switch语句中，表明一个默认的分支</td>
+</tr>
+<tr>
+<td align="center">do</td>
+<td align="left">用在do-while循环结构中</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="left">基本数据类型之一，双精度浮点数类型</td>
+</tr>
+<tr>
+<td align="center">else</td>
+<td align="left">用在条件语句中，表明当条件不成立时的分支</td>
+</tr>
+<tr>
+<td align="center">enum</td>
+<td align="left">枚举</td>
+</tr>
+<tr>
+<td align="center">extends</td>
+<td align="left">表明一个类型是另一个类型的子类型，这里常见的类型有类和接口</td>
+</tr>
+<tr>
+<td align="center">final</td>
+<td align="left">用来说明最终属性，表明一个类不能派生出子类，或者成员方法不能被覆盖，或者成员域的值不能被改变，用来定义常量</td>
+</tr>
+<tr>
+<td align="center">finally</td>
+<td align="left">用于处理异常情况，用来声明一个基本肯定会被执行到的语句块</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="left">基本数据类型之一，单精度浮点数类型</td>
+</tr>
+<tr>
+<td align="center">for</td>
+<td align="left">一种循环结构的引导词</td>
+</tr>
+<tr>
+<td align="center">goto</td>
+<td align="left">保留关键字，没有具体含义</td>
+</tr>
+<tr>
+<td align="center">if</td>
+<td align="left">条件语句的引导词</td>
+</tr>
+<tr>
+<td align="center">implements</td>
+<td align="left">表明一个类实现了给定的接口</td>
+</tr>
+<tr>
+<td align="center">import</td>
+<td align="left">表明要访问指定的类或包</td>
+</tr>
+<tr>
+<td align="center">instanceof</td>
+<td align="left">用来测试一个对象是否是指定类型的实例对象</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="left">基本数据类型之一，整数类型</td>
+</tr>
+<tr>
+<td align="center">interface</td>
+<td align="left">接口</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="left">基本数据类型之一，长整数类型</td>
+</tr>
+<tr>
+<td align="center">native</td>
+<td align="left">用来声明一个方法是由与计算机相关的语言（如C/C++/FORTRAN语言）实现的</td>
+</tr>
+<tr>
+<td align="center">new</td>
+<td align="left">用来创建新实例对象</td>
+</tr>
+<tr>
+<td align="center">package</td>
+<td align="left">包</td>
+</tr>
+<tr>
+<td align="center">private</td>
+<td align="left">一种访问控制方式：私用模式</td>
+</tr>
+<tr>
+<td align="center">protected</td>
+<td align="left">一种访问控制方式：保护模式</td>
+</tr>
+<tr>
+<td align="center">public</td>
+<td align="left">一种访问控制方式：共用模式</td>
+</tr>
+<tr>
+<td align="center">return</td>
+<td align="left">从成员方法中返回数据</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="left">基本数据类型之一,短整数类型</td>
+</tr>
+<tr>
+<td align="center">static</td>
+<td align="left">表明具有静态属性</td>
+</tr>
+<tr>
+<td align="center">strictfp</td>
+<td align="left">用来声明FP_strict（单精度或双精度浮点数）表达式遵循<a href="https://blog.csdn.net/weixin_42158633/article/details/88920080#" target="_blank" rel="noopener">IEEE 754</a>算术规范</td>
+</tr>
+<tr>
+<td align="center">super</td>
+<td align="left">表明当前对象的父类型的引用或者父类型的构造方法</td>
+</tr>
+<tr>
+<td align="center">switch</td>
+<td align="left">分支语句结构的引导词</td>
+</tr>
+<tr>
+<td align="center">synchronized</td>
+<td align="left">表明一段代码需要同步执行</td>
+</tr>
+<tr>
+<td align="center">this</td>
+<td align="left">当前类的一个方法或构造函数的隐含参数</td>
+</tr>
+<tr>
+<td align="center">throw</td>
+<td align="left">抛出一个异常</td>
+</tr>
+<tr>
+<td align="center">throws</td>
+<td align="left">声明一个方法可能拋出的异常</td>
+</tr>
+<tr>
+<td align="center">transient</td>
+<td align="left">声明不用序列化的成员域</td>
+</tr>
+<tr>
+<td align="center">try</td>
+<td align="left">捕获异常的代码块</td>
+</tr>
+<tr>
+<td align="center">void</td>
+<td align="left">指示一个方法不返回任何值</td>
+</tr>
+<tr>
+<td align="center">volatile</td>
+<td align="left">确保一个字段可以由多个线程访问</td>
+</tr>
+<tr>
+<td align="center">while</td>
+<td align="left">用在循环结构中</td>
+</tr>
+</tbody></table>
+
+<div id="gitalk-container"></div>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};
+	    gitalkConfig.id = md5(location.pathname);
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
+    
+  </div>
+</article>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/java/">Java基础</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://fengzxia.gitee.io/posts/dae09912.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://fengzxia.gitee.io/posts/dae09912.html&text=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fengzxia.gitee.io/posts/dae09912.html&is_video=false&description=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java保留字表&body=Check out this article: https://fengzxia.gitee.io/posts/dae09912.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://fengzxia.gitee.io/posts/dae09912.html&title=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://fengzxia.gitee.io/posts/dae09912.html&name=Java保留字表&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://fengzxia.gitee.io/posts/dae09912.html&t=Java保留字表" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    只是学习学习
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">主页</a></li>
+         
+          <li><a href="/java/">Java基础</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/friend_ship/">友链</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-154860368-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d43914a9bfb52175d1b359ec45380563";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</html>
