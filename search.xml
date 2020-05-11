@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>使用fake-useragent伪装爬虫请求头</title>
+      <link href="/posts/d2a53dce.html"/>
+      <url>/posts/d2a53dce.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul><li>可以通过<a href="http://useragentstring.com/" target="_blank" rel="noopener">useragentstring.com</a>来更新最新的请求头信息</li><li>可以在<a href="https://www.w3schools.com/browsers/browsers_stats.asp" target="_blank" rel="noopener">w3schools.com</a>查看自2002年以来的所有浏览器更新（国内不能访问）</li></ul><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install fake-useragent</span><br></pre></td></tr></table></figure><h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fake_useragent <span class="keyword">import</span> UserAgent</span><br><span class="line">ua = UserAgent()</span><br><span class="line"></span><br><span class="line">ua.ie</span><br><span class="line"><span class="comment"># Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US);</span></span><br><span class="line">ua.msie</span><br><span class="line"><span class="comment"># Mozilla/5.0 (compatible; MSIE 10.0; Macintosh; Intel Mac OS X 10_7_3; Trident/6.0)'</span></span><br><span class="line">ua[<span class="string">'Internet Explorer'</span>]</span><br><span class="line"><span class="comment"># Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)</span></span><br><span class="line">ua.opera</span><br><span class="line"><span class="comment"># Opera/9.80 (X11; Linux i686; U; ru) Presto/2.8.131 Version/11.11</span></span><br><span class="line">ua.chrome</span><br><span class="line"><span class="comment"># Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'</span></span><br><span class="line">ua.google</span><br><span class="line"><span class="comment"># Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13</span></span><br><span class="line">ua[<span class="string">'google chrome'</span>]</span><br><span class="line"><span class="comment"># Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11</span></span><br><span class="line">ua.firefox</span><br><span class="line"><span class="comment"># Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1</span></span><br><span class="line">ua.ff</span><br><span class="line"><span class="comment"># Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:15.0) Gecko/20100101 Firefox/15.0.1</span></span><br><span class="line">ua.safari</span><br><span class="line"><span class="comment"># Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># and the best one, random via real world browser usage statistic</span></span><br><span class="line">ua.random</span><br></pre></td></tr></table></figure><p><strong>注：在使用<code>ua = UserAgent()</code>时默认会使用 托管缓存服务器 但是国内访问不到，会导致或者随机请求头速度很慢，控制台报如下错误信息</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error occurred during loading data. Trying to use cache server https:&#x2F;&#x2F;fake-useragent.herokuapp.com&#x2F;browsers&#x2F;0.1.11</span><br></pre></td></tr></table></figure><p>解决办法:</p><p>使用<code>ua = UserAgent(use_cache_server=False)</code>方式创建<code>ua</code>对象即可</p><h2 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h2><ul><li><a href="https://fake-useragent.readthedocs.io/en/latest/" target="_blank" rel="noopener">接口文档</a></li><li><a href="https://github.com/hellysmile/fake-useragent" target="_blank" rel="noopener">GitHub</a></li></ul><div id="gitalk-container"></div><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><script>var gitalkConfig = {"clientID":"28a065e3b5afee156f4f","clientSecret":"e18104d6f3219526491fc42c892ff6a26b8f3e74","repo":"blog_comment","owner":"FENG1000","admin":["FENG1000"],"distractionFreeMode":false};    gitalkConfig.id = md5(location.pathname);var gitalk = new Gitalk(gitalkConfig);    gitalk.render("gitalk-container");    </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+          <category> 爬虫 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随机请求头 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java保留字表</title>
       <link href="/posts/dae09912.html"/>
       <url>/posts/dae09912.html</url>
@@ -531,9 +558,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -624,9 +651,9 @@
           
           <category> Spring </category>
           
-          <category> SpringBoot </category>
-          
           <category> Web </category>
+          
+          <category> SpringBoot </category>
           
           <category> BUG </category>
           
@@ -914,9 +941,9 @@
           
           <category> Java </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1042,9 +1069,9 @@
           
           <category> 基础 </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1114,9 +1141,9 @@
           
           <category> Spring </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> Spring-data-jpa </category>
           
@@ -1205,13 +1232,13 @@
           
           <category> DB </category>
           
-          <category> BUG </category>
-          
           <category> NoSQL </category>
           
-          <category> MongoDB </category>
+          <category> BUG </category>
           
           <category> 异常 </category>
+          
+          <category> MongoDB </category>
           
       </categories>
       
@@ -1304,9 +1331,9 @@
           
           <category> SpringBoot </category>
           
-          <category> 转载 </category>
-          
           <category> Redis </category>
+          
+          <category> 转载 </category>
           
       </categories>
       
@@ -1337,9 +1364,9 @@
           
           <category> SpringBoot </category>
           
-          <category> BUG </category>
-          
           <category> 转载 </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
@@ -1403,9 +1430,9 @@
           
           <category> NoSQL </category>
           
-          <category> Elasticsearch </category>
-          
           <category> Docker </category>
+          
+          <category> Elasticsearch </category>
           
           <category> Elasticsearch </category>
           
@@ -1494,9 +1521,9 @@
           
           <category> Elasticsearch </category>
           
-          <category> x-pack </category>
-          
           <category> Elasticsearch </category>
+          
+          <category> x-pack </category>
           
       </categories>
       
@@ -1730,9 +1757,9 @@
           
           <category> SpringBoot </category>
           
-          <category> SpringMVC </category>
-          
           <category> logback </category>
+          
+          <category> SpringMVC </category>
           
       </categories>
       
@@ -1763,9 +1790,9 @@
           
           <category> SpringBoot </category>
           
-          <category> BUG </category>
-          
           <category> Redis </category>
+          
+          <category> BUG </category>
           
           <category> 异常 </category>
           
